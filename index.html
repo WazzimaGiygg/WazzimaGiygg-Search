@@ -1,11 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WazzimaGiygg Search - Busca Inteligente</title>
     <link rel="icon" href="https://gspotfverwazzimagiygg.wazzimagiygg.com/search/Favicom.png" type="image/x-icon">
+    <title>WazzimaGiygg Search - Busca Inteligente</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
@@ -23,7 +22,6 @@
             color: #1a1a2e;
         }
 
-        /* Container principal */
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -33,7 +31,6 @@
             flex-direction: column;
         }
 
-        /* Header */
         .header {
             display: flex;
             justify-content: space-between;
@@ -41,6 +38,8 @@
             padding: 20px 0;
             border-bottom: 1px solid rgba(255,255,255,0.2);
             margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 16px;
         }
 
         .logo {
@@ -51,6 +50,7 @@
             font-weight: 700;
             color: white;
             text-decoration: none;
+            cursor: pointer;
         }
 
         .logo i {
@@ -116,7 +116,6 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
 
-        /* Área principal de busca */
         .search-container {
             flex: 1;
             display: flex;
@@ -147,7 +146,16 @@
             font-size: 18px;
         }
 
-        /* Barra de busca estilo Google */
+        .guest-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-top: 12px;
+            color: rgba(255,255,255,0.8);
+        }
+
         .search-box {
             width: 100%;
             max-width: 600px;
@@ -228,13 +236,13 @@
             background: #f1f3f4;
         }
 
-        /* Botões de busca */
         .search-buttons {
             display: flex;
             gap: 16px;
             justify-content: center;
             margin-top: 30px;
             animation: fadeInUp 0.6s ease 0.2s backwards;
+            flex-wrap: wrap;
         }
 
         .btn-search {
@@ -257,7 +265,6 @@
             transform: translateY(-2px);
         }
 
-        /* Sugestões de busca */
         .suggestions {
             max-width: 600px;
             margin: 20px auto 0;
@@ -308,11 +315,11 @@
             border-radius: 12px;
         }
 
-        /* Resultados da busca */
         .results-container {
             margin-top: 40px;
             display: none;
             animation: fadeInUp 0.4s ease;
+            width: 100%;
         }
 
         .results-container.show {
@@ -326,6 +333,8 @@
             margin-bottom: 24px;
             padding-bottom: 16px;
             border-bottom: 1px solid rgba(255,255,255,0.2);
+            flex-wrap: wrap;
+            gap: 16px;
         }
 
         .results-count {
@@ -355,7 +364,6 @@
             gap: 20px;
         }
 
-        /* Card de resultado */
         .result-card {
             background: white;
             border-radius: 16px;
@@ -419,7 +427,6 @@
             font-weight: 500;
         }
 
-        /* Loading */
         .loading {
             text-align: center;
             padding: 40px;
@@ -436,7 +443,6 @@
             margin: 0 auto 16px;
         }
 
-        /* Nenhum resultado */
         .no-results {
             text-align: center;
             padding: 60px 20px;
@@ -460,7 +466,6 @@
             color: rgba(255,255,255,0.7);
         }
 
-        /* Modal de login */
         .modal {
             display: none;
             position: fixed;
@@ -533,7 +538,26 @@
             margin-top: 8px;
         }
 
-        /* Animações */
+        .info-banner {
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 16px 24px;
+            margin-top: 30px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            animation: fadeInUp 0.6s ease 0.3s backwards;
+        }
+
+        .info-banner p {
+            color: rgba(255,255,255,0.9);
+            font-size: 14px;
+        }
+
+        .info-banner i {
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -554,7 +578,6 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Responsividade */
         @media (max-width: 768px) {
             .search-title h1 {
                 font-size: 36px;
@@ -566,7 +589,7 @@
             
             .header {
                 flex-direction: column;
-                gap: 16px;
+                text-align: center;
             }
             
             .search-input-wrapper {
@@ -582,10 +605,10 @@
 <body>
     <div class="container">
         <div class="header">
-            <a href="#" class="logo" onclick="resetSearch()">
+            <div class="logo" onclick="resetSearch()">
                 <i class="material-icons">search</i>
                 <span>WazzimaGiygg Search</span>
-            </a>
+            </div>
             <div class="user-area" id="user-area">
                 <!-- Será preenchido dinamicamente -->
             </div>
@@ -595,6 +618,9 @@
             <div class="search-title">
                 <h1>WazzimaGiygg</h1>
                 <p>Busca inteligente para seus produtos e serviços</p>
+                <div class="guest-badge" id="guest-badge">
+                    <i class="material-icons" style="font-size: 14px;">public</i> Modo Convidado - Busca liberada
+                </div>
             </div>
 
             <div class="search-box">
@@ -629,6 +655,13 @@
                 </button>
             </div>
 
+            <div class="info-banner">
+                <p>
+                    <i class="material-icons" style="font-size: 16px;">info</i>
+                    Mais de <span id="page-count">0</span> páginas disponíveis para busca
+                </p>
+            </div>
+
             <div class="results-container" id="results-container">
                 <div class="results-header">
                     <div class="results-count" id="results-count"></div>
@@ -641,7 +674,6 @@
         </div>
     </div>
 
-    <!-- Modal de Login -->
     <div class="modal" id="login-modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -659,13 +691,11 @@
         </div>
     </div>
 
-    <!-- Firebase Scripts -->
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
 
     <script>
-        // Configuração do Firebase (mesma do código original)
         const firebaseConfig = {
             apiKey: "AIzaSyB9GkSqTIZ0kbVsba_WOdQeVAETrF9qna0",
             authDomain: "wzzm-ce3fc.firebaseapp.com",
@@ -676,7 +706,6 @@
             measurementId: "G-PLKNZNFCQ8"
         };
 
-        // Inicializar Firebase
         let app, auth, db;
         try {
             app = firebase.app();
@@ -688,12 +717,10 @@
             db = firebase.firestore();
         }
 
-        // Variáveis globais
         let currentUser = null;
         let allPages = [];
         let searchTimeout = null;
 
-        // Elementos DOM
         const searchInput = document.getElementById('search-input');
         const clearBtn = document.getElementById('clear-search');
         const suggestionsDiv = document.getElementById('suggestions');
@@ -702,17 +729,12 @@
         const resultsCount = document.getElementById('results-count');
         const userArea = document.getElementById('user-area');
         const loginModal = document.getElementById('login-modal');
+        const pageCountSpan = document.getElementById('page-count');
 
-        // ==============================================
-        // FUNÇÕES PRINCIPAIS
-        // ==============================================
-
-        // Carregar todas as páginas do Firebase
         async function loadAllPages() {
             try {
-                console.log('📚 Carregando páginas do Firebase...');
+                console.log('📚 Carregando páginas do Firebase (leitura pública permitida)...');
                 
-                // Buscar todos os documentos da coleção paginasUsuario
                 const querySnapshot = await db.collection('paginasUsuario').get();
                 
                 allPages = [];
@@ -737,7 +759,6 @@
                     });
                 });
                 
-                // Remover duplicados por URL
                 const urlMap = new Map();
                 allPages = allPages.filter(page => {
                     if (urlMap.has(page.url)) {
@@ -747,16 +768,19 @@
                     return true;
                 });
                 
-                console.log(`✅ ${allPages.length} páginas carregadas com sucesso!`);
+                pageCountSpan.textContent = allPages.length;
+                console.log(`✅ ${allPages.length} páginas carregadas com sucesso! (acesso público)`);
                 return allPages;
                 
             } catch (error) {
                 console.error('❌ Erro ao carregar páginas:', error);
+                if (error.code === 'permission-denied') {
+                    console.warn('⚠️ Permissão negada. Verifique as regras do Firestore.');
+                }
                 return [];
             }
         }
 
-        // Buscar páginas
         function searchPages(query) {
             if (!query || query.trim() === '') {
                 return [];
@@ -770,7 +794,6 @@
                        page.categoria.toLowerCase().includes(lowerQuery) ||
                        page.url.toLowerCase().includes(lowerQuery);
             }).sort((a, b) => {
-                // Priorizar títulos que começam com a busca
                 const aStarts = a.nome.toLowerCase().startsWith(lowerQuery);
                 const bStarts = b.nome.toLowerCase().startsWith(lowerQuery);
                 if (aStarts && !bStarts) return -1;
@@ -779,7 +802,6 @@
             });
         }
 
-        // Mostrar sugestões
         function showSuggestions(query) {
             if (!query || query.trim() === '') {
                 suggestionsDiv.classList.remove('show');
@@ -807,21 +829,18 @@
             suggestionsDiv.classList.add('show');
         }
 
-        // Destacar texto da busca
         function highlightText(text, query) {
             if (!query) return text;
             const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
             return text.replace(regex, '<mark style="background: #fff3cd; padding: 0;">$1</mark>');
         }
 
-        // Selecionar sugestão
         function selectSuggestion(query) {
             searchInput.value = query;
             suggestionsDiv.classList.remove('show');
             performSearch();
         }
 
-        // Realizar busca
         async function performSearch() {
             const query = searchInput.value.trim();
             
@@ -834,7 +853,6 @@
             displayResults(results, query);
         }
 
-        // Mostrar todas as páginas
         async function showAllPages() {
             const query = searchInput.value.trim();
             if (query) {
@@ -843,7 +861,6 @@
             displayResults(allPages, 'Todos os resultados');
         }
 
-        // Exibir resultados
         function displayResults(results, searchTerm) {
             resultsCount.textContent = `📄 ${results.length} resultado${results.length !== 1 ? 's' : ''} para "${searchTerm}"`;
             
@@ -861,26 +878,28 @@
                         <div class="card-icon">
                             <i class="material-icons">${page.icone}</i>
                         </div>
-                        <h3 class="card-title">${page.nome}</h3>
-                        <div class="card-url">${page.url}</div>
-                        ${page.descricao ? `<div class="card-description">${page.descricao.substring(0, 100)}${page.descricao.length > 100 ? '...' : ''}</div>` : ''}
-                        <span class="card-category">${page.categoria}</span>
+                        <h3 class="card-title">${escapeHtml(page.nome)}</h3>
+                        <div class="card-url">${escapeHtml(page.url)}</div>
+                        ${page.descricao ? `<div class="card-description">${escapeHtml(page.descricao.substring(0, 100))}${page.descricao.length > 100 ? '...' : ''}</div>` : ''}
+                        <span class="card-category">${escapeHtml(page.categoria)}</span>
                     </div>
                 `).join('');
             }
             
             resultsContainer.classList.add('show');
-            
-            // Scroll suave para os resultados
             resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
-        // Ocultar resultados
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
         function hideResults() {
             resultsContainer.classList.remove('show');
         }
 
-        // Resetar busca
         function resetSearch() {
             searchInput.value = '';
             hideResults();
@@ -888,26 +907,14 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Abrir link
         function openLink(url) {
-            // Verificar se é produto WazzimaGiygg
-            if (url.includes('wazzimagiygg') || url.includes('wzzm')) {
-                window.open(url, '_blank');
-            } else {
-                window.open(url, '_blank');
-            }
+            window.open(url, '_blank');
         }
 
-        // Gerar ID
         function generateId() {
             return 'page_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
         }
 
-        // ==============================================
-        // AUTENTICAÇÃO
-        // ==============================================
-
-        // Atualizar UI do usuário
         function updateUserUI() {
             if (currentUser) {
                 const displayName = currentUser.displayName || currentUser.email.split('@')[0];
@@ -916,13 +923,14 @@
                         <div class="user-avatar">
                             <i class="material-icons" style="font-size: 18px;">person</i>
                         </div>
-                        <span class="user-name">${displayName}</span>
+                        <span class="user-name">${escapeHtml(displayName)}</span>
                     </div>
                     <button class="login-btn" onclick="logout()">
                         <i class="material-icons" style="font-size: 18px;">logout</i>
                         Sair
                     </button>
                 `;
+                document.getElementById('guest-badge').innerHTML = `<i class="material-icons" style="font-size: 14px;">person</i> Olá, ${escapeHtml(displayName)}`;
             } else {
                 userArea.innerHTML = `
                     <button class="login-btn" onclick="showLoginModal()">
@@ -930,20 +938,18 @@
                         Entrar
                     </button>
                 `;
+                document.getElementById('guest-badge').innerHTML = `<i class="material-icons" style="font-size: 14px;">public</i> Modo Convidado - Busca liberada`;
             }
         }
 
-        // Mostrar modal de login
         function showLoginModal() {
             loginModal.classList.add('show');
         }
 
-        // Fechar modal de login
         function closeLoginModal() {
             loginModal.classList.remove('show');
         }
 
-        // Login
         async function login(email, password) {
             try {
                 const userCredential = await auth.signInWithEmailAndPassword(email, password);
@@ -957,7 +963,6 @@
             }
         }
 
-        // Logout
         async function logout() {
             try {
                 await auth.signOut();
@@ -969,7 +974,6 @@
             }
         }
 
-        // Mostrar registro
         function showRegister() {
             const email = prompt('Digite seu e-mail:');
             if (!email) return;
@@ -983,13 +987,11 @@
             registerUser(email, password);
         }
 
-        // Registrar usuário
         async function registerUser(email, password) {
             try {
                 const userCredential = await auth.createUserWithEmailAndPassword(email, password);
                 currentUser = userCredential.user;
                 
-                // Criar documento do usuário
                 await db.collection('users').doc(currentUser.uid).set({
                     email: currentUser.email,
                     displayName: currentUser.email.split('@')[0],
@@ -1009,11 +1011,6 @@
             }
         }
 
-        // ==============================================
-        // EVENT LISTENERS
-        // ==============================================
-
-        // Evento de input na busca
         searchInput.addEventListener('input', (e) => {
             const query = e.target.value;
             
@@ -1029,7 +1026,6 @@
             }, 300);
         });
 
-        // Limpar busca
         clearBtn.addEventListener('click', () => {
             searchInput.value = '';
             clearBtn.style.display = 'none';
@@ -1037,7 +1033,6 @@
             searchInput.focus();
         });
 
-        // Buscar ao pressionar Enter
         searchInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 suggestionsDiv.classList.remove('show');
@@ -1045,13 +1040,11 @@
             }
         });
 
-        // Botão de busca
         document.getElementById('search-button').addEventListener('click', () => {
             suggestionsDiv.classList.remove('show');
             performSearch();
         });
 
-        // Formulário de login
         document.getElementById('login-form-modal').addEventListener('submit', async (e) => {
             e.preventDefault();
             const email = document.getElementById('modal-email').value;
@@ -1059,18 +1052,12 @@
             await login(email, password);
         });
 
-        // Fechar modal ao clicar fora
         loginModal.addEventListener('click', (e) => {
             if (e.target === loginModal) {
                 closeLoginModal();
             }
         });
 
-        // ==============================================
-        // INICIALIZAÇÃO
-        // ==============================================
-
-        // Carregar páginas e verificar autenticação
         async function init() {
             await loadAllPages();
             
@@ -1082,7 +1069,8 @@
         
         init();
         
-        console.log('🚀 WazzimaGiygg Search inicializado!');
+        console.log('🚀 WazzimaGiygg Search inicializado! (Busca pública liberada)');
+        console.log('📝 Regra do Firestore: allow read: if true - Qualquer um pode buscar');
     </script>
 </body>
 </html>
