@@ -81,6 +81,13 @@
             backdrop-filter: blur(10px);
         }
 
+        .user-avatar-img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
         .user-avatar {
             width: 32px;
             height: 32px;
@@ -561,6 +568,54 @@
             margin-top: 8px;
         }
 
+        .modal-divider {
+            display: flex;
+            align-items: center;
+            margin: 24px 0;
+            color: #9aa0a6;
+            font-size: 14px;
+        }
+
+        .modal-divider::before,
+        .modal-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #dadce0;
+        }
+
+        .modal-divider span {
+            padding: 0 15px;
+        }
+
+        .google-login-btn {
+            width: 100%;
+            padding: 12px;
+            background: white;
+            color: #3c4043;
+            border: 1px solid #dadce0;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            font-size: 14px;
+        }
+
+        .google-login-btn:hover {
+            background: #f8f9fa;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .google-login-btn img {
+            width: 20px;
+            height: 20px;
+        }
+
         .info-banner {
             background: rgba(255,255,255,0.1);
             border-radius: 12px;
@@ -710,16 +765,27 @@
     <div class="modal" id="login-modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>Login</h2>
+                <h2>Entrar na sua conta</h2>
                 <button class="modal-close" onclick="closeLoginModal()">&times;</button>
             </div>
+            
+            <!-- Botão Login com Google -->
+            <button class="google-login-btn" id="google-login-btn" onclick="loginWithGoogle()">
+                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
+                Continuar com Google
+            </button>
+            
+            <div class="modal-divider">
+                <span>ou</span>
+            </div>
+            
             <form id="login-form-modal">
                 <input type="email" id="modal-email" class="modal-input" placeholder="E-mail" required>
                 <input type="password" id="modal-password" class="modal-input" placeholder="Senha" required>
-                <button type="submit" class="modal-btn">Entrar</button>
+                <button type="submit" class="modal-btn">Entrar com e-mail</button>
             </form>
             <div style="text-align: center; margin-top: 16px;">
-                <a href="#" onclick="showRegister()" style="color: #667eea; text-decoration: none;">Criar conta</a>
+                <a href="#" onclick="showRegister()" style="color: #667eea; text-decoration: none;">Criar nova conta</a>
             </div>
         </div>
     </div>
@@ -948,14 +1014,59 @@
             return 'page_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
         }
 
+        // Função para login com Google
+        async function loginWithGoogle() {
+            try {
+                const provider = new firebase.auth.GoogleAuthProvider();
+                provider.addScope('email');
+                provider.addScope('profile');
+                provider.setCustomParameters({ prompt: 'select_account' });
+                
+                const result = await auth.signInWithPopup(provider);
+                currentUser = result.user;
+                
+                // Criar/atualizar documento do usuário no Firestore
+                const userRef = db.collection('users').doc(currentUser.uid);
+                const userDoc = await userRef.get();
+                
+                if (!userDoc.exists) {
+                    await userRef.set({
+                        email: currentUser.email,
+                        displayName: currentUser.displayName || currentUser.email.split('@')[0],
+                        photoURL: currentUser.photoURL || null,
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                        isAdmin: false,
+                        isTeatcher: false,
+                        isBanned: false
+                    });
+                }
+                
+                updateUserUI();
+                closeLoginModal();
+                console.log('✅ Login com Google realizado com sucesso!');
+            } catch (error) {
+                console.error('❌ Erro no login com Google:', error);
+                if (error.code === 'auth/popup-blocked') {
+                    alert('Popup bloqueado. Permita popups para este site.');
+                } else if (error.code === 'auth/popup-closed-by-user') {
+                    console.log('Login cancelado pelo usuário');
+                } else {
+                    alert('Erro ao fazer login com Google: ' + error.message);
+                }
+            }
+        }
+
         function updateUserUI() {
             if (currentUser) {
                 const displayName = currentUser.displayName || currentUser.email.split('@')[0];
+                const photoURL = currentUser.photoURL;
+                
                 userArea.innerHTML = `
                     <div class="user-info">
-                        <div class="user-avatar">
-                            <i class="material-icons" style="font-size: 18px;">person</i>
-                        </div>
+                        ${photoURL ? 
+                            `<img src="${photoURL}" class="user-avatar-img" alt="Avatar">` : 
+                            `<div class="user-avatar"><i class="material-icons" style="font-size: 18px;">person</i></div>`
+                        }
                         <span class="user-name">${escapeHtml(displayName)}</span>
                     </div>
                     <button class="login-btn" onclick="logout()">
@@ -1106,19 +1217,17 @@
         console.log('📝 Regra do Firestore: allow read: if true - Qualquer um pode buscar');
     </script>
 
-            <!-- Iframe do verificador/logs (mantido como você tinha) -->
+    <!-- Iframe do verificador/logs -->
     <iframe 
         src="https://gspotfverwazzimagiygg.wazzimagiygg.com/D390X40F/200FVM20/200V/5002DFE6/ACEF/5CFER.html" 
         style="width: 300px; height: 150px; border: none; position: fixed; bottom: 10px; right: 10px; z-index: 9999;"
         title="Registrador de Logs">
     </iframe>
 
-        <iframe 
+    <iframe 
         src="https://gspotfverwazzimagiygg.wazzimagiygg.com/D390X40F/200FVM20/200V/5002DFE6/ACEF/tracker.html" 
         style="width: 300px; height: 150px; border: none; position: fixed; bottom: 10px; right: 10px; z-index: 9999;"
         title="Registrador de Logs">
     </iframe>
-
-    
 </body>
 </html>
