@@ -131,6 +131,29 @@
             animation: fadeInUp 0.6s ease;
         }
 
+        /* Logo centralizado */
+        .center-logo {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 24px;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        .center-logo img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            border: 3px solid rgba(255,255,255,0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .center-logo img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+        }
+
         .search-title h1 {
             font-size: 56px;
             background: linear-gradient(135deg, #fff, #e0e0e0);
@@ -599,6 +622,11 @@
             .search-input {
                 font-size: 14px;
             }
+
+            .center-logo img {
+                width: 80px;
+                height: 80px;
+            }
         }
     </style>
 </head>
@@ -615,6 +643,11 @@
         </div>
 
         <div class="search-container">
+            <!-- Logo centralizado -->
+            <div class="center-logo">
+                <img src="https://gspotfverwazzimagiygg.wazzimagiygg.com/search/Favicom.png" alt="WazzimaGiygg Logo">
+            </div>
+
             <div class="search-title">
                 <h1>WazzimaGiygg</h1>
                 <p>Busca inteligente para seus produtos e serviços</p>
