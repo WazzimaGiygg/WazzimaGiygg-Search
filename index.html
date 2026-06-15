@@ -138,7 +138,6 @@
             animation: fadeInUp 0.6s ease;
         }
 
-        /* Logo centralizado */
         .center-logo {
             display: flex;
             justify-content: center;
@@ -611,11 +610,6 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
-        .google-login-btn img {
-            width: 20px;
-            height: 20px;
-        }
-
         .info-banner {
             background: rgba(255,255,255,0.1);
             border-radius: 12px;
@@ -631,9 +625,118 @@
             font-size: 14px;
         }
 
-        .info-banner i {
-            vertical-align: middle;
-            margin-right: 8px;
+        .warning-banner {
+            background: rgba(255, 100, 100, 0.9);
+            border-radius: 12px;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            display: none;
+        }
+
+        .warning-banner.show {
+            display: block;
+        }
+
+        .warning-banner p {
+            color: white;
+            font-size: 14px;
+        }
+
+        /* Estilos do Labirinto CAPTCHA */
+        .captcha-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 10000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(8px);
+        }
+
+        .captcha-overlay.show {
+            display: flex;
+        }
+
+        .captcha-content {
+            background: #2b1e0f;
+            padding: 30px;
+            border-radius: 48px;
+            box-shadow: 0 20px 35px rgba(0,0,0,0.5);
+            text-align: center;
+            max-width: 650px;
+            width: 90%;
+        }
+
+        .captcha-content h2 {
+            color: #ffd966;
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+
+        .captcha-content p {
+            color: #ecd69e;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .maze-container {
+            background: #3e2a1f;
+            padding: 20px;
+            border-radius: 32px;
+            margin-bottom: 20px;
+        }
+
+        .maze-canvas {
+            display: block;
+            margin: 0 auto;
+            border-radius: 16px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+            background-color: #f9eed7;
+            width: 100%;
+            height: auto;
+        }
+
+        .maze-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .maze-btn {
+            background: #d4af37;
+            border: none;
+            font-family: inherit;
+            font-weight: bold;
+            font-size: 1.5rem;
+            padding: 10px 25px;
+            border-radius: 40px;
+            color: #2c1a0c;
+            cursor: pointer;
+            transition: 0.1s linear;
+            box-shadow: 0 5px 0 #7a5300;
+        }
+
+        .maze-btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #7a5300;
+        }
+
+        .maze-status {
+            background: #1f1a10;
+            padding: 10px 20px;
+            border-radius: 40px;
+            color: #f7e05e;
+            font-weight: bold;
+            margin-top: 15px;
+            font-size: 14px;
         }
 
         @keyframes fadeInUp {
@@ -698,7 +801,6 @@
         </div>
 
         <div class="search-container">
-            <!-- Logo centralizado -->
             <div class="center-logo">
                 <img src="https://gspotfverwazzimagiygg.wazzimagiygg.com/search/Favicom.png" alt="WazzimaGiygg Logo">
             </div>
@@ -709,6 +811,13 @@
                 <div class="guest-badge" id="guest-badge">
                     <i class="material-icons" style="font-size: 14px;">public</i> Modo Convidado - Busca liberada
                 </div>
+            </div>
+
+            <div class="warning-banner" id="warningBanner">
+                <p>
+                    <i class="material-icons" style="font-size: 16px;">warning</i>
+                    ⚠️ Muitas tentativas de acesso! Por favor, complete o labirinto para continuar.
+                </p>
             </div>
 
             <div class="search-box">
@@ -769,7 +878,6 @@
                 <button class="modal-close" onclick="closeLoginModal()">&times;</button>
             </div>
             
-            <!-- Botão Login com Google -->
             <button class="google-login-btn" id="google-login-btn" onclick="loginWithGoogle()">
                 <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
                 Continuar com Google
@@ -790,11 +898,30 @@
         </div>
     </div>
 
+    <!-- Overlay do Labirinto CAPTCHA -->
+    <div class="captcha-overlay" id="captchaOverlay">
+        <div class="captcha-content">
+            <h2>🔐 Verificação de Segurança</h2>
+            <p>Para continuar usando a busca, complete o labirinto abaixo.</p>
+            <div class="maze-container">
+                <canvas id="mazeCanvas" width="500" height="500" class="maze-canvas"></canvas>
+                <div class="maze-controls">
+                    <button class="maze-btn" onclick="mazeMove(0, -1)">⬆️</button>
+                    <button class="maze-btn" onclick="mazeMove(0, 1)">⬇️</button>
+                    <button class="maze-btn" onclick="mazeMove(-1, 0)">⬅️</button>
+                    <button class="maze-btn" onclick="mazeMove(1, 0)">➡️</button>
+                </div>
+                <div class="maze-status" id="mazeStatus">⭐ Leve o personagem até a bandeira 🏁</div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
 
     <script>
+        // ==================== CONFIGURAÇÃO DO FIREBASE ====================
         const firebaseConfig = {
             apiKey: "AIzaSyB9GkSqTIZ0kbVsba_WOdQeVAETrF9qna0",
             authDomain: "wzzm-ce3fc.firebaseapp.com",
@@ -816,6 +943,238 @@
             db = firebase.firestore();
         }
 
+        // ==================== SISTEMA ANTI-ABUSO ====================
+        let accessCount = 0;
+        let lastAccessTime = Date.now();
+        let isCaptchaActive = false;
+        let captchaSolved = false;
+        
+        const MAX_ACCESS_IN_WINDOW = 5;
+        const TIME_WINDOW_MS = 60000;
+        
+        function checkAbuse() {
+            if (captchaSolved) return true;
+            
+            const now = Date.now();
+            
+            if (now - lastAccessTime > TIME_WINDOW_MS) {
+                accessCount = 0;
+                lastAccessTime = now;
+            }
+            
+            accessCount++;
+            lastAccessTime = now;
+            
+            console.log(`📊 Acessos: ${accessCount}`);
+            
+            if (accessCount > MAX_ACCESS_IN_WINDOW && !isCaptchaActive) {
+                showCaptcha();
+                return false;
+            }
+            
+            return true;
+        }
+        
+        function showCaptcha() {
+            if (captchaSolved) return;
+            
+            isCaptchaActive = true;
+            document.getElementById('captchaOverlay').classList.add('show');
+            document.getElementById('warningBanner').classList.add('show');
+            initMazeGame();
+        }
+        
+        function hideCaptcha() {
+            document.getElementById('captchaOverlay').classList.remove('show');
+            isCaptchaActive = false;
+            captchaSolved = true;
+            
+            accessCount = 0;
+            lastAccessTime = Date.now();
+            
+            setTimeout(() => {
+                document.getElementById('warningBanner').classList.remove('show');
+            }, 3000);
+        }
+        
+        // ==================== LABIRINTO ====================
+        const MAZE_SIZE = 21;
+        let mazeCanvas = null;
+        let mazeCtx = null;
+        let mazeWalls = [];
+        let mazePlayerPos = { x: 0, y: 0 };
+        let mazeGoalPos = { x: 0, y: 0 };
+        let mazeStartPos = { x: 0, y: 0 };
+        let mazeGameActive = true;
+        let mazeCellSize = 23;
+        
+        function generateMaze() {
+            let grid = Array(MAZE_SIZE).fill().map(() => Array(MAZE_SIZE).fill(true));
+            
+            let startX = 1 + Math.floor(Math.random() * ((MAZE_SIZE-2)/2)) * 2;
+            let startY = 1 + Math.floor(Math.random() * ((MAZE_SIZE-2)/2)) * 2;
+            let goalX = 1 + Math.floor(Math.random() * ((MAZE_SIZE-2)/2)) * 2;
+            let goalY = 1 + Math.floor(Math.random() * ((MAZE_SIZE-2)/2)) * 2;
+            
+            while(startX === goalX && startY === goalY) {
+                goalX = 1 + Math.floor(Math.random() * ((MAZE_SIZE-2)/2)) * 2;
+                goalY = 1 + Math.floor(Math.random() * ((MAZE_SIZE-2)/2)) * 2;
+            }
+            
+            for(let i = 0; i < MAZE_SIZE; i++) {
+                for(let j = 0; j < MAZE_SIZE; j++) {
+                    if(i % 2 === 1 && j % 2 === 1) {
+                        grid[i][j] = false;
+                    }
+                }
+            }
+            
+            let walls = [];
+            let visited = Array(MAZE_SIZE).fill().map(() => Array(MAZE_SIZE).fill(false));
+            visited[startY][startX] = true;
+            
+            const addWalls = (x, y) => {
+                const dirs = [[0, -2], [0, 2], [-2, 0], [2, 0]];
+                for(let [dx, dy] of dirs) {
+                    let nx = x + dx;
+                    let ny = y + dy;
+                    if(nx > 0 && nx < MAZE_SIZE-1 && ny > 0 && ny < MAZE_SIZE-1 && !visited[ny][nx]) {
+                        let wallX = x + dx/2;
+                        let wallY = y + dy/2;
+                        walls.push({x: wallX, y: wallY, nextX: nx, nextY: ny});
+                    }
+                }
+            };
+            
+            addWalls(startX, startY);
+            
+            while(walls.length > 0) {
+                let randomIndex = Math.floor(Math.random() * walls.length);
+                let wall = walls[randomIndex];
+                walls.splice(randomIndex, 1);
+                
+                let nx = wall.nextX;
+                let ny = wall.nextY;
+                
+                if(!visited[ny][nx]) {
+                    grid[wall.y][wall.x] = false;
+                    visited[ny][nx] = true;
+                    addWalls(nx, ny);
+                }
+            }
+            
+            grid[startY][startX] = false;
+            grid[goalY][goalX] = false;
+            
+            for(let i = 0; i < MAZE_SIZE; i++) {
+                grid[0][i] = true;
+                grid[MAZE_SIZE-1][i] = true;
+                grid[i][0] = true;
+                grid[i][MAZE_SIZE-1] = true;
+            }
+            
+            grid[startY][startX] = false;
+            grid[goalY][goalX] = false;
+            
+            return {
+                walls: grid,
+                start: { x: startX, y: startY },
+                goal: { x: goalX, y: goalY }
+            };
+        }
+        
+        function drawMazeGame() {
+            if(!mazeCtx) return;
+            mazeCtx.clearRect(0, 0, mazeCanvas.width, mazeCanvas.height);
+            
+            for(let row = 0; row < MAZE_SIZE; row++) {
+                for(let col = 0; col < MAZE_SIZE; col++) {
+                    let x = col * mazeCellSize;
+                    let y = row * mazeCellSize;
+                    
+                    if(mazeWalls[row] && mazeWalls[row][col] === true) {
+                        mazeCtx.fillStyle = "#5d3a1a";
+                        mazeCtx.fillRect(x, y, mazeCellSize, mazeCellSize);
+                        mazeCtx.fillStyle = "#8b5a2b";
+                        mazeCtx.fillRect(x+2, y+2, mazeCellSize-4, mazeCellSize-4);
+                    } else {
+                        let grad = mazeCtx.createLinearGradient(x, y, x+mazeCellSize, y+mazeCellSize);
+                        grad.addColorStop(0, "#ebd5b3");
+                        grad.addColorStop(1, "#ddc494");
+                        mazeCtx.fillStyle = grad;
+                        mazeCtx.fillRect(x, y, mazeCellSize, mazeCellSize);
+                    }
+                }
+            }
+            
+            mazeCtx.font = `${Math.floor(mazeCellSize * 0.6)}px "Segoe UI"`;
+            mazeCtx.fillStyle = "#ffb347";
+            mazeCtx.shadowBlur = 2;
+            mazeCtx.fillText("⭐", mazeStartPos.x * mazeCellSize + mazeCellSize*0.25, 
+                        mazeStartPos.y * mazeCellSize + mazeCellSize*0.75);
+            
+            mazeCtx.fillStyle = "#e34234";
+            mazeCtx.fillText("🏁", mazeGoalPos.x * mazeCellSize + mazeCellSize*0.25, 
+                        mazeGoalPos.y * mazeCellSize + mazeCellSize*0.75);
+            
+            let px = mazePlayerPos.x * mazeCellSize;
+            let py = mazePlayerPos.y * mazeCellSize;
+            mazeCtx.beginPath();
+            mazeCtx.arc(px + mazeCellSize/2, py + mazeCellSize/2, mazeCellSize*0.3, 0, Math.PI*2);
+            mazeCtx.fillStyle = "#4d9eff";
+            mazeCtx.fill();
+            mazeCtx.beginPath();
+            mazeCtx.arc(px + mazeCellSize/2, py + mazeCellSize/2, mazeCellSize*0.2, 0, Math.PI*2);
+            mazeCtx.fillStyle = "white";
+            mazeCtx.fill();
+            mazeCtx.shadowBlur = 0;
+        }
+        
+        function mazeMove(dx, dy) {
+            if(!mazeGameActive) return;
+            
+            const newX = mazePlayerPos.x + dx;
+            const newY = mazePlayerPos.y + dy;
+            
+            if(newX < 0 || newX >= MAZE_SIZE || newY < 0 || newY >= MAZE_SIZE) return;
+            if(mazeWalls[newY][newX] === true) return;
+            
+            mazePlayerPos.x = newX;
+            mazePlayerPos.y = newY;
+            drawMazeGame();
+            
+            if(mazePlayerPos.x === mazeGoalPos.x && mazePlayerPos.y === mazeGoalPos.y) {
+                mazeGameActive = false;
+                document.getElementById('mazeStatus').innerHTML = "🎉 PARABÉNS! Acesso liberado! 🎉";
+                setTimeout(() => {
+                    hideCaptcha();
+                    mazeGameActive = true;
+                }, 1500);
+            }
+        }
+        
+        function initMazeGame() {
+            const canvas = document.getElementById('mazeCanvas');
+            const container = canvas.parentElement;
+            const size = Math.min(container.clientWidth - 40, 500);
+            canvas.width = size;
+            canvas.height = size;
+            mazeCellSize = size / MAZE_SIZE;
+            
+            mazeCanvas = canvas;
+            mazeCtx = canvas.getContext('2d');
+            
+            const mazeData = generateMaze();
+            mazeWalls = mazeData.walls;
+            mazePlayerPos = { x: mazeData.start.x, y: mazeData.start.y };
+            mazeGoalPos = { x: mazeData.goal.x, y: mazeData.goal.y };
+            mazeStartPos = { x: mazeData.start.x, y: mazeData.start.y };
+            mazeGameActive = true;
+            
+            drawMazeGame();
+        }
+        
+        // ==================== FUNÇÕES DA BUSCA ====================
         let currentUser = null;
         let allPages = [];
         let searchTimeout = null;
@@ -832,10 +1191,8 @@
 
         async function loadAllPages() {
             try {
-                console.log('📚 Carregando páginas do Firebase (leitura pública permitida)...');
-                
+                console.log('📚 Carregando páginas do Firebase...');
                 const querySnapshot = await db.collection('paginasUsuario').get();
-                
                 allPages = [];
                 
                 querySnapshot.forEach(doc => {
@@ -860,44 +1217,28 @@
                 
                 const urlMap = new Map();
                 allPages = allPages.filter(page => {
-                    if (urlMap.has(page.url)) {
-                        return false;
-                    }
+                    if (urlMap.has(page.url)) return false;
                     urlMap.set(page.url, true);
                     return true;
                 });
                 
                 pageCountSpan.textContent = allPages.length;
-                console.log(`✅ ${allPages.length} páginas carregadas com sucesso! (acesso público)`);
+                console.log(`✅ ${allPages.length} páginas carregadas`);
                 return allPages;
-                
             } catch (error) {
                 console.error('❌ Erro ao carregar páginas:', error);
-                if (error.code === 'permission-denied') {
-                    console.warn('⚠️ Permissão negada. Verifique as regras do Firestore.');
-                }
                 return [];
             }
         }
 
         function searchPages(query) {
-            if (!query || query.trim() === '') {
-                return [];
-            }
-            
+            if (!query || query.trim() === '') return [];
             const lowerQuery = query.toLowerCase();
-            
             return allPages.filter(page => {
                 return page.nome.toLowerCase().includes(lowerQuery) ||
                        page.descricao.toLowerCase().includes(lowerQuery) ||
                        page.categoria.toLowerCase().includes(lowerQuery) ||
                        page.url.toLowerCase().includes(lowerQuery);
-            }).sort((a, b) => {
-                const aStarts = a.nome.toLowerCase().startsWith(lowerQuery);
-                const bStarts = b.nome.toLowerCase().startsWith(lowerQuery);
-                if (aStarts && !bStarts) return -1;
-                if (!aStarts && bStarts) return 1;
-                return 0;
             });
         }
 
@@ -908,7 +1249,6 @@
             }
             
             const results = searchPages(query).slice(0, 5);
-            
             if (results.length === 0) {
                 suggestionsDiv.classList.remove('show');
                 return;
@@ -924,7 +1264,6 @@
                     <span class="suggestion-category">${page.categoria}</span>
                 </div>
             `).join('');
-            
             suggestionsDiv.classList.add('show');
         }
 
@@ -941,8 +1280,14 @@
         }
 
         async function performSearch() {
-            const query = searchInput.value.trim();
+            if (isCaptchaActive) {
+                alert("Complete o labirinto de verificação primeiro!");
+                return;
+            }
             
+            if (!checkAbuse()) return;
+            
+            const query = searchInput.value.trim();
             if (!query) {
                 showAllPages();
                 return;
@@ -953,15 +1298,20 @@
         }
 
         async function showAllPages() {
-            const query = searchInput.value.trim();
-            if (query) {
-                searchInput.value = '';
+            if (isCaptchaActive) {
+                alert("Complete o labirinto de verificação primeiro!");
+                return;
             }
+            
+            if (!checkAbuse()) return;
+            
+            const query = searchInput.value.trim();
+            if (query) searchInput.value = '';
             displayResults(allPages, 'Todos os resultados');
         }
 
         function displayResults(results, searchTerm) {
-            resultsCount.textContent = `📄 ${results.length} resultado${results.length !== 1 ? 's' : ''} para "${searchTerm}"`;
+            resultsCount.textContent = `📄 ${results.length} resultado${results.length !== 1 ? 's' : ''} para "${searchTerm || 'todos'}"`;
             
             if (results.length === 0) {
                 resultsGrid.innerHTML = `
@@ -973,7 +1323,7 @@
                 `;
             } else {
                 resultsGrid.innerHTML = results.map(page => `
-                    <div class="result-card" onclick="openLink('${page.url}')">
+                    <div class="result-card" onclick="window.open('${page.url}', '_blank')">
                         <div class="card-icon">
                             <i class="material-icons">${page.icone}</i>
                         </div>
@@ -1006,26 +1356,17 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function openLink(url) {
-            window.open(url, '_blank');
-        }
-
         function generateId() {
             return 'page_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
         }
 
-        // Função para login com Google
+        // ==================== FUNÇÕES DE AUTENTICAÇÃO ====================
         async function loginWithGoogle() {
             try {
                 const provider = new firebase.auth.GoogleAuthProvider();
-                provider.addScope('email');
-                provider.addScope('profile');
-                provider.setCustomParameters({ prompt: 'select_account' });
-                
                 const result = await auth.signInWithPopup(provider);
                 currentUser = result.user;
                 
-                // Criar/atualizar documento do usuário no Firestore
                 const userRef = db.collection('users').doc(currentUser.uid);
                 const userDoc = await userRef.get();
                 
@@ -1043,16 +1384,10 @@
                 
                 updateUserUI();
                 closeLoginModal();
-                console.log('✅ Login com Google realizado com sucesso!');
+                console.log('✅ Login com Google realizado!');
             } catch (error) {
-                console.error('❌ Erro no login com Google:', error);
-                if (error.code === 'auth/popup-blocked') {
-                    alert('Popup bloqueado. Permita popups para este site.');
-                } else if (error.code === 'auth/popup-closed-by-user') {
-                    console.log('Login cancelado pelo usuário');
-                } else {
-                    alert('Erro ao fazer login com Google: ' + error.message);
-                }
+                console.error('❌ Erro no login:', error);
+                alert('Erro ao fazer login: ' + error.message);
             }
         }
 
@@ -1100,7 +1435,7 @@
                 currentUser = userCredential.user;
                 updateUserUI();
                 closeLoginModal();
-                console.log('✅ Login realizado com sucesso!');
+                console.log('✅ Login realizado!');
             } catch (error) {
                 console.error('❌ Erro no login:', error);
                 alert('Erro ao fazer login: ' + error.message);
@@ -1112,7 +1447,7 @@
                 await auth.signOut();
                 currentUser = null;
                 updateUserUI();
-                console.log('✅ Logout realizado com sucesso!');
+                console.log('✅ Logout realizado!');
             } catch (error) {
                 console.error('❌ Erro no logout:', error);
             }
@@ -1121,13 +1456,11 @@
         function showRegister() {
             const email = prompt('Digite seu e-mail:');
             if (!email) return;
-            
             const password = prompt('Digite sua senha (mínimo 6 caracteres):');
             if (!password || password.length < 6) {
                 alert('A senha deve ter pelo menos 6 caracteres');
                 return;
             }
-            
             registerUser(email, password);
         }
 
@@ -1135,7 +1468,6 @@
             try {
                 const userCredential = await auth.createUserWithEmailAndPassword(email, password);
                 currentUser = userCredential.user;
-                
                 await db.collection('users').doc(currentUser.uid).set({
                     email: currentUser.email,
                     displayName: currentUser.email.split('@')[0],
@@ -1144,10 +1476,8 @@
                     isTeatcher: false,
                     isBanned: false
                 });
-                
                 updateUserUI();
                 closeLoginModal();
-                console.log('✅ Conta criada com sucesso!');
                 alert('Conta criada com sucesso!');
             } catch (error) {
                 console.error('❌ Erro ao criar conta:', error);
@@ -1155,19 +1485,12 @@
             }
         }
 
+        // ==================== EVENT LISTENERS ====================
         searchInput.addEventListener('input', (e) => {
             const query = e.target.value;
-            
-            if (query) {
-                clearBtn.style.display = 'flex';
-            } else {
-                clearBtn.style.display = 'none';
-            }
-            
+            clearBtn.style.display = query ? 'flex' : 'none';
             if (searchTimeout) clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(() => {
-                showSuggestions(query);
-            }, 300);
+            searchTimeout = setTimeout(() => showSuggestions(query), 300);
         });
 
         clearBtn.addEventListener('click', () => {
@@ -1197,11 +1520,24 @@
         });
 
         loginModal.addEventListener('click', (e) => {
-            if (e.target === loginModal) {
-                closeLoginModal();
-            }
+            if (e.target === loginModal) closeLoginModal();
         });
 
+        document.addEventListener('keydown', (e) => {
+            if (!isCaptchaActive) return;
+            
+            let dx = 0, dy = 0;
+            if (e.key === 'ArrowUp' || e.key === 'w') dy = -1;
+            else if (e.key === 'ArrowDown' || e.key === 's') dy = 1;
+            else if (e.key === 'ArrowLeft' || e.key === 'a') dx = -1;
+            else if (e.key === 'ArrowRight' || e.key === 'd') dx = 1;
+            else return;
+            
+            e.preventDefault();
+            mazeMove(dx, dy);
+        });
+
+        // ==================== INICIALIZAÇÃO ====================
         async function init() {
             await loadAllPages();
             
@@ -1209,15 +1545,12 @@
                 currentUser = user;
                 updateUserUI();
             });
+            
+            console.log('🚀 WazzimaGiygg Search inicializado com proteção Anti-Abuse!');
+            console.log('📝 Proteção: ' + MAX_ACCESS_IN_WINDOW + ' acessos a cada ' + TIME_WINDOW_MS/1000 + ' segundos');
         }
         
         init();
-        
-        console.log('🚀 WazzimaGiygg Search inicializado! (Busca pública liberada)');
-        console.log('📝 Regra do Firestore: allow read: if true - Qualquer um pode buscar');
     </script>
-
-        <!-- Iframe do verificador/logs (mantido como você tinha) -->
-<script src="https://gspotfverwazzimagiygg.wazzimagiygg.com/D6FefD0De/EfdFeF1ExcE0C/De0Var6H6f/QXdv0/dddcefb.js"></script>
 </body>
 </html>
