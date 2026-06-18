@@ -739,78 +739,6 @@
             font-size: 14px;
         }
 
-        /* BANNED OVERLAY */
-        .banned-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.95);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            flex-direction: column;
-            padding: 20px;
-        }
-
-        .banned-overlay.show {
-            display: flex;
-        }
-
-        .banned-box {
-            background: #1a1a1a;
-            border: 2px solid #e94560;
-            border-radius: 16px;
-            padding: 50px;
-            max-width: 500px;
-            width: 100%;
-            text-align: center;
-            color: white;
-        }
-
-        .banned-box .icon {
-            font-size: 80px;
-            margin-bottom: 20px;
-        }
-
-        .banned-box h2 {
-            color: #e94560;
-            margin-bottom: 15px;
-        }
-
-        .banned-box p {
-            color: #aaa;
-            margin-bottom: 20px;
-            line-height: 1.6;
-        }
-
-        .banned-box .btn-logout-banned {
-            background: #e94560;
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 30px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: 600;
-            transition: background 0.3s;
-        }
-
-        .banned-box .btn-logout-banned:hover {
-            background: #c0392b;
-        }
-
-        .banned-box .ban-details {
-            background: #2a2a2a;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 15px 0;
-            font-size: 13px;
-            color: #888;
-        }
-
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -861,21 +789,6 @@
     </style>
 </head>
 <body>
-
-    <!-- BANNED OVERLAY -->
-    <div id="bannedOverlay" class="banned-overlay">
-        <div class="banned-box">
-            <div class="icon">🚫</div>
-            <h2>⚠️ Conta Banida</h2>
-            <p>Sua conta foi banida permanentemente do sistema WazzimaGiygg.</p>
-            <div id="banDetails" class="ban-details">
-                Motivo: Violação das políticas de uso
-            </div>
-            <p style="font-size: 14px; color: #666;">Se você acredita que isso é um erro, entre em contato com o suporte.</p>
-            <button class="btn-logout-banned" onclick="logoutBanned()">🚪 Sair da conta</button>
-        </div>
-    </div>
-
     <div class="container">
         <div class="header">
             <div class="logo" onclick="resetSearch()">
@@ -965,7 +878,7 @@
                 <button class="modal-close" onclick="closeLoginModal()">&times;</button>
             </div>
             
-            <button class="google-login-btn" id="google-login-btn" onclick="redirectToLogin()">
+            <button class="google-login-btn" id="google-login-btn" onclick="loginWithGoogle()">
                 <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
                 Continuar com Google
             </button>
@@ -1030,271 +943,12 @@
             db = firebase.firestore();
         }
 
-        // ==================== SISTEMA DE REDIRECIONAMENTO UNIFICADO ====================
-
-        // URL do login unificado
-        const LOGIN_URL = 'https://painel.wazzimagiygg.com/login.html';
-
-        // Obtém a URL atual para usar como parâmetro uid
-        function getCurrentPageUrl() {
-            return window.location.href;
-        }
-
-        // Redireciona para o login com o parâmetro uid
-        function redirectToLogin() {
-            const currentUrl = getCurrentPageUrl();
-            const loginWithReturn = `${LOGIN_URL}?uid=${encodeURIComponent(currentUrl)}`;
-            console.log('🔄 Redirecionando para login unificado:', loginWithReturn);
-            window.location.href = loginWithReturn;
-        }
-
-        // ==================== SISTEMA DE AUTENTICAÇÃO ENTRE DOMÍNIOS ====================
-
-        // Verifica se há um token de autenticação na URL (retorno do login)
-        function checkAuthToken() {
-            const params = new URLSearchParams(window.location.search);
-            const token = params.get('auth_token');
-            const userData = params.get('user_data');
-            
-            if (token && userData) {
-                try {
-                    const user = JSON.parse(decodeURIComponent(userData));
-                    console.log('🔑 Token de autenticação recebido:', user);
-                    
-                    localStorage.setItem('search_auth_user', JSON.stringify(user));
-                    localStorage.setItem('search_auth_token', token);
-                    localStorage.setItem('search_auth_expiry', (Date.now() + 3600000).toString());
-                    
-                    const newUrl = window.location.pathname + window.location.hash;
-                    window.history.replaceState({}, document.title, newUrl);
-                    
-                    applyUserSession(user);
-                    return true;
-                } catch (e) {
-                    console.error('Erro ao processar token:', e);
-                }
-            }
-            return false;
-        }
-
-        // Verifica se há uma sessão salva no localStorage
-        function checkStoredSession() {
-            try {
-                const token = localStorage.getItem('search_auth_token');
-                const userData = localStorage.getItem('search_auth_user');
-                const expiry = localStorage.getItem('search_auth_expiry');
-                
-                if (token && userData && expiry && Date.now() < parseInt(expiry)) {
-                    const user = JSON.parse(userData);
-                    console.log('📂 Sessão restaurada do localStorage:', user);
-                    applyUserSession(user);
-                    return true;
-                }
-            } catch (e) {
-                console.error('Erro ao restaurar sessão:', e);
-            }
-            return false;
-        }
-
-        // ==================== FUNÇÃO PARA APLICAR SESSÃO DO USUÁRIO ====================
-
-        async function applyUserSession(user) {
-            if (!user || !user.uid) {
-                console.log('❌ Usuário inválido');
-                return;
-            }
-            
-            console.log('🔄 Aplicando sessão do usuário:', user.displayName);
-            
-            currentUser = {
-                uid: user.uid,
-                displayName: user.displayName || 'Usuário',
-                email: user.email || '',
-                photoURL: user.photoURL || '',
-                isGuest: user.isGuest || false
-            };
-            
-            try {
-                const isBanned = await checkIfUserIsBanned(currentUser);
-                
-                if (isBanned) {
-                    console.log('🚫 Usuário está banido!');
-                    currentUserIsBanned = true;
-                    showBannedScreen('Sua conta foi banida por violação das políticas de uso.');
-                    return;
-                }
-                
-                currentUserIsBanned = false;
-                console.log('✅ Usuário não está banido');
-                
-                // Atualiza a UI
-                updateUserUI();
-                
-                // Salva no localStorage para persistência
-                const userData = {
-                    uid: user.uid,
-                    displayName: user.displayName,
-                    email: user.email,
-                    photoURL: user.photoURL,
-                    isGuest: false
-                };
-                localStorage.setItem('search_auth_user', JSON.stringify(userData));
-                localStorage.setItem('search_auth_token', 'token_' + Date.now());
-                localStorage.setItem('search_auth_expiry', (Date.now() + 3600000).toString());
-                
-            } catch (error) {
-                console.error('❌ Erro ao aplicar sessão:', error);
-                // Mesmo com erro, tenta mostrar o usuário
-                updateUserUI();
-            }
-        }
-
-        // ==================== FUNÇÃO PARA VERIFICAR BANIMENTO ====================
-
-        async function checkIfUserIsBanned(user) {
-            if (!user) return false;
-            
-            try {
-                const userDoc = await db.collection('users').doc(user.uid).get();
-                if (userDoc.exists) {
-                    return userDoc.data().isBanned === true || userDoc.data().isBan === true;
-                }
-            } catch (error) {
-                console.log("Erro ao verificar banimento:", error);
-            }
-            
-            return false;
-        }
-
-        // ==================== FUNÇÃO PARA USUÁRIO BANIDO ====================
-
-        function showBannedScreen(reason = 'Violação das políticas de uso') {
-            const overlay = document.getElementById('bannedOverlay');
-            const details = document.getElementById('banDetails');
-            details.textContent = `Motivo: ${reason}`;
-            overlay.classList.add('show');
-            
-            document.querySelector('.container').style.opacity = '0.3';
-            document.querySelector('.container').style.pointerEvents = 'none';
-        }
-
-        function logoutBanned() {
-            localStorage.removeItem('search_auth_user');
-            localStorage.removeItem('search_auth_token');
-            localStorage.removeItem('search_auth_expiry');
-            auth.signOut().then(() => {
-                location.reload();
-            });
-        }
-
-        // ==================== FUNÇÃO PARA CARREGAR USUÁRIO DO FIREBASE ====================
-
-        async function loadFirebaseUser(user) {
-            if (!user) {
-                console.log('❌ Usuário não logado no Firebase');
-                currentUser = null;
-                currentUserIsBanned = false;
-                updateUserUI();
-                
-                document.getElementById('bannedOverlay').classList.remove('show');
-                document.querySelector('.container').style.opacity = '1';
-                document.querySelector('.container').style.pointerEvents = 'auto';
-                return;
-            }
-            
-            try {
-                console.log('🔄 Carregando usuário do Firebase:', user.uid);
-                
-                currentUser = {
-                    uid: user.uid,
-                    displayName: user.displayName || 'Usuário',
-                    email: user.email || '',
-                    photoURL: user.photoURL || '',
-                    isGuest: false
-                };
-                
-                // Registra/atualiza o usuário no Firestore
-                await registerUser(user);
-                
-                // VERIFICA BANIMENTO
-                const isBanned = await checkIfUserIsBanned(user);
-                
-                if (isBanned) {
-                    console.log('🚫 Usuário banido!');
-                    currentUserIsBanned = true;
-                    showBannedScreen('Sua conta foi banida por violação das políticas de uso.');
-                    return;
-                }
-                
-                currentUserIsBanned = false;
-                
-                // Salva no localStorage para futuras sessões
-                const userData = {
-                    uid: user.uid,
-                    displayName: user.displayName,
-                    email: user.email,
-                    photoURL: user.photoURL,
-                    isGuest: false
-                };
-                localStorage.setItem('search_auth_user', JSON.stringify(userData));
-                localStorage.setItem('search_auth_token', 'firebase_' + Date.now());
-                localStorage.setItem('search_auth_expiry', (Date.now() + 3600000).toString());
-                
-                updateUserUI();
-                
-            } catch (error) {
-                console.error('❌ Erro ao carregar usuário Firebase:', error);
-                currentUser = null;
-                currentUserIsBanned = false;
-                updateUserUI();
-            }
-        }
-
-        // ==================== FUNÇÃO PARA REGISTRAR USUÁRIO ====================
-
-        async function registerUser(user) {
-            try {
-                const uid = user.uid;
-                
-                const userDoc = await db.collection('users').doc(uid).get();
-                const existingData = userDoc.exists ? userDoc.data() : {};
-                
-                const userData = {
-                    uid: uid,
-                    email: user.email || '',
-                    name: user.displayName || 'Usuário',
-                    profilePictureUrl: user.photoURL || '',
-                    isAdmin: existingData.isAdmin || false,
-                    isBan: existingData.isBan || false,
-                    isBanned: existingData.isBanned || false,
-                    isTeacher: existingData.isTeacher || false,
-                    isTeatcher: existingData.isTeatcher || false,
-                    createdAt: existingData.createdAt || firebase.firestore.FieldValue.serverTimestamp(),
-                    updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-                    lastLoginAt: firebase.firestore.FieldValue.serverTimestamp()
-                };
-
-                await db.collection('users').doc(uid).set(userData, { merge: true });
-                await db.collection('usuários').doc(uid).set(userData, { merge: true });
-
-                console.log(`Usuário ${uid} registrado/atualizado. isBanned: ${userData.isBanned}`);
-                return userData;
-            } catch (error) {
-                console.error('Erro ao registrar usuário:', error);
-                return null;
-            }
-        }
-
         // ==================== SISTEMA ANTI-ABUSO ====================
         let accessCount = 0;
         let lastAccessTime = Date.now();
         let isCaptchaActive = false;
         let captchaSolved = false;
-        let currentUser = null;
-        let currentUserIsBanned = false;
-        let allPages = [];
-        let searchTimeout = null;
-
+        
         const MAX_ACCESS_IN_WINDOW = 5;
         const TIME_WINDOW_MS = 60000;
         
@@ -1519,8 +1173,12 @@
             
             drawMazeGame();
         }
-
+        
         // ==================== FUNÇÕES DA BUSCA ====================
+        let currentUser = null;
+        let allPages = [];
+        let searchTimeout = null;
+
         const searchInput = document.getElementById('search-input');
         const clearBtn = document.getElementById('clear-search');
         const suggestionsDiv = document.getElementById('suggestions');
@@ -1703,12 +1361,38 @@
         }
 
         // ==================== FUNÇÕES DE AUTENTICAÇÃO ====================
+        async function loginWithGoogle() {
+            try {
+                const provider = new firebase.auth.GoogleAuthProvider();
+                const result = await auth.signInWithPopup(provider);
+                currentUser = result.user;
+                
+                const userRef = db.collection('users').doc(currentUser.uid);
+                const userDoc = await userRef.get();
+                
+                if (!userDoc.exists) {
+                    await userRef.set({
+                        email: currentUser.email,
+                        displayName: currentUser.displayName || currentUser.email.split('@')[0],
+                        photoURL: currentUser.photoURL || null,
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                        isAdmin: false,
+                        isTeatcher: false,
+                        isBanned: false
+                    });
+                }
+                
+                updateUserUI();
+                closeLoginModal();
+                console.log('✅ Login com Google realizado!');
+            } catch (error) {
+                console.error('❌ Erro no login:', error);
+                alert('Erro ao fazer login: ' + error.message);
+            }
+        }
 
         function updateUserUI() {
-            const userArea = document.getElementById('user-area');
-            const guestBadge = document.getElementById('guest-badge');
-            
-            if (currentUser && !currentUserIsBanned) {
+            if (currentUser) {
                 const displayName = currentUser.displayName || currentUser.email.split('@')[0];
                 const photoURL = currentUser.photoURL;
                 
@@ -1725,23 +1409,15 @@
                         Sair
                     </button>
                 `;
-                guestBadge.innerHTML = `<i class="material-icons" style="font-size: 14px;">person</i> Olá, ${escapeHtml(displayName)}`;
-            } else if (currentUser && currentUserIsBanned) {
-                userArea.innerHTML = `
-                    <button class="login-btn" onclick="redirectToLogin()">
-                        <i class="material-icons" style="font-size: 18px;">person</i>
-                        Entrar
-                    </button>
-                `;
-                guestBadge.innerHTML = `<i class="material-icons" style="font-size: 14px;">lock</i> Conta banida - Acesso restrito`;
+                document.getElementById('guest-badge').innerHTML = `<i class="material-icons" style="font-size: 14px;">person</i> Olá, ${escapeHtml(displayName)}`;
             } else {
                 userArea.innerHTML = `
-                    <button class="login-btn" onclick="redirectToLogin()">
+                    <button class="login-btn" onclick="showLoginModal()">
                         <i class="material-icons" style="font-size: 18px;">person</i>
                         Entrar
                     </button>
                 `;
-                guestBadge.innerHTML = `<i class="material-icons" style="font-size: 14px;">public</i> Modo Convidado - Busca liberada`;
+                document.getElementById('guest-badge').innerHTML = `<i class="material-icons" style="font-size: 14px;">public</i> Modo Convidado - Busca liberada`;
             }
         }
 
@@ -1768,18 +1444,10 @@
 
         async function logout() {
             try {
-                localStorage.removeItem('search_auth_user');
-                localStorage.removeItem('search_auth_token');
-                localStorage.removeItem('search_auth_expiry');
                 await auth.signOut();
                 currentUser = null;
-                currentUserIsBanned = false;
                 updateUserUI();
                 console.log('✅ Logout realizado!');
-                
-                document.getElementById('bannedOverlay').classList.remove('show');
-                document.querySelector('.container').style.opacity = '1';
-                document.querySelector('.container').style.pointerEvents = 'auto';
             } catch (error) {
                 console.error('❌ Erro no logout:', error);
             }
@@ -1796,7 +1464,7 @@
             registerUser(email, password);
         }
 
-        async function registerUserEmail(email, password) {
+        async function registerUser(email, password) {
             try {
                 const userCredential = await auth.createUserWithEmailAndPassword(email, password);
                 currentUser = userCredential.user;
@@ -1870,42 +1538,15 @@
         });
 
         // ==================== INICIALIZAÇÃO ====================
-
-        // PASSO 1: Verifica token na URL (retorno do login)
-        const hasToken = checkAuthToken();
-
-        // PASSO 2: Se não tem token, verifica sessão no localStorage
-        if (!hasToken) {
-            const hasSession = checkStoredSession();
-            
-            // PASSO 3: Se não tem sessão, verifica Firebase Auth
-            if (!hasSession) {
-                auth.onAuthStateChanged(async (user) => {
-                    await loadFirebaseUser(user);
-                });
-            }
-        } else {
-            // Se já tem token, registra listener para manter sincronizado
-            auth.onAuthStateChanged(async (user) => {
-                if (user) {
-                    if (!currentUser || currentUser.uid !== user.uid) {
-                        await loadFirebaseUser(user);
-                    }
-                }
-            });
-        }
-
         async function init() {
             await loadAllPages();
             
-            // Se não tiver token e não tiver sessão, já carrega o listener
-            if (!hasToken && !localStorage.getItem('search_auth_token')) {
-                auth.onAuthStateChanged(async (user) => {
-                    await loadFirebaseUser(user);
-                });
-            }
+            auth.onAuthStateChanged((user) => {
+                currentUser = user;
+                updateUserUI();
+            });
             
-            console.log('🚀 WazzimaGiygg Search inicializado com proteção Anti-Abuse e Login Unificado!');
+            console.log('🚀 WazzimaGiygg Search inicializado com proteção Anti-Abuse!');
             console.log('📝 Proteção: ' + MAX_ACCESS_IN_WINDOW + ' acessos a cada ' + TIME_WINDOW_MS/1000 + ' segundos');
         }
         
