@@ -31,97 +31,230 @@
             flex-direction: column;
         }
 
+        /* ===== NOVO HEADER PADRONIZADO ===== */
         .header {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+            position: sticky;
+            top: 10px;
+            z-index: 100;
+        }
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.2);
-            margin-bottom: 40px;
             flex-wrap: wrap;
-            gap: 16px;
+            gap: 12px;
         }
-
-        .logo {
+        .logo-area-header {
             display: flex;
             align-items: center;
             gap: 12px;
-            font-size: 24px;
-            font-weight: 700;
-            color: white;
-            text-decoration: none;
             cursor: pointer;
         }
-
-        .logo i {
-            font-size: 32px;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        .logo-area-header img {
+            height: 36px;
+            border-radius: 8px;
         }
-
-        .logo span {
-            background: linear-gradient(135deg, #fff, #e0e0e0);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        .logo-area-header h1 {
+            font-size: 1.1em;
+            font-weight: 600;
         }
-
-        .user-area {
+        .logo-area-header small {
+            font-size: 0.65em;
+            opacity: 0.7;
+            display: block;
+            font-weight: 300;
+        }
+        .user-info-header {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 16px;
         }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            background: rgba(255,255,255,0.1);
-            padding: 8px 16px;
-            border-radius: 50px;
-            backdrop-filter: blur(10px);
-        }
-
-        .user-avatar-img {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
         .user-avatar {
-            width: 32px;
-            height: 32px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
-            background: rgba(255,255,255,0.2);
+            background: linear-gradient(135deg, #e94560, #ff6b6b);
             display: flex;
             align-items: center;
             justify-content: center;
-        }
-
-        .user-name {
+            font-weight: 700;
+            font-size: 1em;
             color: white;
-            font-weight: 500;
-            font-size: 14px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            overflow: hidden;
+        }
+        .user-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .user-avatar:hover { transform: scale(1.05); }
+        .user-name { font-weight: 500; font-size: 0.85em; }
+        .user-email { font-size: 0.7em; opacity: 0.7; }
+        .btn-logout {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.75em;
+            transition: all 0.2s;
+        }
+        .btn-logout:hover { background: rgba(255,255,255,0.2); }
+        .btn-login {
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.25);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.75em;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-login:hover { background: rgba(255,255,255,0.25); }
+        .badge-admin {
+            background: #e94560;
+            color: white;
+            font-size: 0.55em;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .badge-banned {
+            background: #dc3545;
+            color: white;
+            font-size: 0.55em;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
         }
 
-        .login-btn {
-            background: white;
-            color: #667eea;
-            border: none;
-            padding: 10px 24px;
-            border-radius: 50px;
-            font-weight: 600;
+        /* NOTIFICATION BELL */
+        .notification-bell {
+            position: relative;
             cursor: pointer;
-            transition: all 0.3s ease;
+            color: white;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 4px;
+            padding: 4px 10px;
+            border-radius: 30px;
+            transition: background 0.2s;
+        }
+        .notification-bell:hover {
+            background: rgba(255,255,255,0.1);
+        }
+        .notification-bell .material-icons {
+            font-size: 20px;
+        }
+        .notification-badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background: #e94560;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 9px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #1a1a2e;
         }
 
-        .login-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        .notification-dropdown {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            width: 340px;
+            max-height: 350px;
+            overflow-y: auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+            display: none;
+            z-index: 200;
         }
+        .notification-dropdown.show {
+            display: block;
+        }
+        .notification-dropdown-header {
+            padding: 12px 16px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .notification-dropdown-header h3 {
+            font-size: 13px;
+            font-weight: 600;
+            color: #1a1a2e;
+        }
+        .notification-dropdown-header button {
+            background: none;
+            border: none;
+            color: #4a6cf7;
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: 500;
+        }
+        .notification-item {
+            padding: 10px 16px;
+            border-bottom: 1px solid #f0f0f0;
+            transition: background 0.2s;
+            cursor: pointer;
+        }
+        .notification-item:hover {
+            background: #f8f9fa;
+        }
+        .notification-item.unread {
+            background: #eef2ff;
+            border-left: 3px solid #4a6cf7;
+        }
+        .notification-item .notif-title {
+            font-weight: 600;
+            font-size: 12px;
+            color: #1a1a2e;
+        }
+        .notification-item .notif-message {
+            font-size: 11px;
+            color: #666;
+            margin-top: 3px;
+        }
+        .notification-item .notif-time {
+            font-size: 10px;
+            color: #999;
+            margin-top: 3px;
+        }
+        .notification-empty {
+            padding: 20px;
+            text-align: center;
+            color: #999;
+            font-size: 13px;
+        }
+        .notification-empty .material-icons {
+            font-size: 36px;
+            opacity: 0.4;
+        }
+
+        /* ===== FIM HEADER ===== */
 
         .search-container {
             flex: 1;
@@ -739,6 +872,68 @@
             font-size: 14px;
         }
 
+        /* FOOTER PADRONIZADO */
+        .site-footer {
+            background: linear-gradient(135deg, #0a0a0a 0%, #141414 100%);
+            border-top: 1px solid #2a2a2a;
+            margin-top: 40px;
+            padding: 25px 20px 20px;
+            border-radius: 16px 16px 0 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 8px 12px;
+            margin-bottom: 15px;
+        }
+
+        .footer-link {
+            color: #aaa !important;
+            text-decoration: none;
+            font-size: 12px;
+            transition: all 0.3s ease;
+            padding: 4px 0;
+            display: inline-block;
+        }
+
+        .footer-link:hover {
+            color: #667eea !important;
+            transform: translateY(-1px);
+        }
+
+        .footer-link.highlight {
+            color: #ffb347 !important;
+        }
+
+        .footer-link.highlight:hover {
+            color: #ff9500 !important;
+            text-shadow: 0 0 8px rgba(255, 180, 71, 0.3);
+        }
+
+        .footer-divider {
+            color: #444;
+            font-size: 11px;
+            margin: 0 2px;
+        }
+
+        .footer-copyright {
+            color: #666;
+            font-size: 11px;
+            padding-top: 12px;
+            border-top: 1px solid #222;
+            margin-top: 8px;
+        }
+
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -768,11 +963,6 @@
                 grid-template-columns: 1fr;
             }
             
-            .header {
-                flex-direction: column;
-                text-align: center;
-            }
-            
             .search-input-wrapper {
                 padding: 4px 8px 4px 16px;
             }
@@ -785,772 +975,1225 @@
                 width: 80px;
                 height: 80px;
             }
+
+            .header-content {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+            }
+            .user-info-header {
+                justify-content: space-between;
+            }
+            .notification-dropdown {
+                width: 300px;
+                right: -20px;
+            }
+            .footer-links {
+                gap: 6px 8px;
+            }
+            .footer-link {
+                font-size: 10px;
+            }
+            .footer-divider {
+                font-size: 9px;
+            }
+            .footer-copyright {
+                font-size: 9px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .user-name, .user-email { display: none; }
+            .notification-dropdown {
+                width: calc(100vw - 40px);
+                right: -10px;
+            }
+        }
+
+        /* BANNED OVERLAY */
+        .banned-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            flex-direction: column;
+            padding: 20px;
+        }
+        .banned-overlay.show { display: flex; }
+        .banned-box {
+            background: #1a1a1a;
+            border: 2px solid #e94560;
+            border-radius: 16px;
+            padding: 50px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            color: white;
+        }
+        .banned-box .icon { font-size: 80px; margin-bottom: 20px; }
+        .banned-box h2 { color: #e94560; margin-bottom: 15px; }
+        .banned-box p { color: #aaa; margin-bottom: 20px; line-height: 1.6; }
+        .banned-box .btn-logout-banned {
+            background: #e94560;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        .banned-box .btn-logout-banned:hover { background: #c0392b; }
+        .banned-box .ban-details {
+            background: #2a2a2a;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-size: 13px;
+            color: #888;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <div class="logo" onclick="resetSearch()">
-                <i class="material-icons">search</i>
-                <span>WazzimaGiygg Search</span>
-            </div>
-            <div class="user-area" id="user-area">
-                <!-- Será preenchido dinamicamente -->
-            </div>
-        </div>
 
-        <div class="search-container">
-            <div class="center-logo">
-                <img src="https://gspotfverwazzimagiygg.wazzimagiygg.com/search/Favicom.png" alt="WazzimaGiygg Logo">
-            </div>
-
-            <div class="search-title">
-                <h1>WazzimaGiygg</h1>
-                <p>Busca inteligente para seus produtos e serviços</p>
-                <div class="guest-badge" id="guest-badge">
-                    <i class="material-icons" style="font-size: 14px;">public</i> Modo Convidado - Busca liberada
-                </div>
-            </div>
-
-            <div class="warning-banner" id="warningBanner">
-                <p>
-                    <i class="material-icons" style="font-size: 16px;">warning</i>
-                    ⚠️ Muitas tentativas de acesso! Por favor, complete o labirinto para continuar.
-                </p>
-            </div>
-
-            <div class="search-box">
-                <div class="search-input-wrapper">
-                    <i class="material-icons search-icon">search</i>
-                    <input type="text" 
-                           id="search-input" 
-                           class="search-input" 
-                           placeholder="Pesquise produtos, serviços, páginas..."
-                           autocomplete="off">
-                    <button class="search-clear" id="clear-search" style="display: none;">
-                        <i class="material-icons">close</i>
-                    </button>
-                    <div class="search-divider"></div>
-                    <button class="search-button" id="search-button">
-                        <i class="material-icons">search</i>
-                        Buscar
-                    </button>
-                </div>
-
-                <div class="suggestions" id="suggestions"></div>
-            </div>
-
-            <div class="search-buttons">
-                <button class="btn-search" onclick="performSearch()">
-                    <i class="material-icons">search</i>
-                    Pesquisar
-                </button>
-                <button class="btn-search" onclick="showAllPages()">
-                    <i class="material-icons">view_list</i>
-                    Ver todas as páginas
-                </button>
-            </div>
-
-            <div class="info-banner">
-                <p>
-                    <i class="material-icons" style="font-size: 16px;">info</i>
-                    Mais de <span id="page-count">0</span> páginas disponíveis para busca
-                </p>
-            </div>
-
-            <div class="results-container" id="results-container">
-                <div class="results-header">
-                    <div class="results-count" id="results-count"></div>
-                    <button class="results-close" onclick="hideResults()">
-                        <i class="material-icons">close</i>
-                    </button>
-                </div>
-                <div class="results-grid" id="results-grid"></div>
-            </div>
-        </div>
+<!-- BANNED OVERLAY -->
+<div id="bannedOverlay" class="banned-overlay">
+    <div class="banned-box">
+        <div class="icon">🚫</div>
+        <h2>⚠️ Conta Banida</h2>
+        <p>Sua conta foi banida permanentemente do sistema.</p>
+        <div id="banDetails" class="ban-details">Motivo: Violação das políticas de uso</div>
+        <button class="btn-logout-banned" onclick="logoutBanned()">🚪 Sair da conta</button>
     </div>
+</div>
 
-    <div class="modal" id="login-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Entrar na sua conta</h2>
-                <button class="modal-close" onclick="closeLoginModal()">&times;</button>
-            </div>
-            
-            <button class="google-login-btn" id="google-login-btn" onclick="loginWithGoogle()">
-                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
-                Continuar com Google
-            </button>
-            
-            <div class="modal-divider">
-                <span>ou</span>
-            </div>
-            
-            <form id="login-form-modal">
-                <input type="email" id="modal-email" class="modal-input" placeholder="E-mail" required>
-                <input type="password" id="modal-password" class="modal-input" placeholder="Senha" required>
-                <button type="submit" class="modal-btn">Entrar com e-mail</button>
-            </form>
-            <div style="text-align: center; margin-top: 16px;">
-                <a href="#" onclick="showRegister()" style="color: #667eea; text-decoration: none;">Criar nova conta</a>
-            </div>
-        </div>
-    </div>
-
-    <!-- Overlay do Labirinto CAPTCHA -->
-    <div class="captcha-overlay" id="captchaOverlay">
-        <div class="captcha-content">
-            <h2>🔐 Verificação de Segurança</h2>
-            <p>Para continuar usando a busca, complete o labirinto abaixo.</p>
-            <div class="maze-container">
-                <canvas id="mazeCanvas" width="500" height="500" class="maze-canvas"></canvas>
-                <div class="maze-controls">
-                    <button class="maze-btn" onclick="mazeMove(0, -1)">⬆️</button>
-                    <button class="maze-btn" onclick="mazeMove(0, 1)">⬇️</button>
-                    <button class="maze-btn" onclick="mazeMove(-1, 0)">⬅️</button>
-                    <button class="maze-btn" onclick="mazeMove(1, 0)">➡️</button>
+<div class="container">
+    <!-- ===== NOVO HEADER PADRONIZADO ===== -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-area-header" onclick="resetSearch()">
+                <img src="https://wazzimagiygg.com/favicom.png" alt="Logo">
+                <div>
+                    <h1>WazzimaGiygg</h1>
+                    <small>Search</small>
                 </div>
-                <div class="maze-status" id="mazeStatus">⭐ Leve o personagem até a bandeira 🏁</div>
             </div>
-        </div>
-    </div>
-
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
-
-    <script>
-        // ==================== CONFIGURAÇÃO DO FIREBASE ====================
-        const firebaseConfig = {
-            apiKey: "AIzaSyB9GkSqTIZ0kbVsba_WOdQeVAETrF9qna0",
-            authDomain: "wzzm-ce3fc.firebaseapp.com",
-            projectId: "wzzm-ce3fc",
-            storageBucket: "wzzm-ce3fc.appspot.com",
-            messagingSenderId: "249427877153",
-            appId: "1:249427877153:web:0e4297294794a5aadeb260",
-            measurementId: "G-PLKNZNFCQ8"
-        };
-
-        let app, auth, db;
-        try {
-            app = firebase.app();
-            auth = firebase.auth();
-            db = firebase.firestore();
-        } catch (e) {
-            app = firebase.initializeApp(firebaseConfig);
-            auth = firebase.auth();
-            db = firebase.firestore();
-        }
-
-        // ==================== SISTEMA ANTI-ABUSO ====================
-        let accessCount = 0;
-        let lastAccessTime = Date.now();
-        let isCaptchaActive = false;
-        let captchaSolved = false;
-        
-        const MAX_ACCESS_IN_WINDOW = 5;
-        const TIME_WINDOW_MS = 60000;
-        
-        function checkAbuse() {
-            if (captchaSolved) return true;
-            
-            const now = Date.now();
-            
-            if (now - lastAccessTime > TIME_WINDOW_MS) {
-                accessCount = 0;
-                lastAccessTime = now;
-            }
-            
-            accessCount++;
-            lastAccessTime = now;
-            
-            console.log(`📊 Acessos: ${accessCount}`);
-            
-            if (accessCount > MAX_ACCESS_IN_WINDOW && !isCaptchaActive) {
-                showCaptcha();
-                return false;
-            }
-            
-            return true;
-        }
-        
-        function showCaptcha() {
-            if (captchaSolved) return;
-            
-            isCaptchaActive = true;
-            document.getElementById('captchaOverlay').classList.add('show');
-            document.getElementById('warningBanner').classList.add('show');
-            initMazeGame();
-        }
-        
-        function hideCaptcha() {
-            document.getElementById('captchaOverlay').classList.remove('show');
-            isCaptchaActive = false;
-            captchaSolved = true;
-            
-            accessCount = 0;
-            lastAccessTime = Date.now();
-            
-            setTimeout(() => {
-                document.getElementById('warningBanner').classList.remove('show');
-            }, 3000);
-        }
-        
-        // ==================== LABIRINTO ====================
-        const MAZE_SIZE = 21;
-        let mazeCanvas = null;
-        let mazeCtx = null;
-        let mazeWalls = [];
-        let mazePlayerPos = { x: 0, y: 0 };
-        let mazeGoalPos = { x: 0, y: 0 };
-        let mazeStartPos = { x: 0, y: 0 };
-        let mazeGameActive = true;
-        let mazeCellSize = 23;
-        
-        function generateMaze() {
-            let grid = Array(MAZE_SIZE).fill().map(() => Array(MAZE_SIZE).fill(true));
-            
-            let startX = 1 + Math.floor(Math.random() * ((MAZE_SIZE-2)/2)) * 2;
-            let startY = 1 + Math.floor(Math.random() * ((MAZE_SIZE-2)/2)) * 2;
-            let goalX = 1 + Math.floor(Math.random() * ((MAZE_SIZE-2)/2)) * 2;
-            let goalY = 1 + Math.floor(Math.random() * ((MAZE_SIZE-2)/2)) * 2;
-            
-            while(startX === goalX && startY === goalY) {
-                goalX = 1 + Math.floor(Math.random() * ((MAZE_SIZE-2)/2)) * 2;
-                goalY = 1 + Math.floor(Math.random() * ((MAZE_SIZE-2)/2)) * 2;
-            }
-            
-            for(let i = 0; i < MAZE_SIZE; i++) {
-                for(let j = 0; j < MAZE_SIZE; j++) {
-                    if(i % 2 === 1 && j % 2 === 1) {
-                        grid[i][j] = false;
-                    }
-                }
-            }
-            
-            let walls = [];
-            let visited = Array(MAZE_SIZE).fill().map(() => Array(MAZE_SIZE).fill(false));
-            visited[startY][startX] = true;
-            
-            const addWalls = (x, y) => {
-                const dirs = [[0, -2], [0, 2], [-2, 0], [2, 0]];
-                for(let [dx, dy] of dirs) {
-                    let nx = x + dx;
-                    let ny = y + dy;
-                    if(nx > 0 && nx < MAZE_SIZE-1 && ny > 0 && ny < MAZE_SIZE-1 && !visited[ny][nx]) {
-                        let wallX = x + dx/2;
-                        let wallY = y + dy/2;
-                        walls.push({x: wallX, y: wallY, nextX: nx, nextY: ny});
-                    }
-                }
-            };
-            
-            addWalls(startX, startY);
-            
-            while(walls.length > 0) {
-                let randomIndex = Math.floor(Math.random() * walls.length);
-                let wall = walls[randomIndex];
-                walls.splice(randomIndex, 1);
-                
-                let nx = wall.nextX;
-                let ny = wall.nextY;
-                
-                if(!visited[ny][nx]) {
-                    grid[wall.y][wall.x] = false;
-                    visited[ny][nx] = true;
-                    addWalls(nx, ny);
-                }
-            }
-            
-            grid[startY][startX] = false;
-            grid[goalY][goalX] = false;
-            
-            for(let i = 0; i < MAZE_SIZE; i++) {
-                grid[0][i] = true;
-                grid[MAZE_SIZE-1][i] = true;
-                grid[i][0] = true;
-                grid[i][MAZE_SIZE-1] = true;
-            }
-            
-            grid[startY][startX] = false;
-            grid[goalY][goalX] = false;
-            
-            return {
-                walls: grid,
-                start: { x: startX, y: startY },
-                goal: { x: goalX, y: goalY }
-            };
-        }
-        
-        function drawMazeGame() {
-            if(!mazeCtx) return;
-            mazeCtx.clearRect(0, 0, mazeCanvas.width, mazeCanvas.height);
-            
-            for(let row = 0; row < MAZE_SIZE; row++) {
-                for(let col = 0; col < MAZE_SIZE; col++) {
-                    let x = col * mazeCellSize;
-                    let y = row * mazeCellSize;
-                    
-                    if(mazeWalls[row] && mazeWalls[row][col] === true) {
-                        mazeCtx.fillStyle = "#5d3a1a";
-                        mazeCtx.fillRect(x, y, mazeCellSize, mazeCellSize);
-                        mazeCtx.fillStyle = "#8b5a2b";
-                        mazeCtx.fillRect(x+2, y+2, mazeCellSize-4, mazeCellSize-4);
-                    } else {
-                        let grad = mazeCtx.createLinearGradient(x, y, x+mazeCellSize, y+mazeCellSize);
-                        grad.addColorStop(0, "#ebd5b3");
-                        grad.addColorStop(1, "#ddc494");
-                        mazeCtx.fillStyle = grad;
-                        mazeCtx.fillRect(x, y, mazeCellSize, mazeCellSize);
-                    }
-                }
-            }
-            
-            mazeCtx.font = `${Math.floor(mazeCellSize * 0.6)}px "Segoe UI"`;
-            mazeCtx.fillStyle = "#ffb347";
-            mazeCtx.shadowBlur = 2;
-            mazeCtx.fillText("⭐", mazeStartPos.x * mazeCellSize + mazeCellSize*0.25, 
-                        mazeStartPos.y * mazeCellSize + mazeCellSize*0.75);
-            
-            mazeCtx.fillStyle = "#e34234";
-            mazeCtx.fillText("🏁", mazeGoalPos.x * mazeCellSize + mazeCellSize*0.25, 
-                        mazeGoalPos.y * mazeCellSize + mazeCellSize*0.75);
-            
-            let px = mazePlayerPos.x * mazeCellSize;
-            let py = mazePlayerPos.y * mazeCellSize;
-            mazeCtx.beginPath();
-            mazeCtx.arc(px + mazeCellSize/2, py + mazeCellSize/2, mazeCellSize*0.3, 0, Math.PI*2);
-            mazeCtx.fillStyle = "#4d9eff";
-            mazeCtx.fill();
-            mazeCtx.beginPath();
-            mazeCtx.arc(px + mazeCellSize/2, py + mazeCellSize/2, mazeCellSize*0.2, 0, Math.PI*2);
-            mazeCtx.fillStyle = "white";
-            mazeCtx.fill();
-            mazeCtx.shadowBlur = 0;
-        }
-        
-        function mazeMove(dx, dy) {
-            if(!mazeGameActive) return;
-            
-            const newX = mazePlayerPos.x + dx;
-            const newY = mazePlayerPos.y + dy;
-            
-            if(newX < 0 || newX >= MAZE_SIZE || newY < 0 || newY >= MAZE_SIZE) return;
-            if(mazeWalls[newY][newX] === true) return;
-            
-            mazePlayerPos.x = newX;
-            mazePlayerPos.y = newY;
-            drawMazeGame();
-            
-            if(mazePlayerPos.x === mazeGoalPos.x && mazePlayerPos.y === mazeGoalPos.y) {
-                mazeGameActive = false;
-                document.getElementById('mazeStatus').innerHTML = "🎉 PARABÉNS! Acesso liberado! 🎉";
-                setTimeout(() => {
-                    hideCaptcha();
-                    mazeGameActive = true;
-                }, 1500);
-            }
-        }
-        
-        function initMazeGame() {
-            const canvas = document.getElementById('mazeCanvas');
-            const container = canvas.parentElement;
-            const size = Math.min(container.clientWidth - 40, 500);
-            canvas.width = size;
-            canvas.height = size;
-            mazeCellSize = size / MAZE_SIZE;
-            
-            mazeCanvas = canvas;
-            mazeCtx = canvas.getContext('2d');
-            
-            const mazeData = generateMaze();
-            mazeWalls = mazeData.walls;
-            mazePlayerPos = { x: mazeData.start.x, y: mazeData.start.y };
-            mazeGoalPos = { x: mazeData.goal.x, y: mazeData.goal.y };
-            mazeStartPos = { x: mazeData.start.x, y: mazeData.start.y };
-            mazeGameActive = true;
-            
-            drawMazeGame();
-        }
-        
-        // ==================== FUNÇÕES DA BUSCA ====================
-        let currentUser = null;
-        let allPages = [];
-        let searchTimeout = null;
-
-        const searchInput = document.getElementById('search-input');
-        const clearBtn = document.getElementById('clear-search');
-        const suggestionsDiv = document.getElementById('suggestions');
-        const resultsContainer = document.getElementById('results-container');
-        const resultsGrid = document.getElementById('results-grid');
-        const resultsCount = document.getElementById('results-count');
-        const userArea = document.getElementById('user-area');
-        const loginModal = document.getElementById('login-modal');
-        const pageCountSpan = document.getElementById('page-count');
-
-        async function loadAllPages() {
-            try {
-                console.log('📚 Carregando páginas do Firebase...');
-                const querySnapshot = await db.collection('paginasUsuario').get();
-                allPages = [];
-                
-                querySnapshot.forEach(doc => {
-                    const data = doc.data();
-                    const pages = data["Lista de Páginas de Busca"] || [];
-                    
-                    pages.forEach(page => {
-                        if (page.Nome && page.Link) {
-                            allPages.push({
-                                id: page.id || generateId(),
-                                nome: page.Nome,
-                                url: page.Link,
-                                categoria: page.categoria || 'Geral',
-                                icone: page.icone || 'link',
-                                descricao: page.descricao || '',
-                                usuarioId: doc.id,
-                                ordem: page.ordem || 0
-                            });
-                        }
-                    });
-                });
-                
-                const urlMap = new Map();
-                allPages = allPages.filter(page => {
-                    if (urlMap.has(page.url)) return false;
-                    urlMap.set(page.url, true);
-                    return true;
-                });
-                
-                pageCountSpan.textContent = allPages.length;
-                console.log(`✅ ${allPages.length} páginas carregadas`);
-                return allPages;
-            } catch (error) {
-                console.error('❌ Erro ao carregar páginas:', error);
-                return [];
-            }
-        }
-
-        function searchPages(query) {
-            if (!query || query.trim() === '') return [];
-            const lowerQuery = query.toLowerCase();
-            return allPages.filter(page => {
-                return page.nome.toLowerCase().includes(lowerQuery) ||
-                       page.descricao.toLowerCase().includes(lowerQuery) ||
-                       page.categoria.toLowerCase().includes(lowerQuery) ||
-                       page.url.toLowerCase().includes(lowerQuery);
-            });
-        }
-
-        function showSuggestions(query) {
-            if (!query || query.trim() === '') {
-                suggestionsDiv.classList.remove('show');
-                return;
-            }
-            
-            const results = searchPages(query).slice(0, 5);
-            if (results.length === 0) {
-                suggestionsDiv.classList.remove('show');
-                return;
-            }
-            
-            suggestionsDiv.innerHTML = results.map(page => `
-                <div class="suggestion-item" onclick="selectSuggestion('${page.nome.replace(/'/g, "\\'")}')">
-                    <i class="material-icons suggestion-icon">${page.icone}</i>
-                    <div class="suggestion-text">
-                        <strong>${highlightText(page.nome, query)}</strong>
-                        <div style="font-size: 12px; color: #5f6368;">${page.url.substring(0, 50)}</div>
-                    </div>
-                    <span class="suggestion-category">${page.categoria}</span>
+            <div class="user-info-header" id="userInfo">
+                <div class="user-avatar" id="userAvatar">👤</div>
+                <div>
+                    <div class="user-name" id="userName">Carregando...</div>
+                    <div class="user-email" id="userEmail">aguarde</div>
                 </div>
-            `).join('');
-            suggestionsDiv.classList.add('show');
-        }
-
-        function highlightText(text, query) {
-            if (!query) return text;
-            const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
-            return text.replace(regex, '<mark style="background: #fff3cd; padding: 0;">$1</mark>');
-        }
-
-        function selectSuggestion(query) {
-            searchInput.value = query;
-            suggestionsDiv.classList.remove('show');
-            performSearch();
-        }
-
-        async function performSearch() {
-            if (isCaptchaActive) {
-                alert("Complete o labirinto de verificação primeiro!");
-                return;
-            }
-            
-            if (!checkAbuse()) return;
-            
-            const query = searchInput.value.trim();
-            if (!query) {
-                showAllPages();
-                return;
-            }
-            
-            const results = searchPages(query);
-            displayResults(results, query);
-        }
-
-        async function showAllPages() {
-            if (isCaptchaActive) {
-                alert("Complete o labirinto de verificação primeiro!");
-                return;
-            }
-            
-            if (!checkAbuse()) return;
-            
-            const query = searchInput.value.trim();
-            if (query) searchInput.value = '';
-            displayResults(allPages, 'Todos os resultados');
-        }
-
-        function displayResults(results, searchTerm) {
-            resultsCount.textContent = `📄 ${results.length} resultado${results.length !== 1 ? 's' : ''} para "${searchTerm || 'todos'}"`;
-            
-            if (results.length === 0) {
-                resultsGrid.innerHTML = `
-                    <div class="no-results" style="grid-column: 1/-1;">
-                        <i class="material-icons">search_off</i>
-                        <h3>Nenhum resultado encontrado</h3>
-                        <p>Tente buscar por outro termo ou verifique a ortografia.</p>
-                    </div>
-                `;
-            } else {
-                resultsGrid.innerHTML = results.map(page => `
-                    <div class="result-card" onclick="window.open('${page.url}', '_blank')">
-                        <div class="card-icon">
-                            <i class="material-icons">${page.icone}</i>
+                <span id="userBadge"></span>
+                
+                <!-- NOTIFICATION BELL -->
+                <div class="notification-bell" id="notificationBell" onclick="toggleNotifications(event)">
+                    <span class="material-icons">notifications</span>
+                    <span class="notification-badge" id="notifBadge" style="display:none;">0</span>
+                    <div class="notification-dropdown" id="notifDropdown">
+                        <div class="notification-dropdown-header">
+                            <h3>🔔 Notificações</h3>
+                            <button onclick="markAllAsRead(event)">Marcar todas como lidas</button>
                         </div>
-                        <h3 class="card-title">${escapeHtml(page.nome)}</h3>
-                        <div class="card-url">${escapeHtml(page.url)}</div>
-                        ${page.descricao ? `<div class="card-description">${escapeHtml(page.descricao.substring(0, 100))}${page.descricao.length > 100 ? '...' : ''}</div>` : ''}
-                        <span class="card-category">${escapeHtml(page.categoria)}</span>
+                        <div id="notificationList">
+                            <div class="notification-empty">
+                                <span class="material-icons">notifications_off</span>
+                                <p>Nenhuma notificação</p>
+                            </div>
+                        </div>
                     </div>
-                `).join('');
+                </div>
+                
+                <button class="btn-logout" id="btnLogout" style="display:none;">Sair</button>
+                <button class="btn-login" id="btnLogin" onclick="showLoginModal()">
+                    <span class="material-icons" style="font-size:16px;">person</span> Entrar
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="search-container">
+        <div class="center-logo">
+            <img src="https://gspotfverwazzimagiygg.wazzimagiygg.com/search/Favicom.png" alt="WazzimaGiygg Logo">
+        </div>
+
+        <div class="search-title">
+            <h1>WazzimaGiygg</h1>
+            <p>Busca inteligente para seus produtos e serviços</p>
+            <div class="guest-badge" id="guest-badge">
+                <i class="material-icons" style="font-size: 14px;">public</i> Modo Convidado - Busca liberada
+            </div>
+        </div>
+
+        <div class="warning-banner" id="warningBanner">
+            <p>
+                <i class="material-icons" style="font-size: 16px;">warning</i>
+                ⚠️ Muitas tentativas de acesso! Por favor, complete o labirinto para continuar.
+            </p>
+        </div>
+
+        <div class="search-box">
+            <div class="search-input-wrapper">
+                <i class="material-icons search-icon">search</i>
+                <input type="text" 
+                       id="search-input" 
+                       class="search-input" 
+                       placeholder="Pesquise produtos, serviços, páginas..."
+                       autocomplete="off">
+                <button class="search-clear" id="clear-search" style="display: none;">
+                    <i class="material-icons">close</i>
+                </button>
+                <div class="search-divider"></div>
+                <button class="search-button" id="search-button">
+                    <i class="material-icons">search</i>
+                    Buscar
+                </button>
+            </div>
+
+            <div class="suggestions" id="suggestions"></div>
+        </div>
+
+        <div class="search-buttons">
+            <button class="btn-search" onclick="performSearch()">
+                <i class="material-icons">search</i>
+                Pesquisar
+            </button>
+            <button class="btn-search" onclick="showAllPages()">
+                <i class="material-icons">view_list</i>
+                Ver todas as páginas
+            </button>
+        </div>
+
+        <div class="info-banner">
+            <p>
+                <i class="material-icons" style="font-size: 16px;">info</i>
+                Mais de <span id="page-count">0</span> páginas disponíveis para busca
+            </p>
+        </div>
+
+        <div class="results-container" id="results-container">
+            <div class="results-header">
+                <div class="results-count" id="results-count"></div>
+                <button class="results-close" onclick="hideResults()">
+                    <i class="material-icons">close</i>
+                </button>
+            </div>
+            <div class="results-grid" id="results-grid"></div>
+        </div>
+    </div>
+
+    <!-- FOOTER PADRONIZADO -->
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="https://wazzimagiygg.com/donate/" class="footer-link" target="_blank">💝 Doação</a>
+                <span class="footer-divider">|</span>
+                <a href="https://wazzimagiygg.com/desktop.html" class="footer-link" target="_blank">🖥️ Desktop</a>
+                <span class="footer-divider">|</span>
+                <a href="https://wazzimagiygg.com/LGPD" class="footer-link" target="_blank">🔒 LGPD</a>
+                <span class="footer-divider">|</span>
+                <a href="https://wazzimagiygg.com/MarcoCivil" class="footer-link" target="_blank">📜 Marco Civil</a>
+                <span class="footer-divider">|</span>
+                <a href="https://support.wazzimagiygg.com/" class="footer-link" target="_blank">🎫 Ticket</a>
+                <span class="footer-divider">|</span>
+                <a href="https://wazzimagiygg.com/produtos" class="footer-link highlight" target="_blank">🛍️ Produtos</a>
+                <span class="footer-divider">|</span>
+                <a href="https://painel.wazzimagiygg.com/" class="footer-link highlight" target="_blank">👤 Sua conta</a>
+            </div>
+            <div class="footer-copyright">
+                © 2026 WazzimaGiygg Search - Busca inteligente e livre
+            </div>
+        </div>
+    </footer>
+</div>
+
+<div class="modal" id="login-modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Entrar na sua conta</h2>
+            <button class="modal-close" onclick="closeLoginModal()">&times;</button>
+        </div>
+        
+        <button class="google-login-btn" id="google-login-btn" onclick="loginWithGoogle()">
+            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
+            Continuar com Google
+        </button>
+        
+        <div class="modal-divider">
+            <span>ou</span>
+        </div>
+        
+        <form id="login-form-modal">
+            <input type="email" id="modal-email" class="modal-input" placeholder="E-mail" required>
+            <input type="password" id="modal-password" class="modal-input" placeholder="Senha" required>
+            <button type="submit" class="modal-btn">Entrar com e-mail</button>
+        </form>
+        <div style="text-align: center; margin-top: 16px;">
+            <a href="#" onclick="showRegister()" style="color: #667eea; text-decoration: none;">Criar nova conta</a>
+        </div>
+    </div>
+</div>
+
+<!-- Overlay do Labirinto CAPTCHA -->
+<div class="captcha-overlay" id="captchaOverlay">
+    <div class="captcha-content">
+        <h2>🔐 Verificação de Segurança</h2>
+        <p>Para continuar usando a busca, complete o labirinto abaixo.</p>
+        <div class="maze-container">
+            <canvas id="mazeCanvas" width="500" height="500" class="maze-canvas"></canvas>
+            <div class="maze-controls">
+                <button class="maze-btn" onclick="mazeMove(0, -1)">⬆️</button>
+                <button class="maze-btn" onclick="mazeMove(0, 1)">⬇️</button>
+                <button class="maze-btn" onclick="mazeMove(-1, 0)">⬅️</button>
+                <button class="maze-btn" onclick="mazeMove(1, 0)">➡️</button>
+            </div>
+            <div class="maze-status" id="mazeStatus">⭐ Leve o personagem até a bandeira 🏁</div>
+        </div>
+    </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
+
+<script>
+// ==================== CONFIGURAÇÃO DO FIREBASE ====================
+const firebaseConfig = {
+    apiKey: "AIzaSyB9GkSqTIZ0kbVsba_WOdQeVAETrF9qna0",
+    authDomain: "wzzm-ce3fc.firebaseapp.com",
+    projectId: "wzzm-ce3fc",
+    storageBucket: "wzzm-ce3fc.appspot.com",
+    messagingSenderId: "249427877153",
+    appId: "1:249427877153:web:0e4297294794a5aadeb260",
+    measurementId: "G-PLKNZNFCQ8"
+};
+
+let app, auth, db;
+try {
+    app = firebase.app();
+    auth = firebase.auth();
+    db = firebase.firestore();
+} catch (e) {
+    app = firebase.initializeApp(firebaseConfig);
+    auth = firebase.auth();
+    db = firebase.firestore();
+}
+
+// ==================== VARIÁVEIS GLOBAIS ====================
+let currentUser = null;
+let isBanned = false;
+let isAdmin = false;
+let notifications = [];
+let unreadCount = 0;
+let notificationListener = null;
+
+// ==================== SISTEMA ANTI-ABUSO ====================
+let accessCount = 0;
+let lastAccessTime = Date.now();
+let isCaptchaActive = false;
+let captchaSolved = false;
+
+const MAX_ACCESS_IN_WINDOW = 5;
+const TIME_WINDOW_MS = 60000;
+
+function checkAbuse() {
+    if (captchaSolved) return true;
+    
+    const now = Date.now();
+    
+    if (now - lastAccessTime > TIME_WINDOW_MS) {
+        accessCount = 0;
+        lastAccessTime = now;
+    }
+    
+    accessCount++;
+    lastAccessTime = now;
+    
+    console.log(`📊 Acessos: ${accessCount}`);
+    
+    if (accessCount > MAX_ACCESS_IN_WINDOW && !isCaptchaActive) {
+        showCaptcha();
+        return false;
+    }
+    
+    return true;
+}
+
+function showCaptcha() {
+    if (captchaSolved) return;
+    
+    isCaptchaActive = true;
+    document.getElementById('captchaOverlay').classList.add('show');
+    document.getElementById('warningBanner').classList.add('show');
+    initMazeGame();
+}
+
+function hideCaptcha() {
+    document.getElementById('captchaOverlay').classList.remove('show');
+    isCaptchaActive = false;
+    captchaSolved = true;
+    
+    accessCount = 0;
+    lastAccessTime = Date.now();
+    
+    setTimeout(() => {
+        document.getElementById('warningBanner').classList.remove('show');
+    }, 3000);
+}
+
+// ==================== LABIRINTO ====================
+const MAZE_SIZE = 21;
+let mazeCanvas = null;
+let mazeCtx = null;
+let mazeWalls = [];
+let mazePlayerPos = { x: 0, y: 0 };
+let mazeGoalPos = { x: 0, y: 0 };
+let mazeStartPos = { x: 0, y: 0 };
+let mazeGameActive = true;
+let mazeCellSize = 23;
+
+function generateMaze() {
+    let grid = Array(MAZE_SIZE).fill().map(() => Array(MAZE_SIZE).fill(true));
+    
+    let startX = 1 + Math.floor(Math.random() * ((MAZE_SIZE-2)/2)) * 2;
+    let startY = 1 + Math.floor(Math.random() * ((MAZE_SIZE-2)/2)) * 2;
+    let goalX = 1 + Math.floor(Math.random() * ((MAZE_SIZE-2)/2)) * 2;
+    let goalY = 1 + Math.floor(Math.random() * ((MAZE_SIZE-2)/2)) * 2;
+    
+    while(startX === goalX && startY === goalY) {
+        goalX = 1 + Math.floor(Math.random() * ((MAZE_SIZE-2)/2)) * 2;
+        goalY = 1 + Math.floor(Math.random() * ((MAZE_SIZE-2)/2)) * 2;
+    }
+    
+    for(let i = 0; i < MAZE_SIZE; i++) {
+        for(let j = 0; j < MAZE_SIZE; j++) {
+            if(i % 2 === 1 && j % 2 === 1) {
+                grid[i][j] = false;
             }
+        }
+    }
+    
+    let walls = [];
+    let visited = Array(MAZE_SIZE).fill().map(() => Array(MAZE_SIZE).fill(false));
+    visited[startY][startX] = true;
+    
+    const addWalls = (x, y) => {
+        const dirs = [[0, -2], [0, 2], [-2, 0], [2, 0]];
+        for(let [dx, dy] of dirs) {
+            let nx = x + dx;
+            let ny = y + dy;
+            if(nx > 0 && nx < MAZE_SIZE-1 && ny > 0 && ny < MAZE_SIZE-1 && !visited[ny][nx]) {
+                let wallX = x + dx/2;
+                let wallY = y + dy/2;
+                walls.push({x: wallX, y: wallY, nextX: nx, nextY: ny});
+            }
+        }
+    };
+    
+    addWalls(startX, startY);
+    
+    while(walls.length > 0) {
+        let randomIndex = Math.floor(Math.random() * walls.length);
+        let wall = walls[randomIndex];
+        walls.splice(randomIndex, 1);
+        
+        let nx = wall.nextX;
+        let ny = wall.nextY;
+        
+        if(!visited[ny][nx]) {
+            grid[wall.y][wall.x] = false;
+            visited[ny][nx] = true;
+            addWalls(nx, ny);
+        }
+    }
+    
+    grid[startY][startX] = false;
+    grid[goalY][goalX] = false;
+    
+    for(let i = 0; i < MAZE_SIZE; i++) {
+        grid[0][i] = true;
+        grid[MAZE_SIZE-1][i] = true;
+        grid[i][0] = true;
+        grid[i][MAZE_SIZE-1] = true;
+    }
+    
+    grid[startY][startX] = false;
+    grid[goalY][goalX] = false;
+    
+    return {
+        walls: grid,
+        start: { x: startX, y: startY },
+        goal: { x: goalX, y: goalY }
+    };
+}
+
+function drawMazeGame() {
+    if(!mazeCtx) return;
+    mazeCtx.clearRect(0, 0, mazeCanvas.width, mazeCanvas.height);
+    
+    for(let row = 0; row < MAZE_SIZE; row++) {
+        for(let col = 0; col < MAZE_SIZE; col++) {
+            let x = col * mazeCellSize;
+            let y = row * mazeCellSize;
             
-            resultsContainer.classList.add('show');
-            resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
-
-        function hideResults() {
-            resultsContainer.classList.remove('show');
-        }
-
-        function resetSearch() {
-            searchInput.value = '';
-            hideResults();
-            suggestionsDiv.classList.remove('show');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function generateId() {
-            return 'page_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-        }
-
-        // ==================== FUNÇÕES DE AUTENTICAÇÃO ====================
-        async function loginWithGoogle() {
-            try {
-                const provider = new firebase.auth.GoogleAuthProvider();
-                const result = await auth.signInWithPopup(provider);
-                currentUser = result.user;
-                
-                const userRef = db.collection('users').doc(currentUser.uid);
-                const userDoc = await userRef.get();
-                
-                if (!userDoc.exists) {
-                    await userRef.set({
-                        email: currentUser.email,
-                        displayName: currentUser.displayName || currentUser.email.split('@')[0],
-                        photoURL: currentUser.photoURL || null,
-                        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                        isAdmin: false,
-                        isTeatcher: false,
-                        isBanned: false
-                    });
-                }
-                
-                updateUserUI();
-                closeLoginModal();
-                console.log('✅ Login com Google realizado!');
-            } catch (error) {
-                console.error('❌ Erro no login:', error);
-                alert('Erro ao fazer login: ' + error.message);
-            }
-        }
-
-        function updateUserUI() {
-            if (currentUser) {
-                const displayName = currentUser.displayName || currentUser.email.split('@')[0];
-                const photoURL = currentUser.photoURL;
-                
-                userArea.innerHTML = `
-                    <div class="user-info">
-                        ${photoURL ? 
-                            `<img src="${photoURL}" class="user-avatar-img" alt="Avatar">` : 
-                            `<div class="user-avatar"><i class="material-icons" style="font-size: 18px;">person</i></div>`
-                        }
-                        <span class="user-name">${escapeHtml(displayName)}</span>
-                    </div>
-                    <button class="login-btn" onclick="logout()">
-                        <i class="material-icons" style="font-size: 18px;">logout</i>
-                        Sair
-                    </button>
-                `;
-                document.getElementById('guest-badge').innerHTML = `<i class="material-icons" style="font-size: 14px;">person</i> Olá, ${escapeHtml(displayName)}`;
+            if(mazeWalls[row] && mazeWalls[row][col] === true) {
+                mazeCtx.fillStyle = "#5d3a1a";
+                mazeCtx.fillRect(x, y, mazeCellSize, mazeCellSize);
+                mazeCtx.fillStyle = "#8b5a2b";
+                mazeCtx.fillRect(x+2, y+2, mazeCellSize-4, mazeCellSize-4);
             } else {
-                userArea.innerHTML = `
-                    <button class="login-btn" onclick="showLoginModal()">
-                        <i class="material-icons" style="font-size: 18px;">person</i>
-                        Entrar
-                    </button>
-                `;
-                document.getElementById('guest-badge').innerHTML = `<i class="material-icons" style="font-size: 14px;">public</i> Modo Convidado - Busca liberada`;
+                let grad = mazeCtx.createLinearGradient(x, y, x+mazeCellSize, y+mazeCellSize);
+                grad.addColorStop(0, "#ebd5b3");
+                grad.addColorStop(1, "#ddc494");
+                mazeCtx.fillStyle = grad;
+                mazeCtx.fillRect(x, y, mazeCellSize, mazeCellSize);
             }
         }
+    }
+    
+    mazeCtx.font = `${Math.floor(mazeCellSize * 0.6)}px "Segoe UI"`;
+    mazeCtx.fillStyle = "#ffb347";
+    mazeCtx.shadowBlur = 2;
+    mazeCtx.fillText("⭐", mazeStartPos.x * mazeCellSize + mazeCellSize*0.25, 
+                mazeStartPos.y * mazeCellSize + mazeCellSize*0.75);
+    
+    mazeCtx.fillStyle = "#e34234";
+    mazeCtx.fillText("🏁", mazeGoalPos.x * mazeCellSize + mazeCellSize*0.25, 
+                mazeGoalPos.y * mazeCellSize + mazeCellSize*0.75);
+    
+    let px = mazePlayerPos.x * mazeCellSize;
+    let py = mazePlayerPos.y * mazeCellSize;
+    mazeCtx.beginPath();
+    mazeCtx.arc(px + mazeCellSize/2, py + mazeCellSize/2, mazeCellSize*0.3, 0, Math.PI*2);
+    mazeCtx.fillStyle = "#4d9eff";
+    mazeCtx.fill();
+    mazeCtx.beginPath();
+    mazeCtx.arc(px + mazeCellSize/2, py + mazeCellSize/2, mazeCellSize*0.2, 0, Math.PI*2);
+    mazeCtx.fillStyle = "white";
+    mazeCtx.fill();
+    mazeCtx.shadowBlur = 0;
+}
 
-        function showLoginModal() {
-            loginModal.classList.add('show');
+function mazeMove(dx, dy) {
+    if(!mazeGameActive) return;
+    
+    const newX = mazePlayerPos.x + dx;
+    const newY = mazePlayerPos.y + dy;
+    
+    if(newX < 0 || newX >= MAZE_SIZE || newY < 0 || newY >= MAZE_SIZE) return;
+    if(mazeWalls[newY][newX] === true) return;
+    
+    mazePlayerPos.x = newX;
+    mazePlayerPos.y = newY;
+    drawMazeGame();
+    
+    if(mazePlayerPos.x === mazeGoalPos.x && mazePlayerPos.y === mazeGoalPos.y) {
+        mazeGameActive = false;
+        document.getElementById('mazeStatus').innerHTML = "🎉 PARABÉNS! Acesso liberado! 🎉";
+        setTimeout(() => {
+            hideCaptcha();
+            mazeGameActive = true;
+        }, 1500);
+    }
+}
+
+function initMazeGame() {
+    const canvas = document.getElementById('mazeCanvas');
+    const container = canvas.parentElement;
+    const size = Math.min(container.clientWidth - 40, 500);
+    canvas.width = size;
+    canvas.height = size;
+    mazeCellSize = size / MAZE_SIZE;
+    
+    mazeCanvas = canvas;
+    mazeCtx = canvas.getContext('2d');
+    
+    const mazeData = generateMaze();
+    mazeWalls = mazeData.walls;
+    mazePlayerPos = { x: mazeData.start.x, y: mazeData.start.y };
+    mazeGoalPos = { x: mazeData.goal.x, y: mazeData.goal.y };
+    mazeStartPos = { x: mazeData.start.x, y: mazeData.start.y };
+    mazeGameActive = true;
+    
+    drawMazeGame();
+}
+
+// ==================== FUNÇÕES DE UTILIDADE ====================
+function escapeHtml(text) {
+    if (!text) return '';
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+function getTimeAgo(date) {
+    if (!date) return '';
+    if (date.toDate) date = date.toDate();
+    const seconds = Math.floor((new Date() - date) / 1000);
+    if (seconds < 60) return 'agora';
+    const minutes = Math.floor(seconds / 60);
+    if (minutes < 60) return `${minutes}m`;
+    const hours = Math.floor(minutes / 60);
+    if (hours < 24) return `${hours}h`;
+    const days = Math.floor(hours / 24);
+    return `${days}d`;
+}
+
+function getInitials(name) {
+    if (!name) return '?';
+    const parts = name.trim().split(' ');
+    if (parts.length >= 2) return (parts[0][0] + parts[parts.length-1][0]).toUpperCase();
+    return name.substring(0, 2).toUpperCase();
+}
+
+// ==================== NOTIFICAÇÕES ====================
+
+async function loadNotifications() {
+    if (!currentUser) return;
+    
+    try {
+        const snapshot = await db.collection('notifications')
+            .where('userId', '==', currentUser.uid)
+            .orderBy('timestamp', 'desc')
+            .limit(50)
+            .get();
+        
+        notifications = [];
+        snapshot.forEach(doc => {
+            notifications.push({ 
+                id: doc.id, 
+                ...doc.data(),
+                timestamp: doc.data().timestamp || new Date()
+            });
+        });
+        
+        notifications.sort((a, b) => {
+            const dateA = a.timestamp?.toDate ? a.timestamp.toDate() : new Date(a.timestamp);
+            const dateB = b.timestamp?.toDate ? b.timestamp.toDate() : new Date(b.timestamp);
+            return dateB - dateA;
+        });
+        
+        unreadCount = notifications.filter(n => !n.lida).length;
+        updateNotificationBadge();
+        renderNotifications();
+        
+    } catch (error) {
+        console.error('Erro ao carregar notificações:', error);
+    }
+}
+
+function updateNotificationBadge() {
+    if (unreadCount > 0) {
+        notifBadge.style.display = 'flex';
+        notifBadge.textContent = unreadCount > 99 ? '99+' : unreadCount;
+    } else {
+        notifBadge.style.display = 'none';
+    }
+}
+
+function renderNotifications() {
+    if (!notificationList) return;
+    
+    if (notifications.length === 0) {
+        notificationList.innerHTML = `
+            <div class="notification-empty">
+                <span class="material-icons">notifications_off</span>
+                <p>Nenhuma notificação</p>
+            </div>
+        `;
+        return;
+    }
+    
+    const recentNotifs = notifications.slice(0, 10);
+    
+    notificationList.innerHTML = recentNotifs.map(notif => `
+        <div class="notification-item ${notif.lida ? '' : 'unread'}" onclick="markAsRead('${notif.id}')">
+            <div class="notif-title">${escapeHtml(notif.titulo || 'Notificação')}</div>
+            <div class="notif-message">${escapeHtml(notif.mensagem || '')}</div>
+            <div class="notif-time">${getTimeAgo(notif.timestamp)}</div>
+        </div>
+    `).join('');
+}
+
+async function markAsRead(notificationId) {
+    if (!notificationId) return;
+    
+    try {
+        await db.collection('notifications').doc(notificationId).update({
+            lida: true
+        });
+        
+        const notif = notifications.find(n => n.id === notificationId);
+        if (notif && !notif.lida) {
+            notif.lida = true;
+            unreadCount--;
+            updateNotificationBadge();
+            renderNotifications();
         }
+    } catch (error) {
+        console.error('❌ Erro ao marcar como lida:', error);
+    }
+}
 
-        function closeLoginModal() {
-            loginModal.classList.remove('show');
+async function markAllAsRead(event) {
+    if (event) event.stopPropagation();
+    
+    if (unreadCount === 0) return;
+    
+    try {
+        const batch = db.batch();
+        const unreadNotifs = notifications.filter(n => !n.lida);
+        
+        unreadNotifs.forEach(notif => {
+            const ref = db.collection('notifications').doc(notif.id);
+            batch.update(ref, { lida: true });
+        });
+        
+        await batch.commit();
+        
+        notifications.forEach(n => n.lida = true);
+        unreadCount = 0;
+        updateNotificationBadge();
+        renderNotifications();
+    } catch (error) {
+        console.error('❌ Erro ao marcar todas como lidas:', error);
+    }
+}
+
+function toggleNotifications(event) {
+    if (event) event.stopPropagation();
+    if (notifDropdown) {
+        notifDropdown.classList.toggle('show');
+        if (notifDropdown.classList.contains('show')) {
+            loadNotifications();
         }
+    }
+}
 
-        async function login(email, password) {
-            try {
-                const userCredential = await auth.signInWithEmailAndPassword(email, password);
-                currentUser = userCredential.user;
-                updateUserUI();
-                closeLoginModal();
-                console.log('✅ Login realizado!');
-            } catch (error) {
-                console.error('❌ Erro no login:', error);
-                alert('Erro ao fazer login: ' + error.message);
-            }
+document.addEventListener('click', function(e) {
+    if (!e.target.closest('.notification-bell')) {
+        if (notifDropdown) {
+            notifDropdown.classList.remove('show');
         }
+    }
+});
 
-        async function logout() {
-            try {
-                await auth.signOut();
-                currentUser = null;
-                updateUserUI();
-                console.log('✅ Logout realizado!');
-            } catch (error) {
-                console.error('❌ Erro no logout:', error);
-            }
-        }
-
-        function showRegister() {
-            const email = prompt('Digite seu e-mail:');
-            if (!email) return;
-            const password = prompt('Digite sua senha (mínimo 6 caracteres):');
-            if (!password || password.length < 6) {
-                alert('A senha deve ter pelo menos 6 caracteres');
-                return;
-            }
-            registerUser(email, password);
-        }
-
-        async function registerUser(email, password) {
-            try {
-                const userCredential = await auth.createUserWithEmailAndPassword(email, password);
-                currentUser = userCredential.user;
-                await db.collection('users').doc(currentUser.uid).set({
-                    email: currentUser.email,
-                    displayName: currentUser.email.split('@')[0],
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                    isAdmin: false,
-                    isTeatcher: false,
-                    isBanned: false
+function listenNotifications() {
+    if (notificationListener) {
+        notificationListener();
+        notificationListener = null;
+    }
+    
+    if (!currentUser) return;
+    
+    notificationListener = db.collection('notifications')
+        .where('userId', '==', currentUser.uid)
+        .orderBy('timestamp', 'desc')
+        .limit(50)
+        .onSnapshot((snapshot) => {
+            notifications = [];
+            snapshot.forEach(doc => {
+                notifications.push({ 
+                    id: doc.id, 
+                    ...doc.data(),
+                    timestamp: doc.data().timestamp || new Date()
                 });
-                updateUserUI();
-                closeLoginModal();
-                alert('Conta criada com sucesso!');
-            } catch (error) {
-                console.error('❌ Erro ao criar conta:', error);
-                alert('Erro ao criar conta: ' + error.message);
-            }
-        }
-
-        // ==================== EVENT LISTENERS ====================
-        searchInput.addEventListener('input', (e) => {
-            const query = e.target.value;
-            clearBtn.style.display = query ? 'flex' : 'none';
-            if (searchTimeout) clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(() => showSuggestions(query), 300);
-        });
-
-        clearBtn.addEventListener('click', () => {
-            searchInput.value = '';
-            clearBtn.style.display = 'none';
-            suggestionsDiv.classList.remove('show');
-            searchInput.focus();
-        });
-
-        searchInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                suggestionsDiv.classList.remove('show');
-                performSearch();
-            }
-        });
-
-        document.getElementById('search-button').addEventListener('click', () => {
-            suggestionsDiv.classList.remove('show');
-            performSearch();
-        });
-
-        document.getElementById('login-form-modal').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const email = document.getElementById('modal-email').value;
-            const password = document.getElementById('modal-password').value;
-            await login(email, password);
-        });
-
-        loginModal.addEventListener('click', (e) => {
-            if (e.target === loginModal) closeLoginModal();
-        });
-
-        document.addEventListener('keydown', (e) => {
-            if (!isCaptchaActive) return;
-            
-            let dx = 0, dy = 0;
-            if (e.key === 'ArrowUp' || e.key === 'w') dy = -1;
-            else if (e.key === 'ArrowDown' || e.key === 's') dy = 1;
-            else if (e.key === 'ArrowLeft' || e.key === 'a') dx = -1;
-            else if (e.key === 'ArrowRight' || e.key === 'd') dx = 1;
-            else return;
-            
-            e.preventDefault();
-            mazeMove(dx, dy);
-        });
-
-        // ==================== INICIALIZAÇÃO ====================
-        async function init() {
-            await loadAllPages();
-            
-            auth.onAuthStateChanged((user) => {
-                currentUser = user;
-                updateUserUI();
             });
             
-            console.log('🚀 WazzimaGiygg Search inicializado com proteção Anti-Abuse!');
-            console.log('📝 Proteção: ' + MAX_ACCESS_IN_WINDOW + ' acessos a cada ' + TIME_WINDOW_MS/1000 + ' segundos');
+            notifications.sort((a, b) => {
+                const dateA = a.timestamp?.toDate ? a.timestamp.toDate() : new Date(a.timestamp);
+                const dateB = b.timestamp?.toDate ? b.timestamp.toDate() : new Date(b.timestamp);
+                return dateB - dateA;
+            });
+            
+            unreadCount = notifications.filter(n => !n.lida).length;
+            updateNotificationBadge();
+            renderNotifications();
+        }, (error) => {
+            console.error('❌ Erro no listener de notificações:', error);
+        });
+}
+
+// ==================== FUNÇÕES DE AUTENTICAÇÃO ====================
+
+async function checkIfUserIsBanned(user) {
+    if (!user) return false;
+    try {
+        const userDoc = await db.collection('users').doc(user.uid).get();
+        if (userDoc.exists) {
+            return userDoc.data().isBanned === true || userDoc.data().isBan === true;
+        }
+    } catch (error) {
+        console.log("Erro ao verificar banimento:", error);
+    }
+    return false;
+}
+
+function showBannedScreen(reason = 'Violação das políticas de uso') {
+    const overlay = document.getElementById('bannedOverlay');
+    const details = document.getElementById('banDetails');
+    details.textContent = `Motivo: ${reason}`;
+    overlay.classList.add('show');
+    document.querySelector('.header').style.opacity = '0.3';
+    document.querySelector('.header').style.pointerEvents = 'none';
+    document.querySelector('.container').style.opacity = '0.3';
+    document.querySelector('.container').style.pointerEvents = 'none';
+    document.querySelector('.site-footer').style.opacity = '0.3';
+    document.querySelector('.site-footer').style.pointerEvents = 'none';
+}
+
+async function logoutBanned() {
+    try {
+        await auth.signOut();
+        location.reload();
+    } catch (error) {
+        console.error('Erro ao fazer logout:', error);
+        location.reload();
+    }
+}
+
+async function loginWithGoogle() {
+    try {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        const result = await auth.signInWithPopup(provider);
+        currentUser = result.user;
+        
+        // Verifica banimento
+        isBanned = await checkIfUserIsBanned(currentUser);
+        
+        if (isBanned) {
+            showBannedScreen('Sua conta foi banida por violação das políticas de uso.');
+            await auth.signOut();
+            updateUI();
+            return;
         }
         
-        init();
-    </script>
+        // Verifica se é admin
+        isAdmin = false;
+        try {
+            const userDoc = await db.collection('users').doc(currentUser.uid).get();
+            if (userDoc.exists && userDoc.data().isAdmin === true) {
+                isAdmin = true;
+            }
+        } catch (e) {}
+        
+        const userRef = db.collection('users').doc(currentUser.uid);
+        const userDoc = await userRef.get();
+        
+        if (!userDoc.exists) {
+            await userRef.set({
+                email: currentUser.email,
+                displayName: currentUser.displayName || currentUser.email.split('@')[0],
+                photoURL: currentUser.photoURL || null,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                isAdmin: false,
+                isTeatcher: false,
+                isBanned: false
+            });
+        }
+        
+        updateUI();
+        closeLoginModal();
+        await loadNotifications();
+        listenNotifications();
+        console.log('✅ Login com Google realizado!');
+    } catch (error) {
+        console.error('❌ Erro no login:', error);
+        alert('Erro ao fazer login: ' + error.message);
+    }
+}
+
+function updateUI() {
+    const userAvatar = document.getElementById('userAvatar');
+    const userName = document.getElementById('userName');
+    const userEmail = document.getElementById('userEmail');
+    const userBadge = document.getElementById('userBadge');
+    const btnLogin = document.getElementById('btnLogin');
+    const btnLogout = document.getElementById('btnLogout');
+    const guestBadge = document.getElementById('guest-badge');
+    
+    if (currentUser && !isBanned) {
+        let name = currentUser.displayName || (currentUser.email ? currentUser.email.split('@')[0] : 'Usuário');
+        
+        if (currentUser.photoURL) {
+            userAvatar.innerHTML = `<img src="${currentUser.photoURL}" alt="Avatar">`;
+        } else {
+            userAvatar.textContent = getInitials(name);
+        }
+        
+        userName.textContent = name.length > 20 ? name.substring(0,17)+'...' : name;
+        userEmail.textContent = currentUser.email || '';
+        
+        let badges = '';
+        if (isBanned) badges += '<span class="badge-banned">🚫 Banido</span> ';
+        if (isAdmin) badges += '<span class="badge-admin">Admin</span> ';
+        userBadge.innerHTML = badges;
+        
+        btnLogin.style.display = 'none';
+        btnLogout.style.display = 'inline-block';
+        guestBadge.innerHTML = `<i class="material-icons" style="font-size:14px;">person</i> Olá, ${escapeHtml(name)}`;
+    } else {
+        userAvatar.innerHTML = '👤';
+        userName.textContent = 'Visitante';
+        userEmail.textContent = '';
+        userBadge.innerHTML = '';
+        btnLogin.style.display = 'inline-block';
+        btnLogout.style.display = 'none';
+        guestBadge.innerHTML = `<i class="material-icons" style="font-size:14px;">public</i> Modo Convidado - Busca liberada`;
+    }
+}
+
+function showLoginModal() { document.getElementById('login-modal').classList.add('show'); }
+function closeLoginModal() { document.getElementById('login-modal').classList.remove('show'); }
+
+async function logout() {
+    try {
+        await auth.signOut();
+        currentUser = null;
+        isBanned = false;
+        isAdmin = false;
+        updateUI();
+        if (notificationListener) {
+            notificationListener();
+            notificationListener = null;
+        }
+        notifications = [];
+        unreadCount = 0;
+        updateNotificationBadge();
+        console.log('✅ Logout realizado!');
+    } catch (error) {
+        console.error('❌ Erro no logout:', error);
+    }
+}
+
+function showRegister() {
+    const email = prompt('Digite seu e-mail:');
+    if (!email) return;
+    const password = prompt('Digite sua senha (mínimo 6 caracteres):');
+    if (!password || password.length < 6) {
+        alert('A senha deve ter pelo menos 6 caracteres');
+        return;
+    }
+    registerUserEmail(email, password);
+}
+
+async function registerUserEmail(email, password) {
+    try {
+        const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+        currentUser = userCredential.user;
+        await db.collection('users').doc(currentUser.uid).set({
+            email: currentUser.email,
+            displayName: currentUser.email.split('@')[0],
+            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            isAdmin: false,
+            isTeatcher: false,
+            isBanned: false
+        });
+        updateUI();
+        closeLoginModal();
+        alert('Conta criada com sucesso!');
+    } catch (error) {
+        console.error('❌ Erro ao criar conta:', error);
+        alert('Erro ao criar conta: ' + error.message);
+    }
+}
+
+// ==================== FUNÇÕES DA BUSCA ====================
+let allPages = [];
+let searchTimeout = null;
+
+const searchInput = document.getElementById('search-input');
+const clearBtn = document.getElementById('clear-search');
+const suggestionsDiv = document.getElementById('suggestions');
+const resultsContainer = document.getElementById('results-container');
+const resultsGrid = document.getElementById('results-grid');
+const resultsCount = document.getElementById('results-count');
+const pageCountSpan = document.getElementById('page-count');
+
+async function loadAllPages() {
+    try {
+        console.log('📚 Carregando páginas do Firebase...');
+        const querySnapshot = await db.collection('paginasUsuario').get();
+        allPages = [];
+        
+        querySnapshot.forEach(doc => {
+            const data = doc.data();
+            const pages = data["Lista de Páginas de Busca"] || [];
+            
+            pages.forEach(page => {
+                if (page.Nome && page.Link) {
+                    allPages.push({
+                        id: page.id || generateId(),
+                        nome: page.Nome,
+                        url: page.Link,
+                        categoria: page.categoria || 'Geral',
+                        icone: page.icone || 'link',
+                        descricao: page.descricao || '',
+                        usuarioId: doc.id,
+                        ordem: page.ordem || 0
+                    });
+                }
+            });
+        });
+        
+        const urlMap = new Map();
+        allPages = allPages.filter(page => {
+            if (urlMap.has(page.url)) return false;
+            urlMap.set(page.url, true);
+            return true;
+        });
+        
+        pageCountSpan.textContent = allPages.length;
+        console.log(`✅ ${allPages.length} páginas carregadas`);
+        return allPages;
+    } catch (error) {
+        console.error('❌ Erro ao carregar páginas:', error);
+        return [];
+    }
+}
+
+function searchPages(query) {
+    if (!query || query.trim() === '') return [];
+    const lowerQuery = query.toLowerCase();
+    return allPages.filter(page => {
+        return page.nome.toLowerCase().includes(lowerQuery) ||
+               page.descricao.toLowerCase().includes(lowerQuery) ||
+               page.categoria.toLowerCase().includes(lowerQuery) ||
+               page.url.toLowerCase().includes(lowerQuery);
+    });
+}
+
+function showSuggestions(query) {
+    if (!query || query.trim() === '') {
+        suggestionsDiv.classList.remove('show');
+        return;
+    }
+    
+    const results = searchPages(query).slice(0, 5);
+    if (results.length === 0) {
+        suggestionsDiv.classList.remove('show');
+        return;
+    }
+    
+    suggestionsDiv.innerHTML = results.map(page => `
+        <div class="suggestion-item" onclick="selectSuggestion('${page.nome.replace(/'/g, "\\'")}')">
+            <i class="material-icons suggestion-icon">${page.icone}</i>
+            <div class="suggestion-text">
+                <strong>${highlightText(page.nome, query)}</strong>
+                <div style="font-size: 12px; color: #5f6368;">${page.url.substring(0, 50)}</div>
+            </div>
+            <span class="suggestion-category">${page.categoria}</span>
+        </div>
+    `).join('');
+    suggestionsDiv.classList.add('show');
+}
+
+function highlightText(text, query) {
+    if (!query) return text;
+    const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+    return text.replace(regex, '<mark style="background: #fff3cd; padding: 0;">$1</mark>');
+}
+
+function selectSuggestion(query) {
+    searchInput.value = query;
+    suggestionsDiv.classList.remove('show');
+    performSearch();
+}
+
+async function performSearch() {
+    if (isCaptchaActive) {
+        alert("Complete o labirinto de verificação primeiro!");
+        return;
+    }
+    
+    if (!checkAbuse()) return;
+    
+    const query = searchInput.value.trim();
+    if (!query) {
+        showAllPages();
+        return;
+    }
+    
+    const results = searchPages(query);
+    displayResults(results, query);
+}
+
+async function showAllPages() {
+    if (isCaptchaActive) {
+        alert("Complete o labirinto de verificação primeiro!");
+        return;
+    }
+    
+    if (!checkAbuse()) return;
+    
+    const query = searchInput.value.trim();
+    if (query) searchInput.value = '';
+    displayResults(allPages, 'Todos os resultados');
+}
+
+function displayResults(results, searchTerm) {
+    resultsCount.textContent = `📄 ${results.length} resultado${results.length !== 1 ? 's' : ''} para "${searchTerm || 'todos'}"`;
+    
+    if (results.length === 0) {
+        resultsGrid.innerHTML = `
+            <div class="no-results" style="grid-column: 1/-1;">
+                <i class="material-icons">search_off</i>
+                <h3>Nenhum resultado encontrado</h3>
+                <p>Tente buscar por outro termo ou verifique a ortografia.</p>
+            </div>
+        `;
+    } else {
+        resultsGrid.innerHTML = results.map(page => `
+            <div class="result-card" onclick="window.open('${page.url}', '_blank')">
+                <div class="card-icon">
+                    <i class="material-icons">${page.icone}</i>
+                </div>
+                <h3 class="card-title">${escapeHtml(page.nome)}</h3>
+                <div class="card-url">${escapeHtml(page.url)}</div>
+                ${page.descricao ? `<div class="card-description">${escapeHtml(page.descricao.substring(0, 100))}${page.descricao.length > 100 ? '...' : ''}</div>` : ''}
+                <span class="card-category">${escapeHtml(page.categoria)}</span>
+            </div>
+        `).join('');
+    }
+    
+    resultsContainer.classList.add('show');
+    resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function hideResults() {
+    resultsContainer.classList.remove('show');
+}
+
+function resetSearch() {
+    searchInput.value = '';
+    hideResults();
+    suggestionsDiv.classList.remove('show');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function generateId() {
+    return 'page_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+}
+
+// ==================== EVENT LISTENERS ====================
+searchInput.addEventListener('input', (e) => {
+    const query = e.target.value;
+    clearBtn.style.display = query ? 'flex' : 'none';
+    if (searchTimeout) clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => showSuggestions(query), 300);
+});
+
+clearBtn.addEventListener('click', () => {
+    searchInput.value = '';
+    clearBtn.style.display = 'none';
+    suggestionsDiv.classList.remove('show');
+    searchInput.focus();
+});
+
+searchInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        suggestionsDiv.classList.remove('show');
+        performSearch();
+    }
+});
+
+document.getElementById('search-button').addEventListener('click', () => {
+    suggestionsDiv.classList.remove('show');
+    performSearch();
+});
+
+document.getElementById('login-form-modal').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('modal-email').value;
+    const password = document.getElementById('modal-password').value;
+    try {
+        const userCredential = await auth.signInWithEmailAndPassword(email, password);
+        currentUser = userCredential.user;
+        updateUI();
+        closeLoginModal();
+        console.log('✅ Login realizado!');
+    } catch (error) {
+        console.error('❌ Erro no login:', error);
+        alert('Erro ao fazer login: ' + error.message);
+    }
+});
+
+loginModal.addEventListener('click', (e) => {
+    if (e.target === loginModal) closeLoginModal();
+});
+
+document.addEventListener('keydown', (e) => {
+    if (!isCaptchaActive) return;
+    
+    let dx = 0, dy = 0;
+    if (e.key === 'ArrowUp' || e.key === 'w') dy = -1;
+    else if (e.key === 'ArrowDown' || e.key === 's') dy = 1;
+    else if (e.key === 'ArrowLeft' || e.key === 'a') dx = -1;
+    else if (e.key === 'ArrowRight' || e.key === 'd') dx = 1;
+    else return;
+    
+    e.preventDefault();
+    mazeMove(dx, dy);
+});
+
+// ==================== INICIALIZAÇÃO ====================
+async function init() {
+    await loadAllPages();
+    
+    auth.onAuthStateChanged(async (user) => {
+        if (user) {
+            currentUser = user;
+            
+            // Verifica banimento
+            isBanned = await checkIfUserIsBanned(user);
+            
+            if (isBanned) {
+                showBannedScreen('Sua conta foi banida por violação das políticas de uso.');
+                await auth.signOut();
+                updateUI();
+                return;
+            }
+            
+            // Verifica se é admin
+            isAdmin = false;
+            try {
+                const userDoc = await db.collection('users').doc(user.uid).get();
+                if (userDoc.exists && userDoc.data().isAdmin === true) {
+                    isAdmin = true;
+                }
+            } catch (e) {}
+            
+            updateUI();
+            await loadNotifications();
+            listenNotifications();
+        } else {
+            currentUser = null;
+            isBanned = false;
+            isAdmin = false;
+            updateUI();
+            if (notificationListener) {
+                notificationListener();
+                notificationListener = null;
+            }
+            notifications = [];
+            unreadCount = 0;
+            updateNotificationBadge();
+        }
+    });
+    
+    console.log('🚀 WazzimaGiygg Search inicializado com proteção Anti-Abuse!');
+    console.log('📝 Proteção: ' + MAX_ACCESS_IN_WINDOW + ' acessos a cada ' + TIME_WINDOW_MS/1000 + ' segundos');
+    console.log('🔔 Notificações integradas via coleção "notifications"');
+}
+
+init();
+</script>
 </body>
 </html>
