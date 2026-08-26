@@ -4,23 +4,1047 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="https://gspotfverwazzimagiygg.wazzimagiygg.com/search/Favicom.png" type="image/x-icon">
-    <title data-i18n-search="search_titulo">WazzimaGiygg Search - Busca Inteligente</title>
+    <title>WazzimaGiygg Search - Busca Inteligente</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- ===== CSS LOCAL (sem CORS) ===== -->
-    <link rel="stylesheet" href="search.css">
-    
+    <!-- ===== TODO O CSS ESTÁ AQUI ===== -->
     <style>
-        /* CSS de fallback para segurança */
+        /* ============================================
+           SEARCH.CSS - WazzimaGiygg Search (EMBEDDED)
+           ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #1a1a2e;
+        }
+
         .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
             opacity: 0;
             transition: opacity 0.3s;
         }
         .container.loaded {
             opacity: 1;
         }
-        
+
+        /* ===== HEADER ===== */
+        .header {
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+            position: sticky;
+            top: 10px;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .logo-area-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
+
+        .logo-area-header img {
+            height: 36px;
+            border-radius: 8px;
+        }
+
+        .logo-area-header h1 {
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+
+        .logo-area-header small {
+            font-size: 0.65em;
+            opacity: 0.7;
+            display: block;
+            font-weight: 300;
+        }
+
+        .user-info-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #e94560, #ff6b6b);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1em;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.2s;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .user-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .user-avatar:hover { transform: scale(1.05); }
+
+        .user-name { font-weight: 500; font-size: 0.85em; }
+        .user-email { font-size: 0.7em; opacity: 0.7; }
+
+        .btn-logout {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.75em;
+            transition: all 0.2s;
+        }
+
+        .btn-logout:hover { background: rgba(255,255,255,0.2); }
+
+        .btn-login {
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.25);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.75em;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-login:hover { background: rgba(255,255,255,0.25); }
+
+        .badge-admin {
+            background: #e94560;
+            color: white;
+            font-size: 0.55em;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge-banned {
+            background: #dc3545;
+            color: white;
+            font-size: 0.55em;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        /* ===== LANGUAGE SELECTOR ===== */
+        .lang-selector select {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 16px;
+            font-size: 12px;
+            cursor: pointer;
+            outline: none;
+        }
+        .lang-selector select option {
+            background: #1a1a2e;
+            color: white;
+        }
+
+        /* ===== NOTIFICATION BELL ===== */
+        .notification-bell {
+            position: relative;
+            cursor: pointer;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 10px;
+            border-radius: 30px;
+            transition: background 0.2s;
+        }
+
+        .notification-bell:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .notification-bell .material-icons {
+            font-size: 20px;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background: #e94560;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 9px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #1a1a2e;
+        }
+
+        .notification-dropdown {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            width: 340px;
+            max-height: 350px;
+            overflow-y: auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+            display: none;
+            z-index: 200;
+            color: #1a1a2e;
+        }
+
+        .notification-dropdown.show {
+            display: block;
+        }
+
+        .notification-dropdown-header {
+            padding: 12px 16px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .notification-dropdown-header h3 {
+            font-size: 13px;
+            font-weight: 600;
+            color: #1a1a2e;
+        }
+
+        .notification-dropdown-header button {
+            background: none;
+            border: none;
+            color: #4a6cf7;
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .notification-item {
+            padding: 10px 16px;
+            border-bottom: 1px solid #f0f0f0;
+            transition: background 0.2s;
+            cursor: pointer;
+        }
+
+        .notification-item:hover {
+            background: #f8f9fa;
+        }
+
+        .notification-item.unread {
+            background: #eef2ff;
+            border-left: 3px solid #4a6cf7;
+        }
+
+        .notification-item .notif-title {
+            font-weight: 600;
+            font-size: 12px;
+            color: #1a1a2e;
+        }
+
+        .notification-item .notif-message {
+            font-size: 11px;
+            color: #666;
+            margin-top: 3px;
+        }
+
+        .notification-item .notif-time {
+            font-size: 10px;
+            color: #999;
+            margin-top: 3px;
+        }
+
+        .notification-empty {
+            padding: 20px;
+            text-align: center;
+            color: #999;
+            font-size: 13px;
+        }
+
+        .notification-empty .material-icons {
+            font-size: 36px;
+            opacity: 0.4;
+        }
+
+        /* ===== SEARCH ===== */
+        .search-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 40px 20px;
+        }
+
+        .center-logo {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 24px;
+        }
+
+        .center-logo img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            border: 3px solid rgba(255,255,255,0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .center-logo img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+        }
+
+        .search-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .search-title h1 {
+            font-size: 56px;
+            background: linear-gradient(135deg, #fff, #e0e0e0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+            letter-spacing: -1px;
+        }
+
+        .search-title p {
+            color: rgba(255,255,255,0.9);
+            font-size: 18px;
+        }
+
+        .guest-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-top: 12px;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .search-box {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+
+        .search-input-wrapper {
+            background: white;
+            border-radius: 50px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            padding: 4px 8px 4px 20px;
+        }
+
+        .search-input-wrapper:hover,
+        .search-input-wrapper:focus-within {
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            transform: translateY(-2px);
+        }
+
+        .search-icon {
+            color: #9aa0a6;
+            margin-right: 12px;
+        }
+
+        .search-input {
+            flex: 1;
+            border: none;
+            padding: 16px 0;
+            font-size: 16px;
+            outline: none;
+            background: transparent;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .search-clear {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #9aa0a6;
+            padding: 8px;
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search-clear:hover {
+            background: #f1f3f4;
+        }
+
+        .search-divider {
+            width: 1px;
+            height: 28px;
+            background: #dadce0;
+            margin: 0 8px;
+        }
+
+        .search-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px 16px;
+            border-radius: 24px;
+            color: #1a73e8;
+            font-weight: 500;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .search-button:hover {
+            background: #f1f3f4;
+        }
+
+        .search-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn-search {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 12px 24px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .btn-search:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        .suggestions {
+            max-width: 600px;
+            margin: 20px auto 0;
+            display: none;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            overflow: hidden;
+        }
+
+        .suggestions.show {
+            display: block;
+        }
+
+        .suggestion-item {
+            padding: 12px 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: background 0.2s;
+            border-bottom: 1px solid #f1f3f4;
+        }
+
+        .suggestion-item:last-child {
+            border-bottom: none;
+        }
+
+        .suggestion-item:hover {
+            background: #f8f9fa;
+        }
+
+        .suggestion-icon {
+            color: #9aa0a6;
+        }
+
+        .suggestion-text {
+            flex: 1;
+            color: #202124;
+        }
+
+        .suggestion-category {
+            font-size: 12px;
+            color: #1a73e8;
+            background: #e8f0fe;
+            padding: 4px 8px;
+            border-radius: 12px;
+        }
+
+        .info-banner {
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 16px 24px;
+            margin-top: 30px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .info-banner p {
+            color: rgba(255,255,255,0.9);
+            font-size: 14px;
+        }
+
+        .warning-banner {
+            background: rgba(255, 100, 100, 0.9);
+            border-radius: 12px;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            display: none;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .warning-banner.show {
+            display: block;
+        }
+
+        .warning-banner p {
+            color: white;
+            font-size: 14px;
+        }
+
+        .warning-banner .material-icons {
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+
+        /* ===== RESULTS ===== */
+        .results-container {
+            margin-top: 40px;
+            display: none;
+            width: 100%;
+        }
+
+        .results-container.show {
+            display: block;
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .results-count {
+            color: rgba(255,255,255,0.8);
+            font-size: 14px;
+        }
+
+        .results-close {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            transition: background 0.2s;
+        }
+
+        .results-close:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        .result-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+        }
+
+        .result-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+
+        .card-icon i {
+            font-size: 24px;
+            color: white;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a1a2e;
+            margin-bottom: 8px;
+        }
+
+        .card-url {
+            font-size: 13px;
+            color: #1a73e8;
+            margin-bottom: 12px;
+            word-break: break-all;
+        }
+
+        .card-description {
+            font-size: 14px;
+            color: #5f6368;
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        .card-category {
+            display: inline-block;
+            background: #e8f0fe;
+            color: #1a73e8;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 24px;
+            backdrop-filter: blur(10px);
+            grid-column: 1/-1;
+        }
+
+        .no-results i {
+            font-size: 64px;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 20px;
+        }
+
+        .no-results h3 {
+            color: white;
+            margin-bottom: 8px;
+        }
+
+        .no-results p {
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* ===== MODAL ===== */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 24px;
+            padding: 32px;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .modal-header h2 {
+            font-size: 24px;
+            color: #1a1a2e;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #9aa0a6;
+        }
+
+        .modal-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #dadce0;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .modal-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .modal-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 8px;
+            font-size: 14px;
+        }
+
+        .modal-btn:hover {
+            opacity: 0.9;
+        }
+
+        .modal-divider {
+            display: flex;
+            align-items: center;
+            margin: 24px 0;
+            color: #9aa0a6;
+            font-size: 14px;
+        }
+
+        .modal-divider::before,
+        .modal-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #dadce0;
+        }
+
+        .modal-divider span {
+            padding: 0 15px;
+        }
+
+        .google-login-btn {
+            width: 100%;
+            padding: 12px;
+            background: white;
+            color: #3c4043;
+            border: 1px solid #dadce0;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            font-size: 14px;
+        }
+
+        .google-login-btn:hover {
+            background: #f8f9fa;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .google-login-btn img {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* ===== CAPTCHA MAZE ===== */
+        .captcha-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 10000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(8px);
+        }
+
+        .captcha-overlay.show {
+            display: flex;
+        }
+
+        .captcha-content {
+            background: #2b1e0f;
+            padding: 30px;
+            border-radius: 48px;
+            box-shadow: 0 20px 35px rgba(0,0,0,0.5);
+            text-align: center;
+            max-width: 650px;
+            width: 90%;
+        }
+
+        .captcha-content h2 {
+            color: #ffd966;
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+
+        .captcha-content p {
+            color: #ecd69e;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .maze-container {
+            background: #3e2a1f;
+            padding: 20px;
+            border-radius: 32px;
+            margin-bottom: 20px;
+        }
+
+        .maze-canvas {
+            display: block;
+            margin: 0 auto;
+            border-radius: 16px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+            background-color: #f9eed7;
+            width: 100%;
+            height: auto;
+            max-width: 500px;
+            aspect-ratio: 1/1;
+        }
+
+        .maze-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .maze-btn {
+            background: #d4af37;
+            border: none;
+            font-family: inherit;
+            font-weight: bold;
+            font-size: 1.5rem;
+            padding: 10px 25px;
+            border-radius: 40px;
+            color: #2c1a0c;
+            cursor: pointer;
+            transition: 0.1s linear;
+            box-shadow: 0 5px 0 #7a5300;
+            min-width: 60px;
+        }
+
+        .maze-btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #7a5300;
+        }
+
+        .maze-status {
+            background: #1f1a10;
+            padding: 10px 20px;
+            border-radius: 40px;
+            color: #f7e05e;
+            font-weight: bold;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        /* ===== BANNED OVERLAY ===== */
+        .banned-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .banned-overlay.show { display: flex; }
+
+        .banned-box {
+            background: #1a1a1a;
+            border: 2px solid #e94560;
+            border-radius: 16px;
+            padding: 50px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            color: white;
+        }
+
+        .banned-box .icon { font-size: 80px; margin-bottom: 20px; }
+        .banned-box h2 { color: #e94560; margin-bottom: 15px; }
+        .banned-box p { color: #aaa; margin-bottom: 20px; line-height: 1.6; }
+
+        .banned-box .btn-logout-banned {
+            background: #e94560;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .banned-box .btn-logout-banned:hover { background: #c0392b; }
+
+        .banned-box .ban-details {
+            background: #2a2a2a;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-size: 13px;
+            color: #888;
+        }
+
+        /* ===== FOOTER ===== */
+        .site-footer {
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid #2a2a2a;
+            margin-top: 40px;
+            padding: 25px 20px 20px;
+            border-radius: 16px 16px 0 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 8px 12px;
+            margin-bottom: 15px;
+        }
+
+        .footer-link {
+            color: #aaa !important;
+            text-decoration: none;
+            font-size: 12px;
+            transition: all 0.3s ease;
+            padding: 4px 0;
+            display: inline-block;
+        }
+
+        .footer-link:hover {
+            color: #667eea !important;
+            transform: translateY(-1px);
+        }
+
+        .footer-link.highlight {
+            color: #ffb347 !important;
+        }
+
+        .footer-divider {
+            color: #444;
+            font-size: 11px;
+            margin: 0 2px;
+        }
+
+        .footer-copyright {
+            color: #666;
+            font-size: 11px;
+            padding-top: 12px;
+            border-top: 1px solid #222;
+            margin-top: 8px;
+        }
+
+        /* ===== LOADING INDICATOR ===== */
         #loadingIndicator {
             position: fixed;
             top: 0;
@@ -54,6 +1078,56 @@
         #loadingIndicator.hidden {
             display: none;
         }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .search-title h1 {
+                font-size: 36px;
+            }
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+            .search-input-wrapper {
+                padding: 4px 8px 4px 16px;
+            }
+            .search-input {
+                font-size: 14px;
+            }
+            .center-logo img {
+                width: 80px;
+                height: 80px;
+            }
+            .header-content {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+            }
+            .user-info-header {
+                justify-content: space-between;
+            }
+            .notification-dropdown {
+                width: 300px;
+                right: -20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .user-name, .user-email { display: none; }
+            .notification-dropdown {
+                width: calc(100vw - 40px);
+                right: -10px;
+            }
+            .search-title h1 {
+                font-size: 28px;
+            }
+            .search-title p {
+                font-size: 14px;
+            }
+            .btn-search {
+                padding: 10px 16px;
+                font-size: 12px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -61,22 +1135,22 @@
 <!-- INDICADOR DE CARREGAMENTO -->
 <div id="loadingIndicator">
     <div class="spinner"></div>
-    <p data-i18n-search="aguarde_carregando">Carregando WazzimaGiygg Search...</p>
+    <p>Carregando WazzimaGiygg Search...</p>
 </div>
 
 <!-- BANNED OVERLAY -->
-<div id="bannedOverlay" class="banned-overlay" style="display:none;">
+<div id="bannedOverlay" class="banned-overlay">
     <div class="banned-box">
         <div class="icon">🚫</div>
-        <h2 data-i18n-search="conta_banida">⚠️ Conta Banida</h2>
-        <p data-i18n-search="conta_banida_texto">Sua conta foi banida permanentemente do sistema.</p>
-        <div id="banDetails" class="ban-details" data-i18n-search="motivo">Motivo: Violação das políticas de uso</div>
-        <p style="font-size: 14px; color: #666;" data-i18n-search="erro_banimento">Se você acredita que isso é um erro, entre em contato com o suporte.</p>
-        <button class="btn-logout-banned" onclick="logoutBanned()" data-i18n-search="sair_conta">🚪 Sair da conta</button>
+        <h2>⚠️ Conta Banida</h2>
+        <p>Sua conta foi banida permanentemente do sistema.</p>
+        <div id="banDetails" class="ban-details">Motivo: Violação das políticas de uso</div>
+        <p style="font-size: 14px; color: #666;">Se você acredita que isso é um erro, entre em contato com o suporte.</p>
+        <button class="btn-logout-banned" onclick="logoutBanned()">🚪 Sair da conta</button>
     </div>
 </div>
 
-<div class="container">
+<div class="container" id="mainContainer">
     <!-- ===== HEADER ===== -->
     <header class="header">
         <div class="header-content">
@@ -84,14 +1158,14 @@
                 <img src="https://wazzimagiygg.com/favicom.png" alt="Logo">
                 <div>
                     <h1>WazzimaGiygg</h1>
-                    <small data-i18n-search="search_subtitulo">Search</small>
+                    <small>Search</small>
                 </div>
             </div>
             <div class="user-info-header" id="userInfo">
                 <div class="user-avatar" id="userAvatar">👤</div>
                 <div>
-                    <div class="user-name" id="userName" data-i18n-search="carregando">Carregando...</div>
-                    <div class="user-email" id="userEmail" data-i18n-search="aguarde">aguarde</div>
+                    <div class="user-name" id="userName">Carregando...</div>
+                    <div class="user-email" id="userEmail">aguarde</div>
                 </div>
                 <span id="userBadge"></span>
                 
@@ -104,20 +1178,20 @@
                     <span class="notification-badge" id="notifBadge" style="display:none;">0</span>
                     <div class="notification-dropdown" id="notifDropdown">
                         <div class="notification-dropdown-header">
-                            <h3 data-i18n-search="notificacoes">🔔 Notificações</h3>
-                            <button onclick="markAllAsRead(event)" data-i18n-search="marcar_todas_lidas">Marcar todas como lidas</button>
+                            <h3>🔔 Notificações</h3>
+                            <button onclick="markAllAsRead(event)">Marcar todas como lidas</button>
                         </div>
                         <div id="notificationList">
                             <div class="notification-empty">
                                 <span class="material-icons">notifications_off</span>
-                                <p data-i18n-search="nenhuma_notificacao">Nenhuma notificação</p>
+                                <p>Nenhuma notificação</p>
                             </div>
                         </div>
                     </div>
                 </div>
                 
-                <button class="btn-logout" id="btnLogout" style="display:none;" onclick="logout()" data-i18n-search="sair">Sair</button>
-                <button class="btn-login" id="btnLogin" onclick="showLoginModal()" data-i18n-search="entrar">
+                <button class="btn-logout" id="btnLogout" style="display:none;" onclick="logout()">Sair</button>
+                <button class="btn-login" id="btnLogin" onclick="showLoginModal()">
                     <span class="material-icons" style="font-size:16px;">person</span> Entrar
                 </button>
             </div>
@@ -131,17 +1205,17 @@
         </div>
 
         <div class="search-title">
-            <h1 data-i18n-search="busca_titulo">WazzimaGiygg</h1>
-            <p data-i18n-search="busca_descricao">Busca inteligente para seus produtos e serviços</p>
+            <h1>WazzimaGiygg</h1>
+            <p>Busca inteligente para seus produtos e serviços</p>
             <div class="guest-badge" id="guest-badge">
-                <i class="material-icons" style="font-size: 14px;">public</i> <span data-i18n-search="modo_convidado">Modo Convidado - Busca liberada</span>
+                <i class="material-icons" style="font-size: 14px;">public</i> Modo Convidado - Busca liberada
             </div>
         </div>
 
-        <div class="warning-banner" id="warningBanner" style="display:none;">
+        <div class="warning-banner" id="warningBanner">
             <p>
                 <i class="material-icons" style="font-size: 16px;">warning</i>
-                <span data-i18n-search="warning_muitas_tentativas">Muitas tentativas de acesso! Complete o labirinto para continuar.</span>
+                Muitas tentativas de acesso! Complete o labirinto para continuar.
             </p>
         </div>
 
@@ -152,13 +1226,12 @@
                        id="search-input" 
                        class="search-input" 
                        placeholder="Pesquise produtos, serviços, páginas..."
-                       data-i18n-search="placeholder_busca"
                        autocomplete="off">
                 <button class="search-clear" id="clear-search" style="display:none;">
                     <i class="material-icons">close</i>
                 </button>
                 <div class="search-divider"></div>
-                <button class="search-button" id="search-button" data-i18n-search="botao_buscar">
+                <button class="search-button" id="search-button">
                     <i class="material-icons">search</i>
                     Buscar
                 </button>
@@ -170,26 +1243,26 @@
         <div class="search-buttons">
             <button class="btn-search" onclick="performSearch()">
                 <i class="material-icons">search</i>
-                <span data-i18n-search="botao_buscar">Pesquisar</span>
+                Pesquisar
             </button>
             <button class="btn-search" onclick="showAllPages()">
                 <i class="material-icons">view_list</i>
-                <span data-i18n-search="botao_ver_todas">Ver todas as páginas</span>
+                Ver todas as páginas
             </button>
         </div>
 
         <div class="info-banner">
             <p>
                 <i class="material-icons" style="font-size: 16px;">info</i>
-                <span data-i18n-search="info_paginas">Mais de <span id="page-count">0</span> páginas disponíveis para busca</span>
+                Mais de <span id="page-count">0</span> páginas disponíveis para busca
             </p>
         </div>
 
         <!-- RESULTS -->
-        <div class="results-container" id="results-container" style="display:none;">
+        <div class="results-container" id="results-container">
             <div class="results-header">
                 <div class="results-count" id="results-count"></div>
-                <button class="results-close" onclick="hideResults()" data-i18n-search="fechar_resultados">
+                <button class="results-close" onclick="hideResults()">
                     <i class="material-icons">close</i>
                 </button>
             </div>
@@ -201,21 +1274,21 @@
     <footer class="site-footer">
         <div class="footer-content">
             <div class="footer-links">
-                <a href="https://wazzimagiygg.com/donate/" class="footer-link" target="_blank" data-i18n-search="doacao">💝 Doação</a>
+                <a href="https://wazzimagiygg.com/donate/" class="footer-link" target="_blank">💝 Doação</a>
                 <span class="footer-divider">|</span>
-                <a href="https://wazzimagiygg.com/desktop.html" class="footer-link" target="_blank" data-i18n-search="desktop">🖥️ Desktop</a>
+                <a href="https://wazzimagiygg.com/desktop.html" class="footer-link" target="_blank">🖥️ Desktop</a>
                 <span class="footer-divider">|</span>
-                <a href="https://wazzimagiygg.com/LGPD" class="footer-link" target="_blank" data-i18n-search="lgpd">🔒 LGPD</a>
+                <a href="https://wazzimagiygg.com/LGPD" class="footer-link" target="_blank">🔒 LGPD</a>
                 <span class="footer-divider">|</span>
-                <a href="https://wazzimagiygg.com/MarcoCivil" class="footer-link" target="_blank" data-i18n-search="marco_civil">📜 Marco Civil</a>
+                <a href="https://wazzimagiygg.com/MarcoCivil" class="footer-link" target="_blank">📜 Marco Civil</a>
                 <span class="footer-divider">|</span>
-                <a href="https://support.wazzimagiygg.com/" class="footer-link" target="_blank" data-i18n-search="ticket">🎫 Ticket</a>
+                <a href="https://support.wazzimagiygg.com/" class="footer-link" target="_blank">🎫 Ticket</a>
                 <span class="footer-divider">|</span>
-                <a href="https://wazzimagiygg.com/produtos" class="footer-link highlight" target="_blank" data-i18n-search="produtos">🛍️ Produtos</a>
+                <a href="https://wazzimagiygg.com/produtos" class="footer-link highlight" target="_blank">🛍️ Produtos</a>
                 <span class="footer-divider">|</span>
-                <a href="https://painel.wazzimagiygg.com/" class="footer-link highlight" target="_blank" data-i18n-search="sua_conta">👤 Sua conta</a>
+                <a href="https://painel.wazzimagiygg.com/" class="footer-link highlight" target="_blank">👤 Sua conta</a>
             </div>
-            <div class="footer-copyright" data-i18n-search="search_copyright">
+            <div class="footer-copyright">
                 © 2026 WazzimaGiygg Search - Busca inteligente e livre
             </div>
         </div>
@@ -223,38 +1296,38 @@
 </div>
 
 <!-- ===== MODAL LOGIN ===== -->
-<div class="modal" id="login-modal" style="display:none;">
+<div class="modal" id="login-modal">
     <div class="modal-content">
         <div class="modal-header">
-            <h2 data-i18n-search="entrar_conta">Entrar na sua conta</h2>
+            <h2>Entrar na sua conta</h2>
             <button class="modal-close" onclick="closeLoginModal()">&times;</button>
         </div>
         
         <button class="google-login-btn" onclick="loginWithGoogle()">
             <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
-            <span data-i18n-search="continuar_google">Continuar com Google</span>
+            Continuar com Google
         </button>
         
         <div class="modal-divider">
-            <span data-i18n-search="ou">ou</span>
+            <span>ou</span>
         </div>
         
         <form id="login-form-modal">
-            <input type="email" id="modal-email" class="modal-input" placeholder="E-mail" data-i18n-search="email" required>
-            <input type="password" id="modal-password" class="modal-input" placeholder="Senha" data-i18n-search="senha" required>
-            <button type="submit" class="modal-btn" data-i18n-search="entrar_email">Entrar com e-mail</button>
+            <input type="email" id="modal-email" class="modal-input" placeholder="E-mail" required>
+            <input type="password" id="modal-password" class="modal-input" placeholder="Senha" required>
+            <button type="submit" class="modal-btn">Entrar com e-mail</button>
         </form>
         <div style="text-align: center; margin-top: 16px;">
-            <a href="#" onclick="showRegister()" style="color: #667eea; text-decoration: none;" data-i18n-search="criar_conta">Criar nova conta</a>
+            <a href="#" onclick="showRegister()" style="color: #667eea; text-decoration: none;">Criar nova conta</a>
         </div>
     </div>
 </div>
 
 <!-- ===== CAPTCHA MAZE ===== -->
-<div class="captcha-overlay" id="captchaOverlay" style="display:none;">
+<div class="captcha-overlay" id="captchaOverlay">
     <div class="captcha-content">
-        <h2 data-i18n-search="verificacao_seguranca">🔐 Verificação de Segurança</h2>
-        <p data-i18n-search="verificacao_texto">Para continuar usando a busca, complete o labirinto abaixo.</p>
+        <h2>🔐 Verificação de Segurança</h2>
+        <p>Para continuar usando a busca, complete o labirinto abaixo.</p>
         <div class="maze-container">
             <canvas id="mazeCanvas" width="500" height="500" class="maze-canvas"></canvas>
             <div class="maze-controls">
@@ -263,113 +1336,1074 @@
                 <button class="maze-btn" onclick="mazeMove(-1, 0)">⬅️</button>
                 <button class="maze-btn" onclick="mazeMove(1, 0)">➡️</button>
             </div>
-            <div class="maze-status" id="mazeStatus" data-i18n-search="maze_status">⭐ Leve o personagem até a bandeira 🏁</div>
+            <div class="maze-status" id="mazeStatus">⭐ Leve o personagem até a bandeira 🏁</div>
         </div>
     </div>
 </div>
 
 <!-- ============================================ -->
-<!-- SCRIPTS - ORDEM CORRETA E ARQUIVOS LOCAIS -->
+<!-- ===== TODO O JAVASCRIPT ESTÁ AQUI ===== -->
 <!-- ============================================ -->
 
-<!-- 1. Firebase SDKs (CDN - versão estável) -->
+<!-- Firebase SDKs (CDN) -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
-<!-- 2. Language System (local) -->
-<script src="languages/search-pt.js"></script>
-<script src="languages/search-en.js"></script>
-<script src="languages/search-es.js"></script>
-<script src="languages/search-fr.js"></script>
-<script src="languages/search-de.js"></script>
-<script src="languages/search-index.js"></script>
-
-<!-- 3. Search JS (local - mesma pasta) -->
-<script src="search.js"></script>
-
-<!-- ===== SCRIPT DE VERIFICAÇÃO ADICIONAL ===== -->
 <script>
-    (function() {
-        'use strict';
-        
-        function hideLoadingIndicator() {
-            const indicator = document.getElementById('loadingIndicator');
-            if (indicator) {
-                indicator.classList.add('hidden');
-                setTimeout(function() {
-                    indicator.style.display = 'none';
-                }, 500);
-            }
+// ============================================
+// SEARCH.JS - WazzimaGiygg Search (COMPLETO)
+// ============================================
+(function() {
+    'use strict';
+
+    console.log('🚀 Inicializando WazzimaGiygg Search...');
+
+    // ==================== FIREBASE ====================
+    const firebaseConfig = {
+        apiKey: "AIzaSyB9GkSqTIZ0kbVsba_WOdQeVAETrF9qna0",
+        authDomain: "wzzm-ce3fc.firebaseapp.com",
+        projectId: "wzzm-ce3fc",
+        storageBucket: "wzzm-ce3fc.appspot.com",
+        messagingSenderId: "249427877153",
+        appId: "1:249427877153:web:0e4297294794a5aadeb260"
+    };
+
+    let app, auth, db;
+    try {
+        app = firebase.app();
+        auth = firebase.auth();
+        db = firebase.firestore();
+        console.log('✅ Firebase já inicializado');
+    } catch (e) {
+        app = firebase.initializeApp(firebaseConfig);
+        auth = firebase.auth();
+        db = firebase.firestore();
+        console.log('✅ Firebase inicializado pelo search.js');
+    }
+
+    // ==================== TRADUÇÕES ====================
+    const translations = {
+        pt: {
+            'placeholder_busca': 'Pesquise produtos, serviços, páginas...',
+            'botao_buscar': 'Buscar',
+            'botao_ver_todas': 'Ver todas as páginas',
+            'modo_convidado': 'Modo Convidado - Busca liberada',
+            'modo_usuario': 'Olá, {nome}',
+            'visitante': 'Visitante',
+            'entrar': 'Entrar',
+            'sair': 'Sair',
+            'search_titulo': 'WazzimaGiygg Search - Busca Inteligente',
+            'search_copyright': '© 2026 WazzimaGiygg Search - Busca inteligente e livre',
+            'maze_status': '⭐ Leve o personagem até a bandeira 🏁',
+            'warning_muitas_tentativas': 'Muitas tentativas de acesso! Complete o labirinto para continuar.',
+            'notificacoes': '🔔 Notificações',
+            'marcar_todas_lidas': 'Marcar todas como lidas',
+            'nenhuma_notificacao': 'Nenhuma notificação',
+            'conta_banida': '⚠️ Conta Banida',
+            'conta_banida_texto': 'Sua conta foi banida permanentemente do sistema.',
+            'motivo': 'Motivo:',
+            'erro_banimento': 'Se você acredita que isso é um erro, entre em contato com o suporte.',
+            'sair_conta': '🚪 Sair da conta',
+            'entrar_conta': 'Entrar na sua conta',
+            'continuar_google': 'Continuar com Google',
+            'ou': 'ou',
+            'email': 'E-mail',
+            'senha': 'Senha',
+            'entrar_email': 'Entrar com e-mail',
+            'criar_conta': 'Criar nova conta',
+            'verificacao_seguranca': '🔐 Verificação de Segurança',
+            'verificacao_texto': 'Para continuar usando a busca, complete o labirinto abaixo.',
+            'doacao': '💝 Doação',
+            'desktop': '🖥️ Desktop',
+            'lgpd': '🔒 LGPD',
+            'marco_civil': '📜 Marco Civil',
+            'ticket': '🎫 Ticket',
+            'produtos': '🛍️ Produtos',
+            'sua_conta': '👤 Sua conta',
+            'info_paginas': 'Mais de {total} páginas disponíveis para busca',
+            'resultados_para': '📄 {total} resultado{s} para "{termo}"',
+            'resultados_todos': '📄 {total} resultado{s} para "todos"',
+            'nenhum_resultado': 'Nenhum resultado encontrado',
+            'nenhum_resultado_texto': 'Tente buscar por outro termo ou verifique a ortografia.',
+            'fechar_resultados': 'Fechar resultados',
+            'aguarde_carregando': 'Carregando WazzimaGiygg Search...'
+        },
+        en: {
+            'placeholder_busca': 'Search for products, services, pages...',
+            'botao_buscar': 'Search',
+            'botao_ver_todas': 'View all pages',
+            'modo_convidado': 'Guest Mode - Search enabled',
+            'modo_usuario': 'Hello, {nome}',
+            'visitante': 'Guest',
+            'entrar': 'Sign In',
+            'sair': 'Sign Out',
+            'search_titulo': 'WazzimaGiygg Search - Smart Search',
+            'search_copyright': '© 2026 WazzimaGiygg Search - Smart and free search',
+            'maze_status': '⭐ Take the character to the flag 🏁',
+            'warning_muitas_tentativas': 'Too many attempts! Complete the maze to continue.',
+            'notificacoes': '🔔 Notifications',
+            'marcar_todas_lidas': 'Mark all as read',
+            'nenhuma_notificacao': 'No notifications',
+            'conta_banida': '⚠️ Banned Account',
+            'conta_banida_texto': 'Your account has been permanently banned from the system.',
+            'motivo': 'Reason:',
+            'erro_banimento': 'If you believe this is an error, please contact support.',
+            'sair_conta': '🚪 Sign out',
+            'entrar_conta': 'Sign in to your account',
+            'continuar_google': 'Continue with Google',
+            'ou': 'or',
+            'email': 'Email',
+            'senha': 'Password',
+            'entrar_email': 'Sign in with email',
+            'criar_conta': 'Create new account',
+            'verificacao_seguranca': '🔐 Security Verification',
+            'verificacao_texto': 'To continue using the search, complete the maze below.',
+            'doacao': '💝 Donation',
+            'desktop': '🖥️ Desktop',
+            'lgpd': '🔒 Privacy',
+            'marco_civil': '📜 Civil Rights',
+            'ticket': '🎫 Support',
+            'produtos': '🛍️ Products',
+            'sua_conta': '👤 Your Account',
+            'info_paginas': '{total} pages available for search',
+            'resultados_para': '📄 {total} result{s} for "{termo}"',
+            'resultados_todos': '📄 {total} result{s} for "all"',
+            'nenhum_resultado': 'No results found',
+            'nenhum_resultado_texto': 'Try searching for another term or check the spelling.',
+            'fechar_resultados': 'Close results',
+            'aguarde_carregando': 'Loading WazzimaGiygg Search...'
+        },
+        es: {
+            'placeholder_busca': 'Busque productos, servicios, páginas...',
+            'botao_buscar': 'Buscar',
+            'botao_ver_todas': 'Ver todas las páginas',
+            'modo_convidado': 'Modo Invitado - Búsqueda habilitada',
+            'modo_usuario': 'Hola, {nome}',
+            'visitante': 'Visitante',
+            'entrar': 'Iniciar Sesión',
+            'sair': 'Cerrar Sesión',
+            'search_titulo': 'WazzimaGiygg Search - Búsqueda Inteligente',
+            'search_copyright': '© 2026 WazzimaGiygg Search - Búsqueda inteligente y libre',
+            'maze_status': '⭐ Lleva al personaje hasta la bandera 🏁',
+            'warning_muitas_tentativas': '¡Demasiados intentos! Completa el laberinto para continuar.',
+            'notificacoes': '🔔 Notificaciones',
+            'marcar_todas_lidas': 'Marcar todas como leídas',
+            'nenhuma_notificacao': 'Sin notificaciones',
+            'conta_banida': '⚠️ Cuenta Baneada',
+            'conta_banida_texto': 'Tu cuenta ha sido baneada permanentemente del sistema.',
+            'motivo': 'Motivo:',
+            'erro_banimento': 'Si crees que esto es un error, contacta al soporte.',
+            'sair_conta': '🚪 Cerrar sesión',
+            'entrar_conta': 'Iniciar sesión en tu cuenta',
+            'continuar_google': 'Continuar con Google',
+            'ou': 'o',
+            'email': 'Correo electrónico',
+            'senha': 'Contraseña',
+            'entrar_email': 'Iniciar sesión con correo',
+            'criar_conta': 'Crear nueva cuenta',
+            'verificacao_seguranca': '🔐 Verificación de Seguridad',
+            'verificacao_texto': 'Para continuar usando la búsqueda, completa el laberinto.',
+            'doacao': '💝 Donación',
+            'desktop': '🖥️ Escritorio',
+            'lgpd': '🔒 Privacidad',
+            'marco_civil': '📜 Derechos Civiles',
+            'ticket': '🎫 Soporte',
+            'produtos': '🛍️ Productos',
+            'sua_conta': '👤 Tu cuenta',
+            'info_paginas': 'Más de {total} páginas disponibles para búsqueda',
+            'resultados_para': '📄 {total} resultado{s} para "{termo}"',
+            'resultados_todos': '📄 {total} resultado{s} para "todos"',
+            'nenhum_resultado': 'No se encontraron resultados',
+            'nenhum_resultado_texto': 'Intenta buscar otro término o verifica la ortografía.',
+            'fechar_resultados': 'Cerrar resultados',
+            'aguarde_carregando': 'Cargando WazzimaGiygg Search...'
+        }
+    };
+
+    // ==================== FUNÇÕES DE TRADUÇÃO ====================
+    function getTranslation(key, params = {}) {
+        const lang = localStorage.getItem('wzzm_language') || 'pt';
+        const trans = translations[lang] || translations['pt'];
+        let text = trans[key] || key;
+        if (params) {
+            Object.keys(params).forEach(p => {
+                text = text.replace(new RegExp(`{${p}}`, 'g'), params[p]);
+            });
+        }
+        return text;
+    }
+
+    function applyTranslations() {
+        // Atualiza placeholders e textos
+        const searchInput = document.getElementById('search-input');
+        if (searchInput) {
+            searchInput.placeholder = getTranslation('placeholder_busca');
         }
         
-        function markAsLoaded() {
-            const container = document.querySelector('.container');
-            if (container) {
-                container.classList.add('loaded');
-            }
+        const title = document.querySelector('title');
+        if (title) {
+            title.textContent = getTranslation('search_titulo');
         }
         
-        function checkFirebase() {
-            if (typeof firebase !== 'undefined') {
-                console.log('✅ Firebase carregado:', firebase.apps.length > 0);
-                return true;
+        const mazeStatus = document.getElementById('mazeStatus');
+        if (mazeStatus && !mazeStatus.innerHTML.includes('PARABÉNS') && !mazeStatus.innerHTML.includes('CONGRATULATIONS')) {
+            mazeStatus.textContent = getTranslation('maze_status');
+        }
+        
+        // Atualiza badges e textos do usuário
+        updateUI();
+    }
+
+    // ==================== VARIÁVEIS GLOBAIS ====================
+    let currentUser = null;
+    let isBanned = false;
+    let isAdmin = false;
+    let allPages = [];
+    let searchTimeout = null;
+    let notifications = [];
+    let unreadCount = 0;
+    let notificationListener = null;
+
+    // ==================== ANTI-ABUSE ====================
+    let accessCount = 0;
+    let lastAccessTime = Date.now();
+    let isCaptchaActive = false;
+    let captchaSolved = false;
+    const MAX_ACCESS = 5;
+    const TIME_WINDOW = 60000;
+
+    // ==================== FUNÇÕES AUXILIARES ====================
+    function escapeHtml(text) {
+        if (!text) return '';
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
+    function getInitials(name) {
+        if (!name) return '?';
+        const parts = name.trim().split(' ');
+        if (parts.length >= 2) return (parts[0][0] + parts[parts.length-1][0]).toUpperCase();
+        return name.substring(0, 2).toUpperCase();
+    }
+
+    function getTimeAgo(date) {
+        if (!date) return '';
+        if (date.toDate) date = date.toDate();
+        const seconds = Math.floor((new Date() - date) / 1000);
+        if (seconds < 60) return 'agora';
+        const minutes = Math.floor(seconds / 60);
+        if (minutes < 60) return `${minutes}m`;
+        const hours = Math.floor(minutes / 60);
+        if (hours < 24) return `${hours}h`;
+        const days = Math.floor(hours / 24);
+        return `${days}d`;
+    }
+
+    // ==================== AUTENTICAÇÃO ====================
+    async function checkIfUserIsBanned(user) {
+        if (!user) return false;
+        try {
+            const doc = await db.collection('users').doc(user.uid).get();
+            if (doc.exists) return doc.data().isBanned === true || doc.data().isBan === true;
+        } catch (e) {}
+        return false;
+    }
+
+    function showBannedScreen(reason = 'Violação das políticas de uso') {
+        const overlay = document.getElementById('bannedOverlay');
+        if (overlay) overlay.classList.add('show');
+        const details = document.getElementById('banDetails');
+        if (details) details.textContent = `Motivo: ${reason}`;
+        document.querySelector('.header').style.opacity = '0.3';
+        document.querySelector('.header').style.pointerEvents = 'none';
+        document.querySelector('.container').style.opacity = '0.3';
+        document.querySelector('.container').style.pointerEvents = 'none';
+        document.querySelector('.site-footer').style.opacity = '0.3';
+        document.querySelector('.site-footer').style.pointerEvents = 'none';
+    }
+
+    async function logoutBanned() {
+        try { await auth.signOut(); location.reload(); } catch (e) { location.reload(); }
+    }
+
+    function updateUI() {
+        const avatar = document.getElementById('userAvatar');
+        const name = document.getElementById('userName');
+        const email = document.getElementById('userEmail');
+        const badge = document.getElementById('userBadge');
+        const btnLogin = document.getElementById('btnLogin');
+        const btnLogout = document.getElementById('btnLogout');
+        const guestBadge = document.getElementById('guest-badge');
+        
+        if (currentUser && !isBanned) {
+            let displayName = currentUser.displayName || (currentUser.email ? currentUser.email.split('@')[0] : 'Usuário');
+            if (currentUser.photoURL) {
+                avatar.innerHTML = `<img src="${currentUser.photoURL}" alt="Avatar">`;
             } else {
-                console.warn('⚠️ Firebase não carregado ainda');
-                return false;
+                avatar.textContent = getInitials(displayName);
+            }
+            name.textContent = displayName.length > 20 ? displayName.substring(0,17)+'...' : displayName;
+            email.textContent = currentUser.email || '';
+            let badges = '';
+            if (isBanned) badges += '<span class="badge-banned">🚫 Banido</span> ';
+            if (isAdmin) badges += '<span class="badge-admin">Admin</span> ';
+            badge.innerHTML = badges;
+            btnLogin.style.display = 'none';
+            btnLogout.style.display = 'inline-block';
+            if (guestBadge) {
+                guestBadge.innerHTML = `<i class="material-icons" style="font-size:14px;">person</i> ${getTranslation('modo_usuario', { nome: escapeHtml(displayName) })}`;
+            }
+        } else {
+            avatar.innerHTML = '👤';
+            name.textContent = getTranslation('visitante');
+            email.textContent = '';
+            badge.innerHTML = '';
+            btnLogin.style.display = 'inline-block';
+            btnLogout.style.display = 'none';
+            if (guestBadge) {
+                guestBadge.innerHTML = `<i class="material-icons" style="font-size:14px;">public</i> ${getTranslation('modo_convidado')}`;
+            }
+        }
+        applyTranslations();
+    }
+
+    function showLoginModal() { 
+        const modal = document.getElementById('login-modal');
+        if (modal) modal.classList.add('show'); 
+    }
+    
+    function closeLoginModal() { 
+        const modal = document.getElementById('login-modal');
+        if (modal) modal.classList.remove('show'); 
+    }
+
+    async function loginWithGoogle() {
+        try {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            const result = await auth.signInWithPopup(provider);
+            currentUser = result.user;
+            isBanned = await checkIfUserIsBanned(currentUser);
+            if (isBanned) { showBannedScreen('Sua conta foi banida.'); await auth.signOut(); updateUI(); return; }
+            isAdmin = false;
+            try {
+                const doc = await db.collection('users').doc(currentUser.uid).get();
+                if (doc.exists && doc.data().isAdmin === true) isAdmin = true;
+            } catch (e) {}
+            await db.collection('users').doc(currentUser.uid).set({
+                email: currentUser.email,
+                displayName: currentUser.displayName || currentUser.email.split('@')[0],
+                photoURL: currentUser.photoURL || null,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                isAdmin: false,
+                isBanned: false
+            }, { merge: true });
+            updateUI();
+            closeLoginModal();
+            await loadNotifications();
+            listenNotifications();
+        } catch (error) {
+            console.error('Erro no login:', error);
+            alert('Erro ao fazer login: ' + error.message);
+        }
+    }
+
+    async function logout() {
+        try {
+            await auth.signOut();
+            currentUser = null;
+            isBanned = false;
+            isAdmin = false;
+            if (notificationListener) { notificationListener(); notificationListener = null; }
+            notifications = [];
+            unreadCount = 0;
+            updateNotificationBadge();
+            updateUI();
+            console.log('✅ Logout realizado com sucesso!');
+        } catch (error) {
+            console.error('❌ Erro no logout:', error);
+            alert('Erro ao sair: ' + error.message);
+        }
+    }
+
+    function showRegister() {
+        const email = prompt('Digite seu e-mail:');
+        if (!email) return;
+        const password = prompt('Digite sua senha (mínimo 6 caracteres):');
+        if (!password || password.length < 6) { alert('A senha deve ter pelo menos 6 caracteres'); return; }
+        registerUserEmail(email, password);
+    }
+
+    async function registerUserEmail(email, password) {
+        try {
+            const result = await auth.createUserWithEmailAndPassword(email, password);
+            currentUser = result.user;
+            await db.collection('users').doc(currentUser.uid).set({
+                email: currentUser.email,
+                displayName: currentUser.email.split('@')[0],
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                isAdmin: false,
+                isBanned: false
+            });
+            updateUI();
+            closeLoginModal();
+            alert('Conta criada com sucesso!');
+        } catch (error) {
+            console.error('Erro ao criar conta:', error);
+            alert('Erro ao criar conta: ' + error.message);
+        }
+    }
+
+    // ==================== NOTIFICAÇÕES ====================
+    async function loadNotifications() {
+        if (!currentUser) return;
+        try {
+            const snapshot = await db.collection('notifications')
+                .where('userId', '==', currentUser.uid)
+                .orderBy('timestamp', 'desc')
+                .limit(50)
+                .get();
+            notifications = [];
+            snapshot.forEach(doc => {
+                notifications.push({ id: doc.id, ...doc.data(), timestamp: doc.data().timestamp || new Date() });
+            });
+            unreadCount = notifications.filter(n => !n.lida).length;
+            updateNotificationBadge();
+            renderNotifications();
+        } catch (error) {
+            console.error('Erro ao carregar notificações:', error);
+        }
+    }
+
+    function updateNotificationBadge() {
+        const badge = document.getElementById('notifBadge');
+        if (badge) {
+            if (unreadCount > 0) {
+                badge.style.display = 'flex';
+                badge.textContent = unreadCount > 99 ? '99+' : unreadCount;
+            } else {
+                badge.style.display = 'none';
+            }
+        }
+    }
+
+    function renderNotifications() {
+        const list = document.getElementById('notificationList');
+        if (!list) return;
+        if (notifications.length === 0) {
+            list.innerHTML = `<div class="notification-empty"><span class="material-icons">notifications_off</span><p>${getTranslation('nenhuma_notificacao')}</p></div>`;
+            return;
+        }
+        list.innerHTML = notifications.slice(0, 10).map(notif => `
+            <div class="notification-item ${notif.lida ? '' : 'unread'}" onclick="markAsRead('${notif.id}')">
+                <div class="notif-title">${escapeHtml(notif.titulo || getTranslation('notificacao'))}</div>
+                <div class="notif-message">${escapeHtml(notif.mensagem || '')}</div>
+                <div class="notif-time">${getTimeAgo(notif.timestamp)}</div>
+            </div>
+        `).join('');
+    }
+
+    async function markAsRead(id) {
+        if (!id) return;
+        try {
+            await db.collection('notifications').doc(id).update({ lida: true });
+            const notif = notifications.find(n => n.id === id);
+            if (notif && !notif.lida) { notif.lida = true; unreadCount--; updateNotificationBadge(); renderNotifications(); }
+        } catch (error) { console.error('Erro:', error); }
+    }
+
+    async function markAllAsRead(event) {
+        if (event) event.stopPropagation();
+        if (unreadCount === 0) return;
+        try {
+            const batch = db.batch();
+            notifications.filter(n => !n.lida).forEach(n => batch.update(db.collection('notifications').doc(n.id), { lida: true }));
+            await batch.commit();
+            notifications.forEach(n => n.lida = true);
+            unreadCount = 0;
+            updateNotificationBadge();
+            renderNotifications();
+        } catch (error) { console.error('Erro:', error); }
+    }
+
+    function toggleNotifications(event) {
+        if (event) event.stopPropagation();
+        const dropdown = document.getElementById('notifDropdown');
+        if (dropdown) {
+            dropdown.classList.toggle('show');
+            if (dropdown.classList.contains('show')) loadNotifications();
+        }
+    }
+
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.notification-bell')) {
+            const dropdown = document.getElementById('notifDropdown');
+            if (dropdown) dropdown.classList.remove('show');
+        }
+    });
+
+    function listenNotifications() {
+        if (notificationListener) { notificationListener(); notificationListener = null; }
+        if (!currentUser) return;
+        notificationListener = db.collection('notifications')
+            .where('userId', '==', currentUser.uid)
+            .orderBy('timestamp', 'desc')
+            .limit(50)
+            .onSnapshot((snapshot) => {
+                notifications = [];
+                snapshot.forEach(doc => notifications.push({ id: doc.id, ...doc.data(), timestamp: doc.data().timestamp || new Date() }));
+                unreadCount = notifications.filter(n => !n.lida).length;
+                updateNotificationBadge();
+                renderNotifications();
+            }, (error) => console.error('Erro no listener:', error));
+    }
+
+    // ==================== CAPTCHA MAZE ====================
+    const MAZE_SIZE = 21;
+    let mazeCanvas = null;
+    let mazeCtx = null;
+    let mazeWalls = [];
+    let mazePlayerPos = { x: 0, y: 0 };
+    let mazeGoalPos = { x: 0, y: 0 };
+    let mazeStartPos = { x: 0, y: 0 };
+    let mazeGameActive = true;
+    let mazeCellSize = 23;
+
+    function generateMaze() {
+        let grid = Array(MAZE_SIZE).fill().map(() => Array(MAZE_SIZE).fill(true));
+        let startX = 1 + Math.floor(Math.random() * ((MAZE_SIZE-2)/2)) * 2;
+        let startY = 1 + Math.floor(Math.random() * ((MAZE_SIZE-2)/2)) * 2;
+        let goalX = 1 + Math.floor(Math.random() * ((MAZE_SIZE-2)/2)) * 2;
+        let goalY = 1 + Math.floor(Math.random() * ((MAZE_SIZE-2)/2)) * 2;
+        
+        while(startX === goalX && startY === goalY) {
+            goalX = 1 + Math.floor(Math.random() * ((MAZE_SIZE-2)/2)) * 2;
+            goalY = 1 + Math.floor(Math.random() * ((MAZE_SIZE-2)/2)) * 2;
+        }
+        
+        for(let i = 0; i < MAZE_SIZE; i++) {
+            for(let j = 0; j < MAZE_SIZE; j++) {
+                if(i % 2 === 1 && j % 2 === 1) grid[i][j] = false;
             }
         }
         
-        function checkContentLoaded() {
-            const searchInput = document.getElementById('search-input');
-            if (searchInput) {
-                hideLoadingIndicator();
-                markAsLoaded();
-                checkFirebase();
-                // Aplica traduções
-                if (typeof window.applySearchTranslations === 'function') {
-                    setTimeout(window.applySearchTranslations, 300);
+        let walls = [];
+        let visited = Array(MAZE_SIZE).fill().map(() => Array(MAZE_SIZE).fill(false));
+        visited[startY][startX] = true;
+        
+        const addWalls = (x, y) => {
+            const dirs = [[0, -2], [0, 2], [-2, 0], [2, 0]];
+            for(let [dx, dy] of dirs) {
+                let nx = x + dx, ny = y + dy;
+                if(nx > 0 && nx < MAZE_SIZE-1 && ny > 0 && ny < MAZE_SIZE-1 && !visited[ny][nx]) {
+                    walls.push({x: x + dx/2, y: y + dy/2, nextX: nx, nextY: ny});
                 }
-                return true;
             }
-            
-            setTimeout(function() {
-                if (document.getElementById('search-input')) {
-                    hideLoadingIndicator();
-                    markAsLoaded();
-                    checkFirebase();
-                    if (typeof window.applySearchTranslations === 'function') {
-                        setTimeout(window.applySearchTranslations, 300);
-                    }
+        };
+        
+        addWalls(startX, startY);
+        
+        while(walls.length > 0) {
+            let randomIndex = Math.floor(Math.random() * walls.length);
+            let wall = walls[randomIndex];
+            walls.splice(randomIndex, 1);
+            if(!visited[wall.nextY][wall.nextX]) {
+                grid[wall.y][wall.x] = false;
+                visited[wall.nextY][wall.nextX] = true;
+                addWalls(wall.nextX, wall.nextY);
+            }
+        }
+        
+        grid[startY][startX] = false;
+        grid[goalY][goalX] = false;
+        
+        for(let i = 0; i < MAZE_SIZE; i++) {
+            grid[0][i] = grid[MAZE_SIZE-1][i] = grid[i][0] = grid[i][MAZE_SIZE-1] = true;
+        }
+        
+        grid[startY][startX] = false;
+        grid[goalY][goalX] = false;
+        
+        return { walls: grid, start: { x: startX, y: startY }, goal: { x: goalX, y: goalY } };
+    }
+
+    function drawMazeGame() {
+        if(!mazeCtx) return;
+        mazeCtx.clearRect(0, 0, mazeCanvas.width, mazeCanvas.height);
+        
+        for(let row = 0; row < MAZE_SIZE; row++) {
+            for(let col = 0; col < MAZE_SIZE; col++) {
+                let x = col * mazeCellSize, y = row * mazeCellSize;
+                if(mazeWalls[row] && mazeWalls[row][col] === true) {
+                    mazeCtx.fillStyle = "#5d3a1a";
+                    mazeCtx.fillRect(x, y, mazeCellSize, mazeCellSize);
+                    mazeCtx.fillStyle = "#8b5a2b";
+                    mazeCtx.fillRect(x+2, y+2, mazeCellSize-4, mazeCellSize-4);
                 } else {
-                    if (typeof performSearch === 'function') {
-                        hideLoadingIndicator();
-                        markAsLoaded();
-                        checkFirebase();
-                    }
+                    let grad = mazeCtx.createLinearGradient(x, y, x+mazeCellSize, y+mazeCellSize);
+                    grad.addColorStop(0, "#ebd5b3");
+                    grad.addColorStop(1, "#ddc494");
+                    mazeCtx.fillStyle = grad;
+                    mazeCtx.fillRect(x, y, mazeCellSize, mazeCellSize);
                 }
-            }, 3000);
-            
+            }
+        }
+        
+        mazeCtx.font = `${Math.floor(mazeCellSize * 0.6)}px "Segoe UI"`;
+        mazeCtx.shadowBlur = 2;
+        mazeCtx.fillStyle = "#ffb347";
+        mazeCtx.fillText("⭐", mazeStartPos.x * mazeCellSize + mazeCellSize*0.25, 
+                    mazeStartPos.y * mazeCellSize + mazeCellSize*0.75);
+        mazeCtx.fillStyle = "#e34234";
+        mazeCtx.fillText("🏁", mazeGoalPos.x * mazeCellSize + mazeCellSize*0.25, 
+                    mazeGoalPos.y * mazeCellSize + mazeCellSize*0.75);
+        
+        let px = mazePlayerPos.x * mazeCellSize, py = mazePlayerPos.y * mazeCellSize;
+        mazeCtx.shadowBlur = 0;
+        mazeCtx.beginPath();
+        mazeCtx.arc(px + mazeCellSize/2, py + mazeCellSize/2, mazeCellSize*0.3, 0, Math.PI*2);
+        mazeCtx.fillStyle = "#4d9eff";
+        mazeCtx.fill();
+        mazeCtx.beginPath();
+        mazeCtx.arc(px + mazeCellSize/2, py + mazeCellSize/2, mazeCellSize*0.2, 0, Math.PI*2);
+        mazeCtx.fillStyle = "white";
+        mazeCtx.fill();
+    }
+
+    function mazeMove(dx, dy) {
+        if(!mazeGameActive) return;
+        const newX = mazePlayerPos.x + dx, newY = mazePlayerPos.y + dy;
+        if(newX < 0 || newX >= MAZE_SIZE || newY < 0 || newY >= MAZE_SIZE) return;
+        if(mazeWalls[newY][newX] === true) return;
+        
+        mazePlayerPos.x = newX;
+        mazePlayerPos.y = newY;
+        drawMazeGame();
+        
+        if(mazePlayerPos.x === mazeGoalPos.x && mazePlayerPos.y === mazeGoalPos.y) {
+            mazeGameActive = false;
+            document.getElementById('mazeStatus').innerHTML = "🎉 PARABÉNS! Acesso liberado! 🎉";
+            setTimeout(() => { hideCaptcha(); mazeGameActive = true; }, 1500);
+        }
+    }
+
+    function initMazeGame() {
+        const canvas = document.getElementById('mazeCanvas');
+        const container = canvas.parentElement;
+        const size = Math.min(container.clientWidth - 40, 500);
+        canvas.width = size;
+        canvas.height = size;
+        mazeCellSize = size / MAZE_SIZE;
+        
+        mazeCanvas = canvas;
+        mazeCtx = canvas.getContext('2d');
+        const mazeData = generateMaze();
+        mazeWalls = mazeData.walls;
+        mazePlayerPos = { x: mazeData.start.x, y: mazeData.start.y };
+        mazeGoalPos = { x: mazeData.goal.x, y: mazeData.goal.y };
+        mazeStartPos = { x: mazeData.start.x, y: mazeData.start.y };
+        mazeGameActive = true;
+        drawMazeGame();
+    }
+
+    function checkAbuse() {
+        if (captchaSolved) return true;
+        const now = Date.now();
+        if (now - lastAccessTime > TIME_WINDOW) {
+            accessCount = 0;
+            lastAccessTime = now;
+        }
+        accessCount++;
+        lastAccessTime = now;
+        if (accessCount > MAX_ACCESS && !isCaptchaActive) {
+            showCaptcha();
             return false;
         }
+        return true;
+    }
+
+    function showCaptcha() {
+        if (captchaSolved) return;
+        isCaptchaActive = true;
+        const overlay = document.getElementById('captchaOverlay');
+        if (overlay) overlay.classList.add('show');
+        const banner = document.getElementById('warningBanner');
+        if (banner) banner.classList.add('show');
+        initMazeGame();
+    }
+
+    function hideCaptcha() {
+        const overlay = document.getElementById('captchaOverlay');
+        if (overlay) overlay.classList.remove('show');
+        isCaptchaActive = false;
+        captchaSolved = true;
+        accessCount = 0;
+        lastAccessTime = Date.now();
+        setTimeout(() => {
+            const banner = document.getElementById('warningBanner');
+            if (banner) banner.classList.remove('show');
+        }, 3000);
+    }
+
+    // ==================== BUSCA PRINCIPAL ====================
+    async function loadAllPages() {
+        try {
+            console.log('📂 Carregando páginas do Firestore...');
+            const querySnapshot = await db.collection('paginasUsuario').get();
+            allPages = [];
+            querySnapshot.forEach(doc => {
+                const data = doc.data();
+                const pages = data["Lista de Páginas de Busca"] || [];
+                pages.forEach(page => {
+                    if (page.Nome && page.Link) {
+                        allPages.push({
+                            id: page.id || 'page_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
+                            nome: page.Nome,
+                            url: page.Link,
+                            categoria: page.categoria || 'Geral',
+                            icone: page.icone || 'link',
+                            descricao: page.descricao || '',
+                            usuarioId: doc.id,
+                            ordem: page.ordem || 0
+                        });
+                    }
+                });
+            });
+            
+            // Remove duplicatas por URL
+            const urlMap = new Map();
+            allPages = allPages.filter(p => { 
+                if (urlMap.has(p.url)) return false; 
+                urlMap.set(p.url, true); 
+                return true; 
+            });
+            
+            const pageCount = document.getElementById('page-count');
+            if (pageCount) {
+                pageCount.textContent = getTranslation('info_paginas', { total: allPages.length });
+            }
+            
+            console.log(`✅ ${allPages.length} páginas carregadas`);
+            return allPages;
+        } catch (error) {
+            console.error('❌ Erro ao carregar páginas:', error);
+            return [];
+        }
+    }
+
+    function searchPages(query) {
+        if (!query || query.trim() === '') return [];
+        const lower = query.toLowerCase();
+        return allPages.filter(p => 
+            p.nome.toLowerCase().includes(lower) ||
+            p.descricao.toLowerCase().includes(lower) ||
+            p.categoria.toLowerCase().includes(lower) ||
+            p.url.toLowerCase().includes(lower)
+        );
+    }
+
+    function showSuggestions(query) {
+        const suggestions = document.getElementById('suggestions');
+        if (!suggestions) return;
         
-        if (document.readyState === 'complete') {
-            checkContentLoaded();
+        if (!query || query.trim() === '') { 
+            suggestions.classList.remove('show'); 
+            return; 
+        }
+        
+        const results = searchPages(query).slice(0, 5);
+        if (results.length === 0) { 
+            suggestions.classList.remove('show'); 
+            return; 
+        }
+        
+        suggestions.innerHTML = results.map(p => `
+            <div class="suggestion-item" onclick="selectSuggestion('${p.nome.replace(/'/g, "\\'")}')">
+                <i class="material-icons suggestion-icon">${p.icone}</i>
+                <div class="suggestion-text"><strong>${highlightText(p.nome, query)}</strong><div style="font-size:12px;color:#5f6368;">${p.url.substring(0, 50)}</div></div>
+                <span class="suggestion-category">${p.categoria}</span>
+            </div>
+        `).join('');
+        suggestions.classList.add('show');
+    }
+
+    function highlightText(text, query) {
+        if (!query) return text;
+        const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+        return text.replace(regex, '<mark style="background:#fff3cd;padding:0;">$1</mark>');
+    }
+
+    function selectSuggestion(query) {
+        document.getElementById('search-input').value = query;
+        document.getElementById('suggestions').classList.remove('show');
+        performSearch();
+    }
+
+    async function performSearch() {
+        if (isCaptchaActive) { alert(getTranslation('captcha_necessario')); return; }
+        if (!checkAbuse()) return;
+        const query = document.getElementById('search-input').value.trim();
+        if (!query) { showAllPages(); return; }
+        displayResults(searchPages(query), query);
+    }
+
+    async function showAllPages() {
+        if (isCaptchaActive) { alert(getTranslation('captcha_necessario')); return; }
+        if (!checkAbuse()) return;
+        document.getElementById('search-input').value = '';
+        displayResults(allPages, 'todos');
+    }
+
+    function displayResults(results, searchTerm) {
+        const container = document.getElementById('results-container');
+        const count = document.getElementById('results-count');
+        const grid = document.getElementById('results-grid');
+        
+        if (!container || !count || !grid) return;
+        
+        container.style.display = 'block';
+        
+        if (searchTerm === 'todos') {
+            count.textContent = getTranslation('resultados_todos', { 
+                total: results.length, 
+                s: results.length !== 1 ? 's' : '' 
+            });
         } else {
-            window.addEventListener('load', function() {
-                setTimeout(checkContentLoaded, 1000);
+            count.textContent = getTranslation('resultados_para', { 
+                total: results.length, 
+                s: results.length !== 1 ? 's' : '',
+                termo: searchTerm 
             });
         }
         
-        console.log('🟢 Sistema de verificação de recursos - OK (Search)');
+        if (results.length === 0) {
+            grid.innerHTML = `
+                <div class="no-results">
+                    <i class="material-icons">search_off</i>
+                    <h3>${getTranslation('nenhum_resultado')}</h3>
+                    <p>${getTranslation('nenhum_resultado_texto')}</p>
+                </div>
+            `;
+        } else {
+            grid.innerHTML = results.map(p => `
+                <div class="result-card" onclick="window.open('${p.url}', '_blank')">
+                    <div class="card-icon"><i class="material-icons">${p.icone}</i></div>
+                    <h3 class="card-title">${escapeHtml(p.nome)}</h3>
+                    <div class="card-url">${escapeHtml(p.url)}</div>
+                    ${p.descricao ? `<div class="card-description">${escapeHtml(p.descricao.substring(0, 100))}${p.descricao.length > 100 ? '...' : ''}</div>` : ''}
+                    <span class="card-category">${escapeHtml(p.categoria)}</span>
+                </div>
+            `).join('');
+        }
+        container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function hideResults() {
+        const container = document.getElementById('results-container');
+        if (container) container.style.display = 'none';
+    }
+
+    function resetSearch() {
+        document.getElementById('search-input').value = '';
+        hideResults();
+        const suggestions = document.getElementById('suggestions');
+        if (suggestions) suggestions.classList.remove('show');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ==================== SELETOR DE IDIOMA ====================
+    function createLanguageSelector() {
+        const container = document.getElementById('languageSelectorContainer');
+        if (!container) return;
         
-        // Verifica Firebase após 2 segundos
-        setTimeout(function() {
-            if (typeof firebase === 'undefined') {
-                console.error('❌ Firebase SDK não carregou. Verifique a conexão com a internet.');
-            }
-        }, 2000);
-    })();
+        // Não recriar se já existe
+        if (container.querySelector('.lang-selector')) return;
+        
+        const languages = {
+            'pt': { flag: '🇧🇷', name: 'Português' },
+            'en': { flag: '🇺🇸', name: 'English' },
+            'es': { flag: '🇪🇸', name: 'Español' }
+        };
+        
+        const currentLang = localStorage.getItem('wzzm_language') || 'pt';
+        
+        let html = `<div class="lang-selector">`;
+        html += `<select onchange="changeLanguage(this.value)">`;
+        
+        Object.entries(languages).forEach(([code, lang]) => {
+            const selected = code === currentLang ? 'selected' : '';
+            html += `<option value="${code}" ${selected}>${lang.flag} ${code.toUpperCase()}</option>`;
+        });
+        
+        html += `</select></div>`;
+        container.innerHTML = html;
+    }
+
+    // ==================== FUNÇÃO PARA MUDAR IDIOMA ====================
+    function changeLanguage(lang) {
+        localStorage.setItem('wzzm_language', lang);
+        applyTranslations();
+        updateUI();
+        createLanguageSelector();
+        // Recarrega as páginas para atualizar textos
+        loadAllPages();
+        console.log(`🌍 Idioma alterado para: "${lang}"`);
+    }
+
+    // ==================== EVENT LISTENERS ====================
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('📄 DOM carregado, configurando eventos...');
+        
+        const input = document.getElementById('search-input');
+        const clear = document.getElementById('clear-search');
+        const searchButton = document.getElementById('search-button');
+        const loginForm = document.getElementById('login-form-modal');
+        const loginModal = document.getElementById('login-modal');
+        
+        // Aplica traduções iniciais
+        applyTranslations();
+        createLanguageSelector();
+        
+        if (input) {
+            input.addEventListener('input', (e) => {
+                const query = e.target.value;
+                if (clear) clear.style.display = query ? 'flex' : 'none';
+                if (searchTimeout) clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => showSuggestions(query), 300);
+            });
+            
+            input.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    const suggestions = document.getElementById('suggestions');
+                    if (suggestions) suggestions.classList.remove('show');
+                    performSearch();
+                }
+            });
+        }
+        
+        if (clear) {
+            clear.addEventListener('click', () => {
+                if (input) {
+                    input.value = '';
+                    clear.style.display = 'none';
+                    const suggestions = document.getElementById('suggestions');
+                    if (suggestions) suggestions.classList.remove('show');
+                    input.focus();
+                }
+            });
+        }
+        
+        if (searchButton) {
+            searchButton.addEventListener('click', () => {
+                const suggestions = document.getElementById('suggestions');
+                if (suggestions) suggestions.classList.remove('show');
+                performSearch();
+            });
+        }
+        
+        if (loginForm) {
+            loginForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const email = document.getElementById('modal-email').value;
+                const password = document.getElementById('modal-password').value;
+                try {
+                    const result = await auth.signInWithEmailAndPassword(email, password);
+                    currentUser = result.user;
+                    updateUI();
+                    closeLoginModal();
+                } catch (error) {
+                    alert('Erro ao fazer login: ' + error.message);
+                }
+            });
+        }
+        
+        if (loginModal) {
+            loginModal.addEventListener('click', (e) => {
+                if (e.target === e.currentTarget) closeLoginModal();
+            });
+        }
+        
+        document.addEventListener('keydown', (e) => {
+            if (!isCaptchaActive) return;
+            let dx = 0, dy = 0;
+            if (e.key === 'ArrowUp' || e.key === 'w') dy = -1;
+            else if (e.key === 'ArrowDown' || e.key === 's') dy = 1;
+            else if (e.key === 'ArrowLeft' || e.key === 'a') dx = -1;
+            else if (e.key === 'ArrowRight' || e.key === 'd') dx = 1;
+            else return;
+            e.preventDefault();
+            mazeMove(dx, dy);
+        });
+        
+        // Carrega páginas
+        loadAllPages();
+        
+        // Remove loading indicator
+        const indicator = document.getElementById('loadingIndicator');
+        if (indicator) {
+            indicator.classList.add('hidden');
+            setTimeout(function() {
+                indicator.style.display = 'none';
+            }, 500);
+        }
+        
+        // Marca container como carregado
+        const container = document.querySelector('.container');
+        if (container) {
+            container.classList.add('loaded');
+        }
+    });
+
+    // ==================== INICIALIZAÇÃO DO FIREBASE AUTH ====================
+    auth.onAuthStateChanged(async (user) => {
+        if (user) {
+            currentUser = user;
+            isBanned = await checkIfUserIsBanned(user);
+            if (isBanned) { showBannedScreen('Sua conta foi banida.'); await auth.signOut(); updateUI(); return; }
+            isAdmin = false;
+            try {
+                const doc = await db.collection('users').doc(user.uid).get();
+                if (doc.exists && doc.data().isAdmin === true) isAdmin = true;
+            } catch (e) {}
+            updateUI();
+            await loadNotifications();
+            listenNotifications();
+        } else {
+            currentUser = null;
+            isBanned = false;
+            isAdmin = false;
+            updateUI();
+            if (notificationListener) { notificationListener(); notificationListener = null; }
+            notifications = [];
+            unreadCount = 0;
+            updateNotificationBadge();
+        }
+    });
+
+    // ==================== EXPOSIÇÃO GLOBAL ====================
+    window.logout = logout;
+    window.logoutBanned = logoutBanned;
+    window.loginWithGoogle = loginWithGoogle;
+    window.showLoginModal = showLoginModal;
+    window.closeLoginModal = closeLoginModal;
+    window.showRegister = showRegister;
+    window.performSearch = performSearch;
+    window.showAllPages = showAllPages;
+    window.hideResults = hideResults;
+    window.resetSearch = resetSearch;
+    window.selectSuggestion = selectSuggestion;
+    window.markAllAsRead = markAllAsRead;
+    window.toggleNotifications = toggleNotifications;
+    window.mazeMove = mazeMove;
+    window.loadAllPages = loadAllPages;
+    window.applyTranslations = applyTranslations;
+    window.getTranslation = getTranslation;
+    window.changeLanguage = changeLanguage;
+    window.createLanguageSelector = createLanguageSelector;
+
+    console.log('🚀 WazzimaGiygg Search inicializado com sucesso!');
+})();
 </script>
 
 </body>
