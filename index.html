@@ -136,12 +136,12 @@
                 if (timeoutId) clearTimeout(timeoutId);
                 
                 if (!resourcesLoaded.css) {
-                    errorInfo.failedResources.push('https://gspotfverwazzimagiygg.wazzimagiygg.com/jornal/search.css');
+                    errorInfo.failedResources.push('search.css');
                     errorInfo.resources.css.loaded = false;
                     errorInfo.resources.css.error = 'Falha ao carregar CSS';
                 }
                 if (!resourcesLoaded.js) {
-                    errorInfo.failedResources.push('https://gspotfverwazzimagiygg.wazzimagiygg.com/jornal/search.js');
+                    errorInfo.failedResources.push('search.js');
                     errorInfo.resources.js.loaded = false;
                     errorInfo.resources.js.error = 'Falha ao carregar JavaScript';
                 }
@@ -181,18 +181,18 @@
                     let resourceName = '';
                     
                     if (target && target.tagName === 'LINK' && target.rel === 'stylesheet') {
-                        resourceName = target.href || 'https://gspotfverwazzimagiygg.wazzimagiygg.com/jornal/search.css';
+                        resourceName = target.href || 'search.css';
                         console.error('❌ Erro ao carregar CSS:', resourceName);
                         errorInfo.errors.push(`CSS Load Error: ${resourceName}`);
-                        errorInfo.failedResources.push(resourceName.split('/').pop() || 'https://gspotfverwazzimagiygg.wazzimagiygg.com/jornal/search.css');
+                        errorInfo.failedResources.push(resourceName.split('/').pop() || 'search.css');
                         redirectToError();
                     }
                     
                     if (target && target.tagName === 'SCRIPT' && target.src) {
-                        resourceName = target.src || 'https://gspotfverwazzimagiygg.wazzimagiygg.com/jornal/search.js';
+                        resourceName = target.src || 'search.js';
                         console.error('❌ Erro ao carregar JavaScript:', resourceName);
                         errorInfo.errors.push(`JS Load Error: ${resourceName}`);
-                        errorInfo.failedResources.push(resourceName.split('/').pop() || 'https://gspotfverwazzimagiygg.wazzimagiygg.com/jornal/search.js');
+                        errorInfo.failedResources.push(resourceName.split('/').pop() || 'search.js');
                         redirectToError();
                     }
                 }, true);
@@ -213,11 +213,11 @@
                         errorStr.includes('404') || 
                         errorStr.includes('NetworkError')) {
                         errorInfo.errors.push(`Console Error: ${errorStr.substring(0, 100)}`);
-                        if (errorStr.includes('.css') || errorStr.includes('https://gspotfverwazzimagiygg.wazzimagiygg.com/jornal/search.css')) {
-                            errorInfo.failedResources.push('https://gspotfverwazzimagiygg.wazzimagiygg.com/jornal/search.css');
+                        if (errorStr.includes('.css') || errorStr.includes('search.css')) {
+                            errorInfo.failedResources.push('search.css');
                         }
-                        if (errorStr.includes('.js') || errorStr.includes('https://gspotfverwazzimagiygg.wazzimagiygg.com/jornal/search.js')) {
-                            errorInfo.failedResources.push('https://gspotfverwazzimagiygg.wazzimagiygg.com/jornal/search.js');
+                        if (errorStr.includes('.js') || errorStr.includes('search.js')) {
+                            errorInfo.failedResources.push('search.js');
                         }
                     }
                     originalError.apply(console, args);
@@ -278,12 +278,12 @@
                     if (!resourcesLoaded.css || !resourcesLoaded.js) {
                         console.error('❌ Tempo limite excedido. Recursos não carregaram completamente.');
                         if (!resourcesLoaded.css) {
-                            errorInfo.failedResources.push('https://gspotfverwazzimagiygg.wazzimagiygg.com/jornal/search.css (timeout)');
+                            errorInfo.failedResources.push('search.css (timeout)');
                             errorInfo.resources.css.loaded = false;
                             errorInfo.resources.css.error = 'Timeout ao carregar CSS';
                         }
                         if (!resourcesLoaded.js) {
-                            errorInfo.failedResources.push('https://gspotfverwazzimagiygg.wazzimagiygg.com/jornal/search.js (timeout)');
+                            errorInfo.failedResources.push('search.js (timeout)');
                             errorInfo.resources.js.loaded = false;
                             errorInfo.resources.js.error = 'Timeout ao carregar JavaScript';
                         }
@@ -304,10 +304,10 @@
                     if (!resourcesLoaded.css || !resourcesLoaded.js) {
                         console.error('❌ Timeout final. Recursos não carregaram.');
                         if (!resourcesLoaded.css) {
-                            errorInfo.failedResources.push('https://gspotfverwazzimagiygg.wazzimagiygg.com/jornal/search.css (final timeout)');
+                            errorInfo.failedResources.push('search.css (final timeout)');
                         }
                         if (!resourcesLoaded.js) {
-                            errorInfo.failedResources.push('https://gspotfverwazzimagiygg.wazzimagiygg.com/jornal/search.js (final timeout)');
+                            errorInfo.failedResources.push('search.js (final timeout)');
                         }
                         redirectToError();
                     }
@@ -325,10 +325,10 @@
                     if (!resourcesLoaded.css || !resourcesLoaded.js) {
                         console.error('❌ Recursos não carregaram após o load da página.');
                         if (!resourcesLoaded.css) {
-                            errorInfo.failedResources.push('https://gspotfverwazzimagiygg.wazzimagiygg.com/jornal/search.css (post-load)');
+                            errorInfo.failedResources.push('search.css (post-load)');
                         }
                         if (!resourcesLoaded.js) {
-                            errorInfo.failedResources.push('https://gspotfverwazzimagiygg.wazzimagiygg.com/jornal/search.js (post-load)');
+                            errorInfo.failedResources.push('search.js (post-load)');
                         }
                         redirectToError();
                     }
@@ -358,8 +358,8 @@
         })();
     </script>
     
-    <!-- CSS Externo com ONERROR -->
-    <link rel="stylesheet" href="https://gspotfverwazzimagiygg.wazzimagiygg.com/search/search.css" 
+    <!-- CSS com caminho CORRIGIDO -->
+    <link rel="stylesheet" href="search.css" 
           onerror="window.location.href=window.__errorSystem ? window.__errorSystem.getErrorURL() : 'https://wazzimagiygg.com/generalerror/'">
     
     <style>
@@ -619,24 +619,28 @@
     </div>
 </div>
 
-<!-- Firebase SDKs -->
-<script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
+<!-- ============================================ -->
+<!-- SCRIPTS - ORDEM CORRETA E CAMINHOS AJUSTADOS -->
+<!-- ============================================ -->
 
-<!-- ===== LANGUAGE SYSTEM ===== -->
-<!-- PRIMEIRO: As traduções -->
+<!-- 1. Firebase SDKs (CDN) -->
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+<!-- 2. Language System (PASTA languages/) -->
 <script src="languages/search-pt.js"></script>
 <script src="languages/search-en.js"></script>
 <script src="languages/search-es.js"></script>
 <script src="languages/search-fr.js"></script>
 <script src="languages/search-de.js"></script>
-
-<!-- SEGUNDO: O gerenciador (NÃO SOBRESCREVE NADA) -->
+<script src="languages/search-it.js"></script>
+<script src="languages/search-ja.js"></script>
+<script src="languages/search-zh.js"></script>
 <script src="languages/search-index.js"></script>
 
-<!-- ===== SEARCH.JS PRINCIPAL ===== -->
-<script src="https://gspotfverwazzimagiygg.wazzimagiygg.com/search/search.js" 
+<!-- 3. Search JS (LOCAL - mesma pasta do index.html) -->
+<script src="search.js" 
         onerror="window.location.href=window.__errorSystem ? window.__errorSystem.getErrorURL() : 'https://wazzimagiygg.com/generalerror/'">
 </script>
 
