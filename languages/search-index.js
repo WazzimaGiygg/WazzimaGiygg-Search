@@ -185,43 +185,43 @@
         });
     }
     
-    // ============================================
-    // CRIA SELETOR DE IDIOMA (SEM QUEBRAR A BUSCA)
-    // ============================================
-    function createLanguageSelector() {
-        try {
-            const container = document.getElementById('languageSelectorContainer');
-            if (!container) return;
-            
-            // Não recriar se já existe
-            if (container.querySelector('.lang-selector')) return;
-            
-            const languages = {
-                'pt': { flag: '🇧🇷', name: 'Português' },
-                'en': { flag: '🇺🇸', name: 'English' },
-                'es': { flag: '🇪🇸', name: 'Español' },
-                'fr': { flag: '🇫🇷', name: 'Français' },
-                'de': { flag: '🇩🇪', name: 'Deutsch' }
-            };
-            
-            const currentLang = localStorage.getItem('wzzm_language') || 'pt';
-            
-            let html = `<div class="lang-selector" style="position:relative;display:inline-block;">`;
-            html += `<select onchange="window.changeSearchLanguage(this.value)" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:white;padding:4px 8px;border-radius:16px;font-size:12px;cursor:pointer;outline:none;">`;
-            
-            Object.entries(languages).forEach(([code, lang]) => {
-                const selected = code === currentLang ? 'selected' : '';
-                html += `<option value="${code}" ${selected}>${lang.flag} ${code.toUpperCase()}</option>`;
-            });
-            
-            html += `</select></div>`;
-            container.innerHTML = html;
-            
-            console.log('🌍 Seletor de idioma criado');
-        } catch(e) {
-            console.warn('⚠️ Erro ao criar seletor de idioma:', e);
-        }
+   function createLanguageSelector() {
+    try {
+        const container = document.getElementById('languageSelectorContainer');
+        if (!container) return;
+        
+        if (container.querySelector('.lang-selector')) return;
+        
+        // ===== ADICIONE OS NOVOS IDIOMAS AQUI =====
+        const languages = {
+            'pt': { flag: '🇧🇷', name: 'Português' },
+            'en': { flag: '🇺🇸', name: 'English' },
+            'es': { flag: '🇪🇸', name: 'Español' },
+            'fr': { flag: '🇫🇷', name: 'Français' },
+            'de': { flag: '🇩🇪', name: 'Deutsch' },
+            'it': { flag: '🇮🇹', name: 'Italiano' },
+            'ja': { flag: '🇯🇵', name: '日本語' },
+            'zh': { flag: '🇨🇳', name: '中文' }
+        };
+        
+        const currentLang = localStorage.getItem('wzzm_language') || 'pt';
+        
+        let html = `<div class="lang-selector" style="position:relative;display:inline-block;">`;
+        html += `<select onchange="window.changeSearchLanguage(this.value)" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:white;padding:4px 8px;border-radius:16px;font-size:12px;cursor:pointer;outline:none;">`;
+        
+        Object.entries(languages).forEach(([code, lang]) => {
+            const selected = code === currentLang ? 'selected' : '';
+            html += `<option value="${code}" ${selected}>${lang.flag} ${code.toUpperCase()}</option>`;
+        });
+        
+        html += `</select></div>`;
+        container.innerHTML = html;
+        
+        console.log('🌍 Seletor de idioma criado com ' + Object.keys(languages).length + ' idiomas');
+    } catch(e) {
+        console.warn('⚠️ Erro ao criar seletor de idioma:', e);
     }
+}
     
     // ============================================
     // FUNÇÃO PARA MUDAR IDIOMA (NÃO QUEBRA A BUSCA)
