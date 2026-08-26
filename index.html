@@ -1135,17 +1135,17 @@
 <!-- INDICADOR DE CARREGAMENTO -->
 <div id="loadingIndicator">
     <div class="spinner"></div>
-    <p>Carregando WazzimaGiygg Search...</p>
+    <p id="loadingText">Carregando WazzimaGiygg Search...</p>
 </div>
 
 <!-- BANNED OVERLAY -->
 <div id="bannedOverlay" class="banned-overlay">
     <div class="banned-box">
         <div class="icon">🚫</div>
-        <h2>⚠️ Conta Banida</h2>
-        <p>Sua conta foi banida permanentemente do sistema.</p>
+        <h2 id="bannedTitle">⚠️ Conta Banida</h2>
+        <p id="bannedText">Sua conta foi banida permanentemente do sistema.</p>
         <div id="banDetails" class="ban-details">Motivo: Violação das políticas de uso</div>
-        <p style="font-size: 14px; color: #666;">Se você acredita que isso é um erro, entre em contato com o suporte.</p>
+        <p style="font-size: 14px; color: #666;" id="bannedHelp">Se você acredita que isso é um erro, entre em contato com o suporte.</p>
         <button class="btn-logout-banned" onclick="logoutBanned()">🚪 Sair da conta</button>
     </div>
 </div>
@@ -1158,7 +1158,7 @@
                 <img src="https://wazzimagiygg.com/favicom.png" alt="Logo">
                 <div>
                     <h1>WazzimaGiygg</h1>
-                    <small>Search</small>
+                    <small id="headerSubtitle">Search</small>
                 </div>
             </div>
             <div class="user-info-header" id="userInfo">
@@ -1178,13 +1178,13 @@
                     <span class="notification-badge" id="notifBadge" style="display:none;">0</span>
                     <div class="notification-dropdown" id="notifDropdown">
                         <div class="notification-dropdown-header">
-                            <h3>🔔 Notificações</h3>
-                            <button onclick="markAllAsRead(event)">Marcar todas como lidas</button>
+                            <h3 id="notifTitle">🔔 Notificações</h3>
+                            <button onclick="markAllAsRead(event)" id="notifMarkAll">Marcar todas como lidas</button>
                         </div>
                         <div id="notificationList">
                             <div class="notification-empty">
                                 <span class="material-icons">notifications_off</span>
-                                <p>Nenhuma notificação</p>
+                                <p id="notifEmpty">Nenhuma notificação</p>
                             </div>
                         </div>
                     </div>
@@ -1205,17 +1205,17 @@
         </div>
 
         <div class="search-title">
-            <h1>WazzimaGiygg</h1>
-            <p>Busca inteligente para seus produtos e serviços</p>
+            <h1 id="searchTitle">WazzimaGiygg</h1>
+            <p id="searchDesc">Busca inteligente para seus produtos e serviços</p>
             <div class="guest-badge" id="guest-badge">
-                <i class="material-icons" style="font-size: 14px;">public</i> Modo Convidado - Busca liberada
+                <i class="material-icons" style="font-size: 14px;">public</i> <span id="guestBadgeText">Modo Convidado - Busca liberada</span>
             </div>
         </div>
 
         <div class="warning-banner" id="warningBanner">
             <p>
                 <i class="material-icons" style="font-size: 16px;">warning</i>
-                Muitas tentativas de acesso! Complete o labirinto para continuar.
+                <span id="warningText">Muitas tentativas de acesso! Complete o labirinto para continuar.</span>
             </p>
         </div>
 
@@ -1233,7 +1233,7 @@
                 <div class="search-divider"></div>
                 <button class="search-button" id="search-button">
                     <i class="material-icons">search</i>
-                    Buscar
+                    <span id="searchBtnText">Buscar</span>
                 </button>
             </div>
 
@@ -1243,18 +1243,18 @@
         <div class="search-buttons">
             <button class="btn-search" onclick="performSearch()">
                 <i class="material-icons">search</i>
-                Pesquisar
+                <span id="btnSearch">Pesquisar</span>
             </button>
             <button class="btn-search" onclick="showAllPages()">
                 <i class="material-icons">view_list</i>
-                Ver todas as páginas
+                <span id="btnAllPages">Ver todas as páginas</span>
             </button>
         </div>
 
         <div class="info-banner">
             <p>
                 <i class="material-icons" style="font-size: 16px;">info</i>
-                Mais de <span id="page-count">0</span> páginas disponíveis para busca
+                <span id="infoPages">Mais de <span id="page-count">0</span> páginas disponíveis para busca</span>
             </p>
         </div>
 
@@ -1288,7 +1288,7 @@
                 <span class="footer-divider">|</span>
                 <a href="https://painel.wazzimagiygg.com/" class="footer-link highlight" target="_blank">👤 Sua conta</a>
             </div>
-            <div class="footer-copyright">
+            <div class="footer-copyright" id="footerCopyright">
                 © 2026 WazzimaGiygg Search - Busca inteligente e livre
             </div>
         </div>
@@ -1299,26 +1299,26 @@
 <div class="modal" id="login-modal">
     <div class="modal-content">
         <div class="modal-header">
-            <h2>Entrar na sua conta</h2>
+            <h2 id="loginTitle">Entrar na sua conta</h2>
             <button class="modal-close" onclick="closeLoginModal()">&times;</button>
         </div>
         
         <button class="google-login-btn" onclick="loginWithGoogle()">
             <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
-            Continuar com Google
+            <span id="googleBtnText">Continuar com Google</span>
         </button>
         
         <div class="modal-divider">
-            <span>ou</span>
+            <span id="orText">ou</span>
         </div>
         
         <form id="login-form-modal">
             <input type="email" id="modal-email" class="modal-input" placeholder="E-mail" required>
             <input type="password" id="modal-password" class="modal-input" placeholder="Senha" required>
-            <button type="submit" class="modal-btn">Entrar com e-mail</button>
+            <button type="submit" class="modal-btn" id="loginEmailBtn">Entrar com e-mail</button>
         </form>
         <div style="text-align: center; margin-top: 16px;">
-            <a href="#" onclick="showRegister()" style="color: #667eea; text-decoration: none;">Criar nova conta</a>
+            <a href="#" onclick="showRegister()" style="color: #667eea; text-decoration: none;" id="createAccountLink">Criar nova conta</a>
         </div>
     </div>
 </div>
@@ -1326,8 +1326,8 @@
 <!-- ===== CAPTCHA MAZE ===== -->
 <div class="captcha-overlay" id="captchaOverlay">
     <div class="captcha-content">
-        <h2>🔐 Verificação de Segurança</h2>
-        <p>Para continuar usando a busca, complete o labirinto abaixo.</p>
+        <h2 id="captchaTitle">🔐 Verificação de Segurança</h2>
+        <p id="captchaText">Para continuar usando a busca, complete o labirinto abaixo.</p>
         <div class="maze-container">
             <canvas id="mazeCanvas" width="500" height="500" class="maze-canvas"></canvas>
             <div class="maze-controls">
@@ -1352,7 +1352,7 @@
 
 <script>
 // ============================================
-// SEARCH.JS - WazzimaGiygg Search (COMPLETO)
+// SEARCH.JS - WazzimaGiygg Search (COMPLETO - CORRIGIDO)
 // ============================================
 (function() {
     'use strict';
@@ -1400,6 +1400,7 @@
             'notificacoes': '🔔 Notificações',
             'marcar_todas_lidas': 'Marcar todas como lidas',
             'nenhuma_notificacao': 'Nenhuma notificação',
+            'notificacao': 'Notificação',
             'conta_banida': '⚠️ Conta Banida',
             'conta_banida_texto': 'Sua conta foi banida permanentemente do sistema.',
             'motivo': 'Motivo:',
@@ -1427,7 +1428,9 @@
             'nenhum_resultado': 'Nenhum resultado encontrado',
             'nenhum_resultado_texto': 'Tente buscar por outro termo ou verifique a ortografia.',
             'fechar_resultados': 'Fechar resultados',
-            'aguarde_carregando': 'Carregando WazzimaGiygg Search...'
+            'aguarde_carregando': 'Carregando WazzimaGiygg Search...',
+            'captcha_necessario': 'Complete o labirinto de verificação primeiro!',
+            'search_subtitulo': 'Search'
         },
         en: {
             'placeholder_busca': 'Search for products, services, pages...',
@@ -1445,6 +1448,7 @@
             'notificacoes': '🔔 Notifications',
             'marcar_todas_lidas': 'Mark all as read',
             'nenhuma_notificacao': 'No notifications',
+            'notificacao': 'Notification',
             'conta_banida': '⚠️ Banned Account',
             'conta_banida_texto': 'Your account has been permanently banned from the system.',
             'motivo': 'Reason:',
@@ -1472,7 +1476,9 @@
             'nenhum_resultado': 'No results found',
             'nenhum_resultado_texto': 'Try searching for another term or check the spelling.',
             'fechar_resultados': 'Close results',
-            'aguarde_carregando': 'Loading WazzimaGiygg Search...'
+            'aguarde_carregando': 'Loading WazzimaGiygg Search...',
+            'captcha_necessario': 'Complete the verification maze first!',
+            'search_subtitulo': 'Search'
         },
         es: {
             'placeholder_busca': 'Busque productos, servicios, páginas...',
@@ -1490,6 +1496,7 @@
             'notificacoes': '🔔 Notificaciones',
             'marcar_todas_lidas': 'Marcar todas como leídas',
             'nenhuma_notificacao': 'Sin notificaciones',
+            'notificacao': 'Notificación',
             'conta_banida': '⚠️ Cuenta Baneada',
             'conta_banida_texto': 'Tu cuenta ha sido baneada permanentemente del sistema.',
             'motivo': 'Motivo:',
@@ -1517,7 +1524,9 @@
             'nenhum_resultado': 'No se encontraron resultados',
             'nenhum_resultado_texto': 'Intenta buscar otro término o verifica la ortografía.',
             'fechar_resultados': 'Cerrar resultados',
-            'aguarde_carregando': 'Cargando WazzimaGiygg Search...'
+            'aguarde_carregando': 'Cargando WazzimaGiygg Search...',
+            'captcha_necessario': '¡Completa el laberinto de verificación primero!',
+            'search_subtitulo': 'Búsqueda'
         }
     };
 
@@ -1532,27 +1541,6 @@
             });
         }
         return text;
-    }
-
-    function applyTranslations() {
-        // Atualiza placeholders e textos
-        const searchInput = document.getElementById('search-input');
-        if (searchInput) {
-            searchInput.placeholder = getTranslation('placeholder_busca');
-        }
-        
-        const title = document.querySelector('title');
-        if (title) {
-            title.textContent = getTranslation('search_titulo');
-        }
-        
-        const mazeStatus = document.getElementById('mazeStatus');
-        if (mazeStatus && !mazeStatus.innerHTML.includes('PARABÉNS') && !mazeStatus.innerHTML.includes('CONGRATULATIONS')) {
-            mazeStatus.textContent = getTranslation('maze_status');
-        }
-        
-        // Atualiza badges e textos do usuário
-        updateUI();
     }
 
     // ==================== VARIÁVEIS GLOBAIS ====================
@@ -1601,6 +1589,73 @@
         return `${days}d`;
     }
 
+    // ==================== APLICAR TRADUÇÕES (CORRIGIDO - SEM LOOP) ====================
+    function applyTranslations() {
+        // Atualiza placeholders e textos estáticos
+        const searchInput = document.getElementById('search-input');
+        if (searchInput) {
+            searchInput.placeholder = getTranslation('placeholder_busca');
+        }
+        
+        const title = document.querySelector('title');
+        if (title) {
+            title.textContent = getTranslation('search_titulo');
+        }
+        
+        const mazeStatus = document.getElementById('mazeStatus');
+        if (mazeStatus && !mazeStatus.innerHTML.includes('PARABÉNS') && !mazeStatus.innerHTML.includes('CONGRATULATIONS')) {
+            mazeStatus.textContent = getTranslation('maze_status');
+        }
+        
+        // Atualiza textos estáticos da interface
+        const elements = {
+            'searchBtnText': 'botao_buscar',
+            'btnSearch': 'botao_buscar',
+            'btnAllPages': 'botao_ver_todas',
+            'guestBadgeText': 'modo_convidado',
+            'searchDesc': 'busca_descricao',
+            'headerSubtitle': 'search_subtitulo',
+            'loadingText': 'aguarde_carregando',
+            'bannedTitle': 'conta_banida',
+            'bannedText': 'conta_banida_texto',
+            'bannedHelp': 'erro_banimento',
+            'notifTitle': 'notificacoes',
+            'notifMarkAll': 'marcar_todas_lidas',
+            'notifEmpty': 'nenhuma_notificacao',
+            'loginTitle': 'entrar_conta',
+            'googleBtnText': 'continuar_google',
+            'orText': 'ou',
+            'loginEmailBtn': 'entrar_email',
+            'createAccountLink': 'criar_conta',
+            'captchaTitle': 'verificacao_seguranca',
+            'captchaText': 'verificacao_texto',
+            'warningText': 'warning_muitas_tentativas',
+            'footerCopyright': 'search_copyright',
+            'infoPages': 'info_paginas'
+        };
+        
+        Object.keys(elements).forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+                const text = getTranslation(elements[id]);
+                if (text && text !== elements[id]) {
+                    el.textContent = text;
+                }
+            }
+        });
+        
+        // Atualiza a contagem de páginas
+        updatePageCount();
+    }
+
+    function updatePageCount() {
+        const pageCount = document.getElementById('page-count');
+        if (pageCount) {
+            const total = allPages.length || 0;
+            pageCount.textContent = getTranslation('info_paginas', { total: total });
+        }
+    }
+
     // ==================== AUTENTICAÇÃO ====================
     async function checkIfUserIsBanned(user) {
         if (!user) return false;
@@ -1628,6 +1683,7 @@
         try { await auth.signOut(); location.reload(); } catch (e) { location.reload(); }
     }
 
+    // ==================== UPDATE UI (CORRIGIDO - SEM LOOP) ====================
     function updateUI() {
         const avatar = document.getElementById('userAvatar');
         const name = document.getElementById('userName');
@@ -1653,7 +1709,10 @@
             btnLogin.style.display = 'none';
             btnLogout.style.display = 'inline-block';
             if (guestBadge) {
-                guestBadge.innerHTML = `<i class="material-icons" style="font-size:14px;">person</i> ${getTranslation('modo_usuario', { nome: escapeHtml(displayName) })}`;
+                const guestBadgeText = document.getElementById('guestBadgeText');
+                if (guestBadgeText) {
+                    guestBadgeText.textContent = getTranslation('modo_usuario', { nome: escapeHtml(displayName) });
+                }
             }
         } else {
             avatar.innerHTML = '👤';
@@ -1663,10 +1722,13 @@
             btnLogin.style.display = 'inline-block';
             btnLogout.style.display = 'none';
             if (guestBadge) {
-                guestBadge.innerHTML = `<i class="material-icons" style="font-size:14px;">public</i> ${getTranslation('modo_convidado')}`;
+                const guestBadgeText = document.getElementById('guestBadgeText');
+                if (guestBadgeText) {
+                    guestBadgeText.textContent = getTranslation('modo_convidado');
+                }
             }
         }
-        applyTranslations();
+        // NÃO chama applyTranslations() aqui para evitar loop!
     }
 
     function showLoginModal() { 
@@ -2079,11 +2141,7 @@
                 return true; 
             });
             
-            const pageCount = document.getElementById('page-count');
-            if (pageCount) {
-                pageCount.textContent = getTranslation('info_paginas', { total: allPages.length });
-            }
-            
+            updatePageCount();
             console.log(`✅ ${allPages.length} páginas carregadas`);
             return allPages;
         } catch (error) {
@@ -2401,6 +2459,7 @@
     window.getTranslation = getTranslation;
     window.changeLanguage = changeLanguage;
     window.createLanguageSelector = createLanguageSelector;
+    window.updateUI = updateUI;
 
     console.log('🚀 WazzimaGiygg Search inicializado com sucesso!');
 })();
