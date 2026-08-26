@@ -1,29 +1,35 @@
 // languages/search-index.js
 // ============================================
-// SEARCH LANGUAGE MANAGER
+// SEARCH LANGUAGE MANAGER - INTEGRAÇÃO COM O SISTEMA EXISTENTE
 // ============================================
 
-// Estende o LanguageManager existente para incluir as traduções do Search
 (function() {
     'use strict';
     
-    // Se o LanguageManager já existe, adiciona as traduções de busca
+    // Verifica se o LanguageManager já existe (do jornal)
     if (typeof LanguageManager !== 'undefined') {
         console.log('🌍 LanguageManager encontrado, integrando Search translations...');
         
-        // Função para adicionar traduções de busca
-        LanguageManager.addSearchTranslations = function(lang, translations) {
-            // Mescla com as traduções existentes
+        // Guarda referência ao LanguageManager original
+        const OriginalLanguageManager = LanguageManager;
+        
+        // Adiciona suporte para traduções de busca
+        if (!OriginalLanguageManager.searchTranslations) {
+            OriginalLanguageManager.searchTranslations = {};
+        }
+        
+        // Função para registrar traduções de busca
+        OriginalLanguageManager.registerSearchTranslations = function(lang, translations) {
             if (!this.searchTranslations) {
                 this.searchTranslations = {};
             }
             this.searchTranslations[lang] = translations;
-            console.log(`✅ Search translations para "${lang}" adicionadas`);
+            console.log(`✅ Search translations para "${lang}" registradas`);
         };
         
-        // Sobrescreve o translate para incluir as traduções de busca
-        const originalTranslate = LanguageManager.translate;
-        LanguageManager.translate = function(key, params = {}) {
+        // Estende a função translate para incluir searchTranslations
+        const originalTranslate = OriginalLanguageManager.translate;
+        OriginalLanguageManager.translate = function(key, params = {}) {
             // Primeiro tenta nas traduções de busca
             const searchTrans = this.searchTranslations?.[this.currentLang] || {};
             let text = searchTrans[key] || null;
@@ -43,11 +49,37 @@
             return text || key;
         };
         
+        // Adiciona função para aplicar traduções de busca
+        OriginalLanguageManager.applySearchTranslations = function() {
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                const translation = this.translate(key);
+                if (translation && translation !== key) {
+                    if (el.tagName === 'INPUT' && el.getAttribute('data-i18n-attr') === 'placeholder') {
+                        el.placeholder = translation;
+                    } else if (el.tagName === 'TEXTAREA' && el.getAttribute('data-i18n-attr') === 'placeholder') {
+                        el.placeholder = translation;
+                    } else if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                        // Não altera valor de inputs
+                    } else {
+                        el.textContent = translation;
+                    }
+                }
+            });
+            
+            // Placeholder específico do search
+            const searchInput = document.getElementById('search-input');
+            if (searchInput) {
+                searchInput.placeholder = this.translate('placeholder_busca');
+            }
+        };
+        
         console.log('✅ Search Language Manager integrado com sucesso!');
+        
     } else {
         console.warn('⚠️ LanguageManager não encontrado. Criando versão simplificada para Search.');
         
-        // Versão simplificada do LanguageManager para Search
+        // Versão simplificada apenas para fallback
         window.LanguageManager = {
             currentLang: 'pt',
             translations: {},
@@ -58,7 +90,7 @@
                 console.log(`✅ Idioma "${lang}" registrado (Search)`);
             },
             
-            addSearchTranslations: function(lang, translations) {
+            registerSearchTranslations: function(lang, translations) {
                 this.searchTranslations[lang] = translations;
                 console.log(`✅ Search translations para "${lang}" adicionadas`);
             },
@@ -89,16 +121,16 @@
             changeLanguage: function(lang) {
                 this.currentLang = lang;
                 console.log(`🌍 Search Language Manager mudou para: "${lang}"`);
-                this.applyTranslations();
+                if (typeof this.applySearchTranslations === 'function') {
+                    this.applySearchTranslations();
+                }
                 
-                // Dispara evento
                 document.dispatchEvent(new CustomEvent('languageChanged', { 
                     detail: { language: lang } 
                 }));
             },
             
-            applyTranslations: function() {
-                // Aplica traduções aos elementos com data-i18n
+            applySearchTranslations: function() {
                 document.querySelectorAll('[data-i18n]').forEach(el => {
                     const key = el.getAttribute('data-i18n');
                     const translation = this.translate(key);
@@ -114,23 +146,35 @@
                         }
                     }
                 });
+                
+                const searchInput = document.getElementById('search-input');
+                if (searchInput) {
+                    searchInput.placeholder = this.translate('placeholder_busca');
+                }
             }
         };
+        
+        console.log('📚 Search Language Manager (fallback) carregado');
     }
+    
+    // ============================================
+    // INICIALIZAÇÃO
+    // ============================================
+    document.addEventListener('DOMContentLoaded', function() {
+        if (typeof LanguageManager !== 'undefined') {
+            const savedLang = localStorage.getItem('wzzm_language') || 'pt';
+            LanguageManager.currentLang = savedLang;
+            
+            // Aplica traduções de busca
+            if (typeof LanguageManager.applySearchTranslations === 'function') {
+                LanguageManager.applySearchTranslations();
+            } else if (typeof applySearchTranslations === 'function') {
+                applySearchTranslations();
+            }
+            
+            console.log(`🌍 Search: Idioma atual: "${savedLang}"`);
+        }
+    });
+    
+    console.log('📚 Search Language Manager carregado');
 })();
-
-// ============================================
-// INICIALIZAÇÃO DO SEARCH LANGUAGE MANAGER
-// ============================================
-document.addEventListener('DOMContentLoaded', function() {
-    // Verifica se já existe LanguageManager
-    if (typeof LanguageManager !== 'undefined') {
-        // Inicializa
-        const savedLang = localStorage.getItem('wzzm_language') || 'pt';
-        LanguageManager.currentLang = savedLang;
-        LanguageManager.applyTranslations();
-        console.log(`🌍 Search: Idioma atual: "${savedLang}"`);
-    }
-});
-
-console.log('📚 Search Language Manager carregado');
