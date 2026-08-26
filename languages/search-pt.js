@@ -78,7 +78,20 @@ const searchTranslationsPt = {
     'aguarde_carregando': 'Carregando WazzimaGiygg Search...'
 };
 
-// Registra no LanguageManager
-if (typeof LanguageManager !== 'undefined') {
-    LanguageManager.registerLanguage('pt', searchTranslationsPt);
+// Registra no sistema
+if (typeof registerSearchTranslations === 'function') {
+    registerSearchTranslations('pt', searchTranslationsPt);
+} else if (typeof LanguageManager !== 'undefined') {
+    if (!LanguageManager.searchTranslations) {
+        LanguageManager.searchTranslations = {};
+    }
+    LanguageManager.searchTranslations['pt'] = searchTranslationsPt;
+    console.log('✅ Search translations para "pt" registradas');
+} else {
+    // Fallback: armazena para depois
+    if (!window._pendingSearchTranslations) {
+        window._pendingSearchTranslations = {};
+    }
+    window._pendingSearchTranslations['pt'] = searchTranslationsPt;
+    console.log('⏳ Search translations para "pt" armazenadas (aguardando LanguageManager)');
 }
