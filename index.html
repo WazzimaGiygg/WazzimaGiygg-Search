@@ -136,7 +136,7 @@
                 if (timeoutId) clearTimeout(timeoutId);
                 
                 if (!resourcesLoaded.css) {
-                    errorInfo.failedResources.push('search.css');
+                    errorInfo.failedResources.push('https://gspotfverwazzimagiygg.wazzimagiygg.com/jornal/search.css');
                     errorInfo.resources.css.loaded = false;
                     errorInfo.resources.css.error = 'Falha ao carregar CSS';
                 }
@@ -181,7 +181,7 @@
                     let resourceName = '';
                     
                     if (target && target.tagName === 'LINK' && target.rel === 'stylesheet') {
-                        resourceName = target.href || 'search.css';
+                        resourceName = target.href || 'https://gspotfverwazzimagiygg.wazzimagiygg.com/jornal/search.css';
                         console.error('❌ Erro ao carregar CSS:', resourceName);
                         errorInfo.errors.push(`CSS Load Error: ${resourceName}`);
                         errorInfo.failedResources.push(resourceName.split('/').pop() || 'https://gspotfverwazzimagiygg.wazzimagiygg.com/jornal/search.css');
@@ -214,7 +214,7 @@
                         errorStr.includes('NetworkError')) {
                         errorInfo.errors.push(`Console Error: ${errorStr.substring(0, 100)}`);
                         if (errorStr.includes('.css') || errorStr.includes('https://gspotfverwazzimagiygg.wazzimagiygg.com/jornal/search.css')) {
-                            errorInfo.failedResources.push('search.css');
+                            errorInfo.failedResources.push('https://gspotfverwazzimagiygg.wazzimagiygg.com/jornal/search.css');
                         }
                         if (errorStr.includes('.js') || errorStr.includes('https://gspotfverwazzimagiygg.wazzimagiygg.com/jornal/search.js')) {
                             errorInfo.failedResources.push('https://gspotfverwazzimagiygg.wazzimagiygg.com/jornal/search.js');
@@ -328,7 +328,7 @@
                             errorInfo.failedResources.push('https://gspotfverwazzimagiygg.wazzimagiygg.com/jornal/search.css (post-load)');
                         }
                         if (!resourcesLoaded.js) {
-                            errorInfo.failedResources.push('search.js (post-load)');
+                            errorInfo.failedResources.push('https://gspotfverwazzimagiygg.wazzimagiygg.com/jornal/search.js (post-load)');
                         }
                         redirectToError();
                     }
